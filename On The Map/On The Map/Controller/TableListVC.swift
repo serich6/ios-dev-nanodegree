@@ -8,11 +8,34 @@
 
 import UIKit
 
-class TableListVC: UIViewController {
+class TableListVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       // return memes.count
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // From course instructions/examples
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell")!
+//        let meme = self.memes[(indexPath as NSIndexPath).row]
+//        cell.textLabel?.text = "\(meme.topText ?? "top") \(meme.bottomText ?? "bottom")"
+//        cell.imageView?.image = meme.memedImage
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //performSegue(withIdentifier: "tableCellDetailSegue", sender: nil)
     }
 
 
