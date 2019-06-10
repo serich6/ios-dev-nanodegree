@@ -11,6 +11,9 @@ import UIKit
 
 class LoginVC: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var emailAddressTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var udacityLogo: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
