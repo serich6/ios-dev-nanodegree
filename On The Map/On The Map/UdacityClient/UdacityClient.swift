@@ -9,9 +9,8 @@
 import Foundation
 
 class UdacityClient {
-    // move to login, then refactor out post request stuff to another class
+    //refactor out post request stuff to another class
     class func loginRequest(password: String, emailAddress: String, completion: @escaping (Bool, Error?) -> Void) {
-        //TODO: refactor to move these two lines out.
         let body = "{\"udacity\": {\"username\": \"\(emailAddress)\", \"password\": \"\(password)\"}}"
         let responseType = LoginResponse.self
         
@@ -30,19 +29,16 @@ class UdacityClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: newData!)
-                print("in do")
-                print(response.account)
                 if response.account.key != "" {
+                    DataModel.user.userKey = response.account.key
+                    DataModel.user.sessionID = response.session.id
                     completion(true, nil)
                 }
             }
             catch {
-                print("unable to decode response")
-                // this part isn't working, need to figure out why
                 completion(false, nil)
                 return
             }
-            
         }
         task.resume()
     }

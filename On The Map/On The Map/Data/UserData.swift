@@ -9,12 +9,12 @@
 import Foundation
 
 class UserData {
-    var userKey: Int
+    var userKey: String
     var sessionID: String
     var hasPin: Bool
     
     init() {
-        userKey = 0
+        userKey = ""
         sessionID = ""
         hasPin = false
     }
