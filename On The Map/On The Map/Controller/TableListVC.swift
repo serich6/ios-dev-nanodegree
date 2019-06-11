@@ -18,9 +18,30 @@ class TableListVC: UITableViewController {
     }
     
     @IBAction func clickRefreshButton(_ sender: Any) {
+        print("clicked refresh button")
     }
     @IBAction func clickPinButton(_ sender: Any) {
+        print("clicked refresh button")
+        showOverwritePinPrompt()
+        // need to check if this person already has a pin
+        //if not, bring up the new view
+        // if yes, bring up alert
+    
     }
+    
+    func showOverwritePinPrompt() {
+        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        show(alertVC, sender: nil)
+    }
+    
+    func handleOverwrite() {
+        print("reached handle overwrite method")
+         // if accept alert, bring up new view,
+    }
+    
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
