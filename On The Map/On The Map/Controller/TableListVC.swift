@@ -10,11 +10,17 @@ import UIKit
 
 class TableListVC: UITableViewController {
 
+    @IBOutlet weak var pinButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    @IBAction func clickRefreshButton(_ sender: Any) {
+    }
+    @IBAction func clickPinButton(_ sender: Any) {
+    }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }

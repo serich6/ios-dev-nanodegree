@@ -131,8 +131,16 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <items>
                                 <navigationItem title="On The Map" id="nuy-IO-Jaa">
-                                    <barButtonItem key="leftBarButtonItem" title="Pin" image="icon_pin" id="VlB-lJ-Zb6"/>
-                                    <barButtonItem key="rightBarButtonItem" title="Refresh" image="icon_refresh" id="Mop-sP-R4e"/>
+                                    <barButtonItem key="leftBarButtonItem" title="Pin" image="icon_pin" id="VlB-lJ-Zb6">
+                                        <connections>
+                                            <action selector="clickPinButton:" destination="kd6-Ds-9do" id="5vZ-xf-C5E"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" title="Refresh" image="icon_refresh" id="Mop-sP-R4e">
+                                        <connections>
+                                            <action selector="clickRefreshButton:" destination="kd6-Ds-9do" id="f9H-iu-AkD"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </navigationItem>
                             </items>
                         </navigationBar>
@@ -152,6 +160,10 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="List" image="icon_listview-selected" id="eRH-Dt-cO5"/>
+                    <connections>
+                        <outlet property="pinButton" destination="VlB-lJ-Zb6" id="pbF-JK-aX7"/>
+                        <outlet property="refreshButton" destination="Mop-sP-R4e" id="mzw-6b-UO9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-dC-cSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
