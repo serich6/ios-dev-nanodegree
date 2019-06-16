@@ -12,21 +12,34 @@ class TableListVC: UITableViewController {
 
     @IBOutlet weak var pinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
+    
+    // TODO: on initial load, nothing is there, but hitting the refresh button solves the issue.
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        _ = PinClient.getPins() { pins, error in
+            DataModel.pinData = pins!
+            print("in view did load")
+            print(DataModel.pinData)
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     @IBAction func clickRefreshButton(_ sender: Any) {
         print("clicked refresh button")
     }
     @IBAction func clickPinButton(_ sender: Any) {
-        print("clicked refresh button")
-        showOverwritePinPrompt()
-        // need to check if this person already has a pin
-        //if not, bring up the new view
-        // if yes, bring up alert
-    
+        if DataModel.userAdded {
+            showOverwritePinPrompt()
+        }
+        else {
+            print("User doesn't already have a pin, let's make one!")
+        }
+        
     }
     
     func showOverwritePinPrompt() {
@@ -47,17 +60,17 @@ class TableListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return memes.count
-        return 0
+        //print("Pin count is \(DataModel.pinData.count)")
+        return DataModel.pinData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // From course instructions/examples
         let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell")!
-//        let meme = self.memes[(indexPath as NSIndexPath).row]
-//        cell.textLabel?.text = "\(meme.topText ?? "top") \(meme.bottomText ?? "bottom")"
-//        cell.imageView?.image = meme.memedImage
-        
+        let displayName = "\(DataModel.pinData[(indexPath as NSIndexPath).row].firstName) \(DataModel.pinData[(indexPath as NSIndexPath).row].lastName)"
+        print(displayName)
+        cell.textLabel?.text = displayName
+        cell.imageView?.image = UIImage(named:"icon_pin")
         return cell
     }
     

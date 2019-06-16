@@ -26,7 +26,8 @@ class LoginVC: UIViewController {
     //    MARK: Button Handlers
     @IBAction func clickLoginButton(_ sender: Any) {
         isLogginIn(inProgress: true)
-        UdacityClient.loginRequest(password: passwordTextField.text ?? "", emailAddress: emailAddressTextField.text ?? "", completion: handleLoginRequest(success:error:))
+        //UdacityClient.loginRequest(password: passwordTextField.text ?? "", emailAddress: emailAddressTextField.text ?? "", completion: handleLoginRequest(success:error:))
+        self.performSegue(withIdentifier: "loginSegue", sender: nil)
         isLogginIn(inProgress: false)
     }
     

@@ -8,32 +8,32 @@
 
 import Foundation
 
+// Example:
+// [{"firstName":"Raheem","lastName":"Medhurst","longitude":46.754795,"latitude":24.580842,"mapString":"sara","mediaURL":"https%252525253A%252525252F%252525252FPune.com","uniqueKey":"555364971","objectId":"ID10","createdAt":"2019-05-17T00:53:33.941Z","updatedAt":"2019-06-06T21:17:08.510Z"}
 struct StudentInformation: Codable {
-    let key: String
-    let uniqueKey: String
     let firstName: String
     let lastName: String
+    let longitude: Double
+    let latitude: Double
     let mapString: String
     let mediaURL: String
-    let latitude: Double
-    let longitude: Double
-    let createdAt: Date
+    let uniqueKey: String
+    let objectId: String
+    let createdAt: String
     // Don't have to parse these two for the actual app
-    let updatedAt: Date
-    let acl: String
+    let updatedAt: String
     
     enum CodingKeys: String, CodingKey {
-        case key = "key"
-        case uniqueKey = "uniqueKey"
         case firstName = "firstName"
         case lastName = "lastName"
+        case longitude = "longitude"
+        case latitude = "latitude"
         case mapString = "mapString"
         case mediaURL = "mediaURL"
-        case latitude = "latitude"
-        case longitude = "longitude"
+        case uniqueKey = "uniqueKey"
+        case objectId = "objectId"
         case createdAt = "createdAt"
         // Don't have to parse these two for the actual app
         case updatedAt = "updatedAt"
-        case acl = "ACL"
     }
 }

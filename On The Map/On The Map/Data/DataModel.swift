@@ -9,6 +9,7 @@
 import Foundation
 
 class DataModel {
+    static var userAdded = false
     static var user = UserData()
     static var pinData = [StudentInformation]()
     
