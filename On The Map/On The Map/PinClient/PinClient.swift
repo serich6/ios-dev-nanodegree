@@ -11,7 +11,7 @@ import Foundation
 class PinClient {
     class func getPins(completion: @escaping ([StudentInformation]?, Error?) -> Void) {
         let responseType = GetPinsResponse.self
-        let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/StudentLocation?limit=5&order-=updatedAt")!)
+        let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/StudentLocation?limit=100&order-=updatedAt")!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             //if there is an error with the datatask
