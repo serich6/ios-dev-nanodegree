@@ -22,7 +22,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         addPins()
     }
     
-    
+    // Adapted from the example PinApp
     // For some reason right now I'm having to call this twice - this may be related to the similar issue in the table VC where
     // I can't seem to get the initial load correct
     func addPins() {
@@ -75,27 +75,5 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
         return pinView
     }
-    
-//    // This delegate method is implemented to respond to taps.
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        print("tapped on a pin!")
-//        if control == view.rightCalloutAccessoryView {
-//            let app = UIApplication.shared
-//            if let toOpen = view.annotation?.subtitle! {
-//                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
-//            }
-//        }
-//    }
-    
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
-//    {
-//        print("tapped on a pin!")
-//        if view == view.rightCalloutAccessoryView {
-//            let app = UIApplication.shared
-//            if let toOpen = view.annotation?.subtitle! {
-//                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
-//            }
-//        }
-//    }
 }
 

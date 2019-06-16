@@ -61,7 +61,6 @@ class TableListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print("Pin count is \(DataModel.pinData.count)")
         return DataModel.pinData.count
     }
     
