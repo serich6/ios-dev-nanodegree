@@ -27,6 +27,79 @@
             </objects>
             <point key="canvasLocation" x="750" y="-347"/>
         </scene>
+        <!--Add PinVC-->
+        <scene sceneID="UKU-Kg-aBK">
+            <objects>
+                <viewController id="2N8-RK-als" customClass="AddPinVC" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="daT-Sc-Bt2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKG-Px-TX5">
+                                <rect key="frame" x="69" y="230.5" width="237" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxp-cz-Nh4">
+                                <rect key="frame" x="132" y="394.5" width="111" height="30"/>
+                                <state key="normal" title="Find on the Map"/>
+                                <connections>
+                                    <action selector="findButtonClicked:" destination="2N8-RK-als" eventType="touchUpInside" id="xch-gD-l7C"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Location" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TmC-PK-COi">
+                                <rect key="frame" x="149" y="332.5" width="77" height="22"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pw-mf-SCK">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Pin" id="abh-nb-8s4">
+                                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="Tmn-Ug-tAq">
+                                            <connections>
+                                                <action selector="cancelButtonClicked:" destination="2N8-RK-als" id="Lg2-77-obY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Your Location Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQC-Nf-2WO">
+                                <rect key="frame" x="92" y="291.5" width="191" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TmC-PK-COi" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="0Rx-ZI-oqW"/>
+                            <constraint firstItem="cKG-Px-TX5" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="9QQ-nY-iM9"/>
+                            <constraint firstItem="TmC-PK-COi" firstAttribute="centerY" secondItem="RZI-cF-6LD" secondAttribute="centerY" id="CxN-oD-Bgy"/>
+                            <constraint firstItem="5pw-mf-SCK" firstAttribute="trailing" secondItem="RZI-cF-6LD" secondAttribute="trailing" id="EL2-C6-xL7"/>
+                            <constraint firstItem="Wxp-cz-Nh4" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="Fu2-Q8-9NL"/>
+                            <constraint firstItem="Wxp-cz-Nh4" firstAttribute="top" secondItem="TmC-PK-COi" secondAttribute="bottom" constant="40" id="GMm-o8-iPh"/>
+                            <constraint firstItem="5pw-mf-SCK" firstAttribute="top" secondItem="RZI-cF-6LD" secondAttribute="top" id="N13-ym-eS5"/>
+                            <constraint firstItem="nQC-Nf-2WO" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="XqS-va-npM"/>
+                            <constraint firstItem="5pw-mf-SCK" firstAttribute="leading" secondItem="RZI-cF-6LD" secondAttribute="leading" id="YG8-rT-Ke9"/>
+                            <constraint firstItem="nQC-Nf-2WO" firstAttribute="top" secondItem="cKG-Px-TX5" secondAttribute="bottom" constant="40" id="f9l-3W-6Wz"/>
+                            <constraint firstItem="TmC-PK-COi" firstAttribute="top" secondItem="nQC-Nf-2WO" secondAttribute="bottom" constant="20" id="fzJ-MI-aT7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="RZI-cF-6LD"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="Tmn-Ug-tAq" id="XGn-Nc-n63"/>
+                        <outlet property="findLocationButton" destination="Wxp-cz-Nh4" id="Pwd-EH-i00"/>
+                        <outlet property="searchField" destination="TmC-PK-COi" id="RqT-kZ-oV7"/>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="returnToTabView" id="6Nw-S1-z2k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SJu-rQ-nEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1686" y="-24"/>
+        </scene>
         <!--LoginVC-->
         <scene sceneID="jgm-JQ-jc1">
             <objects>
@@ -166,6 +239,7 @@
                     <connections>
                         <outlet property="pinButton" destination="VlB-lJ-Zb6" id="pbF-JK-aX7"/>
                         <outlet property="refreshButton" destination="Mop-sP-R4e" id="mzw-6b-UO9"/>
+                        <segue destination="2N8-RK-als" kind="show" identifier="addPinFromTableSegue" id="lpO-rD-S0G"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-dC-cSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -180,4 +254,7 @@
         <image name="icon_refresh" width="24" height="24"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="6Nw-S1-z2k"/>
+    </inferredMetricsTieBreakers>
 </document>

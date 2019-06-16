@@ -21,6 +21,7 @@
 		61F9E58622AFF667009FD0E6 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58522AFF667009FD0E6 /* DataModel.swift */; };
 		61F9E58922B59FCE009FD0E6 /* PinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58822B59FCE009FD0E6 /* PinClient.swift */; };
 		61F9E58B22B5A3C4009FD0E6 /* GetPinsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58A22B5A3C4009FD0E6 /* GetPinsResponse.swift */; };
+		61F9E58D22B5D120009FD0E6 /* AddPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58C22B5D120009FD0E6 /* AddPinVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		61F9E58522AFF667009FD0E6 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		61F9E58822B59FCE009FD0E6 /* PinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinClient.swift; sourceTree = "<group>"; };
 		61F9E58A22B5A3C4009FD0E6 /* GetPinsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPinsResponse.swift; sourceTree = "<group>"; };
+		61F9E58C22B5D120009FD0E6 /* AddPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPinVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				618E5776229F02DC002AE331 /* MapVC.swift */,
 				618E5778229F02DC002AE331 /* TableListVC.swift */,
 				618E578C229F0A09002AE331 /* LoginVC.swift */,
+				61F9E58C22B5D120009FD0E6 /* AddPinVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				618E5779229F02DC002AE331 /* TableListVC.swift in Sources */,
 				618E5775229F02DB002AE331 /* AppDelegate.swift in Sources */,
 				618E578D229F0A09002AE331 /* LoginVC.swift in Sources */,
+				61F9E58D22B5D120009FD0E6 /* AddPinVC.swift in Sources */,
 				61F9E58622AFF667009FD0E6 /* DataModel.swift in Sources */,
 				618E5777229F02DC002AE331 /* MapVC.swift in Sources */,
 				61F9E57A22AEDA1B009FD0E6 /* LoginResponse.swift in Sources */,

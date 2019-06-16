@@ -37,7 +37,8 @@ class TableListVC: UITableViewController {
             showOverwritePinPrompt()
         }
         else {
-            print("User doesn't already have a pin, let's make one!")
+            //need to perform the segue here, not sure why doing it conditionally is so tricky
+            performSegue(withIdentifier: "addPinFromTableSegue", sender: nil)
         }
         
     }

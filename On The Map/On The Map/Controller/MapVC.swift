@@ -14,13 +14,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("in view will appear")
         addPins()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("in view did load")
         addPins()
     }
     
@@ -62,37 +60,42 @@ class MapVC: UIViewController, MKMapViewDelegate {
         self.mapView.addAnnotations(annotations)
     }
     
-    // From the example PinApp
+    // Adapted from the example PinApp
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
         let reuseId = "studentPin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
         
         if pinView == nil {
-            print("in nil")
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            pinView?.canShowCallout = true
         }
         else {
-            print("in else")
             pinView!.annotation = annotation
         }
-        
         return pinView
     }
     
-    // This delegate method is implemented to respond to taps.
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("tapped on a pin!")
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.shared
-            if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
-            }
-        }
-        print("Pin tapped")
-    }
+//    // This delegate method is implemented to respond to taps.
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        print("tapped on a pin!")
+//        if control == view.rightCalloutAccessoryView {
+//            let app = UIApplication.shared
+//            if let toOpen = view.annotation?.subtitle! {
+//                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+//            }
+//        }
+//    }
+    
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+//    {
+//        print("tapped on a pin!")
+//        if view == view.rightCalloutAccessoryView {
+//            let app = UIApplication.shared
+//            if let toOpen = view.annotation?.subtitle! {
+//                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+//            }
+//        }
+//    }
 }
 
