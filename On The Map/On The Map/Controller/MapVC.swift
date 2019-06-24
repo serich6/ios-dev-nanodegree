@@ -19,45 +19,38 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         addPins()
     }
     
-    // Adapted from the example PinApp
-    // For some reason right now I'm having to call this twice - this may be related to the similar issue in the table VC where
-    // I can't seem to get the initial load correct
+    // Adapted from the example PinApp, reformatted as per code review feedback
     func addPins() {
         _  = PinClient.getPins() { pins, error in
-            DataModel.pinData = pins!
-            self.mapView.reloadInputViews()
+            DispatchQueue.main.async {
+                if let locations = pins{
+                    DataModel.pinData = pins!
+                    self.mapView.reloadInputViews()
+                    var annotations = [MKPointAnnotation]()
+                    for pin in locations {
+                        let lat = CLLocationDegrees(pin.latitude)
+                        let long = CLLocationDegrees(pin.longitude)
+                        let first = pin.firstName
+                        let last = pin.lastName
+                        let mediaURL = pin.mediaURL
+                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                        let annotation = MKPointAnnotation()
+                        annotation.coordinate = coordinate
+                        annotation.title = "\(first) \(last)"
+                        annotation.subtitle = mediaURL
+                        annotations.append(annotation)
+                    }
+                    self.mapView.addAnnotations(annotations)
+                }
+                else{
+                    // There are no pins/student locations
+                }
+            }
         }
-        var annotations = [MKPointAnnotation]()
-        //let locations = hardCodedLocationData()
-        let locations = DataModel.pinData
-        
-        for pin in locations {
-            let lat = CLLocationDegrees(pin.latitude)
-            let long = CLLocationDegrees(pin.longitude)
-            let first = pin.firstName
-            let last = pin.lastName
-            let mediaURL = pin.mediaURL
-            
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            // Here we create the annotation and set its coordiate, title, and subtitle properties
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
-            
-            // Finally we place the annotation in an array of annotations.
-            annotations.append(annotation)
-        }
-        
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
-        print(annotations)
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
     }
     
     // Adapted from the example PinApp

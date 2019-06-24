@@ -11,11 +11,13 @@ import Foundation
 class UserData {
     var userKey: String
     var sessionID: String
-    var hasPin: Bool
+    var firstName: String
+    var lastName: String
     
     init() {
         userKey = ""
         sessionID = ""
-        hasPin = false
+        firstName = "Sam"
+        lastName = "Test"
     }
 }
