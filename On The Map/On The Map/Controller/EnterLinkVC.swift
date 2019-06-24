@@ -14,32 +14,35 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    var temporaryPin : StudentInformation!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         addPin()
-        // TODO: remove example code below, this was just for getting the centering property figured out
-        let pin = DataModel.pinData.first
-        let lat = CLLocationDegrees(pin!.latitude)
-        let long = CLLocationDegrees(pin!.longitude)
-        let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        mapView.setCenter(coord, animated: false)
-        
     }
     
-    func submitButtonClicked() {
-        // Do the post command here
+    @IBAction func submitButtonClicked() {
+        updateStudentPin()
         performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
     }
     
+    @IBAction func cancelButtonClicked(_ sender: Any) {
+        performSegue(withIdentifier: "returnToTabView", sender: nil)
+        
+    }
+    
+    func updateStudentPin() {
+        temporaryPin.mediaURL = linkTextField.text ?? ""
+        // call the post command here
+    }
+    
     // Adapted from the example PinApp
-    // For some reason right now I'm having to call this twice - this may be related to the similar issue in the table VC where
-    // I can't seem to get the initial load correct
     func addPin() {
-
         var annotations = [MKPointAnnotation]()
-        let pin = DataModel.pinData.first
+        let pin = temporaryPin
         let lat = CLLocationDegrees(pin!.latitude)
         let long = CLLocationDegrees(pin!.longitude)
         let first = pin!.firstName
@@ -53,16 +56,11 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         annotation.coordinate = coordinate
         annotation.title = "\(first) \(last)"
         annotation.subtitle = mediaURL
-        
         // Finally we place the annotation in an array of annotations.
         annotations.append(annotation)
-        
-        
         // When the array is complete, we add the annotations to the map.
         self.mapView.addAnnotations(annotations)
-        print(annotations)
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
+        mapView.setCenter(coordinate, animated: false)
     }
     
     // Adapted from the example PinApp

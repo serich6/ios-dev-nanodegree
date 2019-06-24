@@ -18,9 +18,7 @@ class TableListVC: UITableViewController {
         super.viewDidLoad()
         _ = PinClient.getPins() { pins, error in
             DataModel.pinData = pins!
-            print("in view did load")
-            print(DataModel.pinData)
-            self.tableView.reloadData()
+            // self.tableView.reloadData()
         }
     }
     
@@ -68,7 +66,6 @@ class TableListVC: UITableViewController {
         // From course instructions/examples
         let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell")!
         let displayName = "\(DataModel.pinData[(indexPath as NSIndexPath).row].firstName) \(DataModel.pinData[(indexPath as NSIndexPath).row].lastName)"
-        print(displayName)
         cell.textLabel?.text = displayName
         cell.imageView?.image = UIImage(named:"icon_pin")
         return cell
