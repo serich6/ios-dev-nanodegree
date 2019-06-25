@@ -11,6 +11,8 @@ import MapKit
 
 class MapVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var pinButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,6 +69,33 @@ class MapVC: UIViewController, MKMapViewDelegate {
             pinView!.annotation = annotation
         }
         return pinView
+    }
+    
+    @IBAction func clickRefreshButton(_ sender: Any) {
+        print("clicked refresh button")
+    }
+    
+    @IBAction func clickPinButton(_ sender: Any) {
+        if DataModel.userAdded {
+            showOverwritePinPrompt()
+        }
+        else {
+            //need to perform the segue here, not sure why doing it conditionally is so tricky
+            performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
+        }
+        
+    }
+    
+    func showOverwritePinPrompt() {
+        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        show(alertVC, sender: nil)
+    }
+    
+    func handleOverwrite() {
+        print("reached handle overwrite method")
+        // if accept alert, bring up new view,
     }
 }
 

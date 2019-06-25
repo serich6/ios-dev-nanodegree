@@ -19,15 +19,26 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </mapView>
                     <navigationItem key="navigationItem" id="CCv-c9-aBE">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="icon_pin" id="bIL-Hj-59F"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="icon_refresh" id="q6W-e7-lVy"/>
+                        <barButtonItem key="leftBarButtonItem" title="Pin Button" image="icon_pin" id="bIL-Hj-59F">
+                            <connections>
+                                <action selector="clickPinButton:" destination="9pv-A4-QxB" id="sdE-1P-DKr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Refresh Button" image="icon_refresh" id="q6W-e7-lVy">
+                            <connections>
+                                <action selector="clickRefreshButton:" destination="9pv-A4-QxB" id="zig-Ia-M4d"/>
+                            </connections>
+                        </barButtonItem>
                         <connections>
-                            <outlet property="leftBarButtonItem" destination="bIL-Hj-59F" id="IcZ-lb-oiA"/>
-                            <outlet property="rightBarButtonItem" destination="q6W-e7-lVy" id="Ilx-HO-ds3"/>
+                            <outlet property="leftBarButtonItem" destination="bIL-Hj-59F" id="81W-C4-XO7"/>
+                            <outlet property="rightBarButtonItem" destination="q6W-e7-lVy" id="JGE-qM-TTg"/>
                         </connections>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Gm7-su-9OB" id="T0K-yf-EHT"/>
+                        <outlet property="pinButton" destination="bIL-Hj-59F" id="ytN-yb-PuL"/>
+                        <outlet property="refreshButton" destination="q6W-e7-lVy" id="1ld-Dz-Q9s"/>
+                        <segue destination="2N8-RK-als" kind="show" identifier="addPinFromMapSegue" id="CfE-A7-6hT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -373,7 +384,7 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lpO-rD-S0G"/>
-        <segue reference="sur-Y5-hlL"/>
+        <segue reference="6Nw-S1-z2k"/>
+        <segue reference="CfE-A7-6hT"/>
     </inferredMetricsTieBreakers>
 </document>
