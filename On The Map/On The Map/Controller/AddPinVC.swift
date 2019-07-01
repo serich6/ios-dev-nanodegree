@@ -13,13 +13,19 @@ import CoreLocation
 class AddPinVC: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
+    @IBOutlet weak var overwriteLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
     var newPin: StudentInformation!
+    var isPost: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if isPost {
+            overwriteLabel.text = ""
+        } else {
+            overwriteLabel.text = "User pin already exists. To leave the pin as is, cancel at the top of the page. Otherwise, procede."
+        }
     }
     
     @IBAction func findButtonClicked(_ sender: Any) {
@@ -27,7 +33,6 @@ class AddPinVC: UIViewController {
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(locationString) { (placemarkers, error) in
-            print("in geocode block")
             var place: CLPlacemark!
             place = placemarkers?[0]
             let lat = place?.location?.coordinate.latitude
@@ -46,10 +51,9 @@ class AddPinVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEnterLinkScreen"{
-            print("reached prepare method!")
             let enterLinkVC = segue.destination as! EnterLinkVC
             enterLinkVC.temporaryPin = newPin
-            print(enterLinkVC.temporaryPin)
+            enterLinkVC.isPost = isPost
         }
     }
 }

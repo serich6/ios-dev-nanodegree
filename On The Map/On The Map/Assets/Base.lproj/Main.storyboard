@@ -24,7 +24,7 @@
                                 <action selector="clickPinButton:" destination="9pv-A4-QxB" id="sdE-1P-DKr"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Refresh Button" image="icon_refresh" id="q6W-e7-lVy">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="q6W-e7-lVy">
                             <connections>
                                 <action selector="clickRefreshButton:" destination="9pv-A4-QxB" id="zig-Ia-M4d"/>
                             </connections>
@@ -54,20 +54,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKG-Px-TX5">
-                                <rect key="frame" x="88.5" y="331" width="237" height="21"/>
+                                <rect key="frame" x="88.5" y="353" width="237" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxp-cz-Nh4">
-                                <rect key="frame" x="151.5" y="513" width="111" height="30"/>
+                                <rect key="frame" x="151.5" y="535" width="111" height="30"/>
                                 <state key="normal" title="Find on the Map"/>
                                 <connections>
                                     <action selector="findButtonClicked:" destination="2N8-RK-als" eventType="touchUpInside" id="xch-gD-l7C"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Location" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TmC-PK-COi">
-                                <rect key="frame" x="76" y="433" width="262" height="40"/>
+                                <rect key="frame" x="76" y="455" width="262" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="262" id="cVK-v5-FRN"/>
                                     <constraint firstAttribute="height" constant="40" id="qRj-hW-oO5"/>
@@ -77,7 +77,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pw-mf-SCK">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Add Pin" id="abh-nb-8s4">
                                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="Tmn-Ug-tAq">
@@ -89,7 +89,16 @@
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Your Location Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQC-Nf-2WO">
-                                <rect key="frame" x="111.5" y="392" width="191" height="21"/>
+                                <rect key="frame" x="111.5" y="414" width="191" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User pin already exists. To leave the user pin as in, cancel at the top of the page. Otherwise, procede." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFZ-At-6VX">
+                                <rect key="frame" x="76" y="237.5" width="262" height="81.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="262" id="Cgu-sT-UVf"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -101,6 +110,7 @@
                             <constraint firstItem="cKG-Px-TX5" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="9QQ-nY-iM9"/>
                             <constraint firstItem="TmC-PK-COi" firstAttribute="centerY" secondItem="RZI-cF-6LD" secondAttribute="centerY" id="CxN-oD-Bgy"/>
                             <constraint firstItem="5pw-mf-SCK" firstAttribute="trailing" secondItem="RZI-cF-6LD" secondAttribute="trailing" id="EL2-C6-xL7"/>
+                            <constraint firstItem="cKG-Px-TX5" firstAttribute="top" secondItem="mFZ-At-6VX" secondAttribute="bottom" constant="34" id="EoM-Lf-uoU"/>
                             <constraint firstItem="Wxp-cz-Nh4" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="Fu2-Q8-9NL"/>
                             <constraint firstItem="Wxp-cz-Nh4" firstAttribute="top" secondItem="TmC-PK-COi" secondAttribute="bottom" constant="40" id="GMm-o8-iPh"/>
                             <constraint firstItem="5pw-mf-SCK" firstAttribute="top" secondItem="RZI-cF-6LD" secondAttribute="top" id="N13-ym-eS5"/>
@@ -108,12 +118,14 @@
                             <constraint firstItem="5pw-mf-SCK" firstAttribute="leading" secondItem="RZI-cF-6LD" secondAttribute="leading" id="YG8-rT-Ke9"/>
                             <constraint firstItem="nQC-Nf-2WO" firstAttribute="top" secondItem="cKG-Px-TX5" secondAttribute="bottom" constant="40" id="f9l-3W-6Wz"/>
                             <constraint firstItem="TmC-PK-COi" firstAttribute="top" secondItem="nQC-Nf-2WO" secondAttribute="bottom" constant="20" id="fzJ-MI-aT7"/>
+                            <constraint firstItem="mFZ-At-6VX" firstAttribute="centerX" secondItem="RZI-cF-6LD" secondAttribute="centerX" id="ljI-xK-S2y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RZI-cF-6LD"/>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="Tmn-Ug-tAq" id="XGn-Nc-n63"/>
                         <outlet property="findLocationButton" destination="Wxp-cz-Nh4" id="Pwd-EH-i00"/>
+                        <outlet property="overwriteLabel" destination="mFZ-At-6VX" id="iTM-G4-L3H"/>
                         <outlet property="searchField" destination="TmC-PK-COi" id="RqT-kZ-oV7"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="returnToTabView" id="6Nw-S1-z2k"/>
                         <segue destination="A4d-h1-Ldy" kind="show" identifier="showEnterLinkScreen" id="bM8-HU-XIJ"/>
@@ -132,19 +144,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a link here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="na3-gv-9IG">
-                                <rect key="frame" x="145.5" y="176.5" width="123" height="21"/>
+                                <rect key="frame" x="145.5" y="198.5" width="123" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZMg-wE-NMq">
-                                <rect key="frame" x="0.0" y="267.5" width="414" height="371"/>
+                                <rect key="frame" x="0.0" y="289.5" width="414" height="371"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="371" id="FZc-Wt-z1O"/>
                                 </constraints>
                             </mapView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Link" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O0L-vl-uca">
-                                <rect key="frame" x="76" y="217.5" width="262" height="30"/>
+                                <rect key="frame" x="76" y="239.5" width="262" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="262" id="MnP-os-Jqk"/>
                                 </constraints>
@@ -153,7 +165,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="url"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNY-dq-TfQ">
-                                <rect key="frame" x="182.5" y="658.5" width="49" height="30"/>
+                                <rect key="frame" x="182.5" y="680.5" width="49" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitButtonClicked" destination="A4d-h1-Ldy" eventType="touchUpInside" id="lOx-kd-PwD"/>
@@ -192,12 +204,12 @@
                         <outlet property="linkTextField" destination="O0L-vl-uca" id="eye-3O-jOr"/>
                         <outlet property="mapView" destination="ZMg-wE-NMq" id="fVH-wm-V8O"/>
                         <outlet property="submitButton" destination="VNY-dq-TfQ" id="7Zy-U5-c5H"/>
-                        <segue destination="49e-Tb-3d3" kind="show" identifier="pinSubmittedSegue" id="sur-Y5-hlL"/>
+                        <segue destination="9pv-A4-QxB" kind="show" identifier="pinSubmittedSegue" id="OfT-Hz-nW8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x60-eD-ydu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4327.536231884058" y="-13.392857142857142"/>
+            <point key="canvasLocation" x="4496" y="-348"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="jgm-JQ-jc1">
@@ -317,7 +329,7 @@
                                 <action selector="clickPinButton:" destination="kd6-Ds-9do" id="5vZ-xf-C5E"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Refresh" image="icon_refresh" id="Mop-sP-R4e">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="Mop-sP-R4e">
                             <connections>
                                 <action selector="clickRefreshButton:" destination="kd6-Ds-9do" id="f9H-iu-AkD"/>
                             </connections>
@@ -380,11 +392,11 @@
         <image name="icon_listview-selected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
-        <image name="icon_refresh" width="24" height="24"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Nw-S1-z2k"/>
         <segue reference="CfE-A7-6hT"/>
+        <segue reference="ZcS-Ew-mA2"/>
     </inferredMetricsTieBreakers>
 </document>

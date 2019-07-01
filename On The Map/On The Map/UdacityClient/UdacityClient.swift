@@ -42,4 +42,9 @@ class UdacityClient {
         }
         task.resume()
     }
+    
+    //refactor out post request stuff to another class
+    class func logoutRequest(password: String, emailAddress: String, completion: @escaping (Bool, Error?) -> Void) {
+    }
+    
 }

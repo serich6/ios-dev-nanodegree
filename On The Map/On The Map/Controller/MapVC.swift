@@ -13,6 +13,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
+    var isPost: Bool!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,30 +73,48 @@ class MapVC: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func clickRefreshButton(_ sender: Any) {
-        print("clicked refresh button")
+        //reloadInputViews()
+        print("tapped logout button")
     }
     
     @IBAction func clickPinButton(_ sender: Any) {
-        if DataModel.userAdded {
-            showOverwritePinPrompt()
-        }
-        else {
-            //need to perform the segue here, not sure why doing it conditionally is so tricky
+        if DataModel.userPinAddedForSession {
+            DispatchQueue.main.async {
+                self.showOverwritePinPrompt()
+            }
+        } else {
+            isPost = true
             performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
         }
-        
     }
     
     func showOverwritePinPrompt() {
-        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: nil))
-        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        show(alertVC, sender: nil)
+//        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
+//        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
+//           self.handleOverwrite()
+//        }))
+//       // alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//        //self.present(UIViewController, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)(alertVC, sender: nil)
+//        show(alertVC, sender: nil)
     }
     
     func handleOverwrite() {
-        print("reached handle overwrite method")
-        // if accept alert, bring up new view,
+        isPost = false
+        performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
+    }
+    
+    // From Pin Sample App
+    // This delegate method is implemented to respond to taps. It opens the system browser
+    // to the URL specified in the annotationViews subtitle property.
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("in tap method?")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addPinFromMapSegue"{
+            let addPinVC = segue.destination as! AddPinVC
+            addPinVC.isPost = isPost
+        }
     }
 }
 

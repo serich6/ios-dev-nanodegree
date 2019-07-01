@@ -28,24 +28,26 @@ class TableListVC: UITableViewController {
     }
     
     @IBAction func clickRefreshButton(_ sender: Any) {
-        print("clicked refresh button")
+        print("clicked logout")
     }
     
     @IBAction func clickPinButton(_ sender: Any) {
-        if DataModel.userAdded {
-            showOverwritePinPrompt()
+       PinClient.getUsersPin(completion: handleCheckForUserPin(bool:error:))
+    }
+    
+    func handleCheckForUserPin(bool: Bool, error: Error?) {
+         DispatchQueue.main.async {
+            if bool {
+                    self.showOverwritePinPrompt()
+            } else {
+                self.performSegue(withIdentifier: "addPinFromTableSegue", sender: nil)
+            }
         }
-        else {
-            //need to perform the segue here, not sure why doing it conditionally is so tricky
-            performSegue(withIdentifier: "addPinFromTableSegue", sender: nil)
-        }
-        
     }
     
     func showOverwritePinPrompt() {
-        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: nil))
-        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        let alertVC = UIAlertController(title: "User Pin Exists", message: "A pin already exists for your user and current session. Press OK to overwrite the current pin.", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(alertVC, sender: nil)
     }
     

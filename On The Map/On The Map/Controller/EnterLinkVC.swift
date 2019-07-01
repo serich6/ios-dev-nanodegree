@@ -16,6 +16,7 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     var temporaryPin : StudentInformation!
+    var isPost: Bool!
     
     
     override func viewDidLoad() {
@@ -26,17 +27,33 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func submitButtonClicked() {
         updateStudentPin()
-        performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
     }
     
     @IBAction func cancelButtonClicked(_ sender: Any) {
         performSegue(withIdentifier: "returnToTabView", sender: nil)
-        
     }
     
     func updateStudentPin() {
         temporaryPin.mediaURL = linkTextField.text ?? ""
-        // call the post command here
+        if isPost {
+            PinClient.postPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
+        } else {
+            print("TODO: add put here")
+           // PinClient.putPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
+        }
+        
+    }
+    
+    func handleSuccessfulPinPostPut(result: Bool, error: Error?) {
+        if result {
+            DataModel.userPinAddedForSession = true
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
+            }
+        } else {
+            // TODO: change this to a popup to alert the user?
+            print("Error during post process")
+        }
     }
     
     // Adapted from the example PinApp
