@@ -85,7 +85,10 @@ class TableListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //performSegue(withIdentifier: "tableCellDetailSegue", sender: nil)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell")!
+        let urlString = DataModel.pinData[(indexPath as NSIndexPath).row].mediaURL
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url)
     }
 
 
