@@ -11,6 +11,9 @@ import MapKit
 
 class MapVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    // TODO: Save off the map center coordinates for next launch (UserDefaults?)
+    var mapCenterCoordinate: CLLocationCoordinate2D!
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,12 +37,9 @@ class MapVC: UIViewController, MKMapViewDelegate {
         print("Long press registered!")
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-//        let album = Album(coordinate: touchMapCoordinate, context: sharedContext)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        annotation.title = "test pin!"
-//        mapView.addAnnotation(album)
-         self.mapView.addAnnotations([annotation])
+        self.mapView.addAnnotations([annotation])
     }
     
     // Adapted from the example PinApp
@@ -56,6 +56,20 @@ class MapVC: UIViewController, MKMapViewDelegate {
             pinView!.annotation = annotation
         }
         return pinView
+    }
+    
+    // For when the pin is tapped
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("something was tapped!")
+        let lat = view.annotation?.coordinate.latitude
+        let long = view.annotation?.coordinate.longitude
+        FlickerClient.getPhotoPage(latitude: lat!, longitude: long!, completion: handlePhotoResponse)
+    }
+    
+    func handlePhotoResponse(photos: [Photo]?, error: Error?) {
+        //TODO: stuff here
+        // bring up the view controller/segue
+        print("in handle photo response block")
     }
 }
 
