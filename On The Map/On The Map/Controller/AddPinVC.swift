@@ -33,17 +33,29 @@ class AddPinVC: UIViewController {
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(locationString) { (placemarkers, error) in
-            var place: CLPlacemark!
-            place = placemarkers?[0]
-            let lat = place?.location?.coordinate.latitude
-            let long = place?.location?.coordinate.longitude
-            
-            self.newPin = StudentInformation(firstName: DataModel.user.firstName, lastName: DataModel.user.lastName, longitude: long!, latitude: lat!, mapString: locationString, mediaURL: "", uniqueKey: DataModel.user.userKey, objectId: "", createdAt: "", updatedAt: "")
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "showEnterLinkScreen", sender: nil)
+            if error != nil {
+                print(error)
+                self.showGeocodeAlert()
+            } else {
+                var place: CLPlacemark!
+                place = placemarkers?[0]
+                let lat = place?.location?.coordinate.latitude
+                let long = place?.location?.coordinate.longitude
+                self.newPin = StudentInformation(firstName: DataModel.user.firstName, lastName: DataModel.user.lastName, longitude: long!, latitude: lat!, mapString: locationString, mediaURL: "", uniqueKey: DataModel.user.userKey, objectId: "", createdAt: "", updatedAt: "")
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showEnterLinkScreen", sender: nil)
+                }
             }
+           
         }
     }
+    
+    func showGeocodeAlert() {
+        let alert = UIAlertController(title: "Geocodig Error", message: "There was a problem geocoding your location, please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     @IBAction func cancelButtonClicked(_ sender: Any) {
          performSegue(withIdentifier: "returnToTabView", sender: nil)
