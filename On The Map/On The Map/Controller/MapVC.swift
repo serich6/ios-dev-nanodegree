@@ -64,12 +64,23 @@ class MapVC: UIViewController, MKMapViewDelegate {
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.isEnabled = true
             pinView?.canShowCallout = true
+            // I wasn't able to get the regular callout bubble to open the link correctly on tap once it was already open, so I added a button as a workaround.
+            let linkButton = UIButton(type: .detailDisclosure)
+            pinView?.rightCalloutAccessoryView = linkButton
         }
         else {
             pinView!.annotation = annotation
         }
         return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let urlString = view.annotation?.subtitle
+        if let url = URL(string: urlString as! String) {
+             UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func clickLogoutButton(_ sender: Any) {
@@ -112,13 +123,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
         performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
     }
     
-    // From Pin Sample App
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("in tap method?")
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addPinFromMapSegue"{
             let addPinVC = segue.destination as! AddPinVC
@@ -126,4 +130,3 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
 }
-
