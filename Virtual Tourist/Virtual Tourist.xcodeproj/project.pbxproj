@@ -16,6 +16,8 @@
 		6184B44F22CA7815007AECC1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B44E22CA7815007AECC1 /* DataController.swift */; };
 		6184B45222CA8290007AECC1 /* FlickerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B45122CA8290007AECC1 /* FlickerClient.swift */; };
 		6184B45422CA82AA007AECC1 /* GetPhotoListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */; };
+		61FC9A9F22CA8CDF009DB8AB /* PhotoAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC9A9E22CA8CDF009DB8AB /* PhotoAlbumVC.swift */; };
+		61FC9AA122CA8FAB009DB8AB /* GetPhotoInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		6184B44E22CA7815007AECC1 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		6184B45122CA8290007AECC1 /* FlickerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerClient.swift; sourceTree = "<group>"; };
 		6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoListResponse.swift; sourceTree = "<group>"; };
+		61FC9A9E22CA8CDF009DB8AB /* PhotoAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumVC.swift; sourceTree = "<group>"; };
+		61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoInfoResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 			children = (
 				6184B44E22CA7815007AECC1 /* DataController.swift */,
 				6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */,
+				61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				6184B43722CA7098007AECC1 /* MapVC.swift */,
+				61FC9A9E22CA8CDF009DB8AB /* PhotoAlbumVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -187,7 +193,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61FC9A9F22CA8CDF009DB8AB /* PhotoAlbumVC.swift in Sources */,
 				6184B45222CA8290007AECC1 /* FlickerClient.swift in Sources */,
+				61FC9AA122CA8FAB009DB8AB /* GetPhotoInfoResponse.swift in Sources */,
 				6184B43822CA7098007AECC1 /* MapVC.swift in Sources */,
 				6184B44F22CA7815007AECC1 /* DataController.swift in Sources */,
 				6184B43E22CA7098007AECC1 /* Virtual_Tourist.xcdatamodeld in Sources */,

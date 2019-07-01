@@ -66,10 +66,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
         FlickerClient.getPhotoPage(latitude: lat!, longitude: long!, completion: handlePhotoResponse)
     }
     
-    func handlePhotoResponse(photos: [Photo]?, error: Error?) {
+    func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
         //TODO: stuff here
         // bring up the view controller/segue
         print("in handle photo response block")
+        print(photos)
     }
 }
 
