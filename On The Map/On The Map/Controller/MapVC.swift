@@ -29,31 +29,47 @@ class MapVC: UIViewController, MKMapViewDelegate {
     // Adapted from the example PinApp, reformatted as per code review feedback
     func addPins() {
         _  = PinClient.getPins() { pins, error in
-            DispatchQueue.main.async {
-                if let locations = pins{
-                    DataModel.pinData = pins!
-                    self.mapView.reloadInputViews()
-                    var annotations = [MKPointAnnotation]()
-                    for pin in locations {
-                        let lat = CLLocationDegrees(pin.latitude)
-                        let long = CLLocationDegrees(pin.longitude)
-                        let first = pin.firstName
-                        let last = pin.lastName
-                        let mediaURL = pin.mediaURL
-                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = coordinate
-                        annotation.title = "\(first) \(last)"
-                        annotation.subtitle = mediaURL
-                        annotations.append(annotation)
+            if error != nil {
+                
+            } else {
+                DispatchQueue.main.async {
+                    if let locations = pins{
+                        DataModel.pinData = pins!
+                        self.mapView.reloadInputViews()
+                        var annotations = [MKPointAnnotation]()
+                        for pin in locations {
+                            let lat = CLLocationDegrees(pin.latitude)
+                            let long = CLLocationDegrees(pin.longitude)
+                            let first = pin.firstName
+                            let last = pin.lastName
+                            let mediaURL = pin.mediaURL
+                            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                            let annotation = MKPointAnnotation()
+                            annotation.coordinate = coordinate
+                            annotation.title = "\(first) \(last)"
+                            annotation.subtitle = mediaURL
+                            annotations.append(annotation)
+                        }
+                        self.mapView.addAnnotations(annotations)
                     }
-                    self.mapView.addAnnotations(annotations)
-                }
-                else{
-                    // There are no pins/student locations
+                    else{
+                        self.showNoPinsAlert()
+                    }
                 }
             }
         }
+    }
+    
+    func showNoPinsAlert() {
+        let alert = UIAlertController(title: "No Pins Available", message: "There are no pins available to view.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showPinDownloadIssueAlert() {
+        let alert = UIAlertController(title: "Download Pin Error", message: "There was a problem downloading the pins. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Adapted from the example PinApp
