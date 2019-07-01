@@ -39,9 +39,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBAction func clickLoginButton(_ sender: Any) {
         isLogginIn(inProgress: true)
         UdacityClient.loginRequest(password: passwordTextField.text ?? "", emailAddress: emailAddressTextField.text ?? "", completion: handleLoginRequest(success:error:))
-        // Used for testing when above line is disabled.
-        //TODO: remove before final submission
-        //self.performSegue(withIdentifier: "loginSegue", sender: nil)
         isLogginIn(inProgress: false)
     }
     

@@ -27,8 +27,18 @@ class TableListVC: UITableViewController {
         tableView.reloadData()
     }
     
-    @IBAction func clickRefreshButton(_ sender: Any) {
-        print("clicked logout")
+    @IBAction func clickLogoutButton(_ sender: Any) {
+        UdacityClient.logoutRequest(completion: handleLogOut(bool:error:))
+    }
+    
+    func handleLogOut(bool: Bool, error: Error?){
+        DispatchQueue.main.async {
+            if bool {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                print(error)
+            }
+        }
     }
     
     @IBAction func clickPinButton(_ sender: Any) {

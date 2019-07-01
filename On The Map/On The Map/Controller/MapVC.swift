@@ -72,10 +72,18 @@ class MapVC: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
-    @IBAction func clickRefreshButton(_ sender: Any) {
-        //reloadInputViews()
-        print("tapped logout button")
-        dismiss(animated: true, completion: nil)
+    @IBAction func clickLogoutButton(_ sender: Any) {
+        UdacityClient.logoutRequest(completion: handleLogOut(bool:error:))
+    }
+    
+    func handleLogOut(bool: Bool, error: Error?){
+        DispatchQueue.main.async {
+            if bool {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                print(error)
+            }
+        }
     }
     
     @IBAction func clickPinButton(_ sender: Any) {
