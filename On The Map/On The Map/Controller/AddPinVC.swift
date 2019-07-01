@@ -18,6 +18,7 @@ class AddPinVC: UIViewController {
     @IBOutlet weak var findLocationButton: UIButton!
     var newPin: StudentInformation!
     var isPost: Bool!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,11 @@ class AddPinVC: UIViewController {
         } else {
             overwriteLabel.text = "User pin already exists. To leave the pin as is, cancel at the top of the page. Otherwise, procede."
         }
+        activityIndicator.isHidden = true
     }
     
     @IBAction func findButtonClicked(_ sender: Any) {
+        activityIndicator.isHidden = false
         let locationString = searchField.text ?? "Unable to geocode location"
         let geocoder = CLGeocoder()
         
@@ -43,6 +46,7 @@ class AddPinVC: UIViewController {
                 let long = place?.location?.coordinate.longitude
                 self.newPin = StudentInformation(firstName: DataModel.user.firstName, lastName: DataModel.user.lastName, longitude: long!, latitude: lat!, mapString: locationString, mediaURL: "", uniqueKey: DataModel.user.userKey, objectId: "", createdAt: "", updatedAt: "")
                 DispatchQueue.main.async {
+                    self.activityIndicator.isHidden = true
                     self.performSegue(withIdentifier: "showEnterLinkScreen", sender: nil)
                 }
             }
