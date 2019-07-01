@@ -48,6 +48,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     func handleLoginRequest(success: Bool, error: Error?) {
         if success {
             DispatchQueue.main.async {
+                self.emailAddressTextField.text = ""
+                self.passwordTextField.text = ""
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
         } else {

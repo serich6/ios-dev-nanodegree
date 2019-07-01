@@ -75,6 +75,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     @IBAction func clickRefreshButton(_ sender: Any) {
         //reloadInputViews()
         print("tapped logout button")
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func clickPinButton(_ sender: Any) {
