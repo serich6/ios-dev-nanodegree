@@ -45,7 +45,6 @@ class PinClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
-                print(response)
                 completion(true, nil)
             }
             catch {
@@ -75,7 +74,6 @@ class PinClient {
                 pin.createdAt = response.createdAt
                 pin.objectId = response.objectId
                 DataModel.pinData.append(pin)
-                print(response)
                 completion(true, nil)
             }
             catch {
@@ -100,7 +98,6 @@ class PinClient {
             if error != nil { // Handle error…
                 completion(false, error)
             } else {
-                print(String(data: data!, encoding: .utf8)!)
                 completion(true, nil)
             }
         }

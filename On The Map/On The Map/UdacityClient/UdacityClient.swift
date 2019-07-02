@@ -43,6 +43,35 @@ class UdacityClient {
         task.resume()
     }
     
+    class func getUserData(completion: @escaping (Bool, Error?) -> Void) {
+        let responseType = GetUserDataResponse.self
+        let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/users/\(DataModel.user.userKey)")!)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            if error != nil { // Handle error...
+                print("There was an error retrieving user data. Defaulting to test values")
+                completion(false, error)
+            } else {
+                let range = Range(5..<data!.count)
+                let newData = data?.subdata(in: range) /* subset response data! */
+                print(String(data: newData!, encoding: .utf8)!)
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(responseType.self, from: newData!)
+                    DataModel.user.lastName = response.lastName
+                    DataModel.user.firstName = response.firstName
+                    completion(true, nil)
+                }
+                catch {
+                    completion(false, error)
+                    return
+                }
+            }
+            
+        }
+        task.resume()
+    }
+    
     //refactor out post request stuff to another class
     class func logoutRequest(completion: @escaping (Bool, Error?) -> Void) {
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
@@ -62,7 +91,6 @@ class UdacityClient {
             } else {
                 let range = 5..<data!.count
                 let newData = data?.subdata(in: range) /* subset response data! */
-                print(String(data: newData!, encoding: .utf8)!)
                 completion(true, nil)
             }
         }

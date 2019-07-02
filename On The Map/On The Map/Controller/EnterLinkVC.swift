@@ -38,7 +38,6 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         if isPost {
             PinClient.postPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
         } else {
-            print("TODO: complete this somehow")
            PinClient.putPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
         }
         
@@ -51,7 +50,6 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
                 self.performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
             }
         } else {
-            print("Error during post process")
             showPostErrorAlert()
         }
     }

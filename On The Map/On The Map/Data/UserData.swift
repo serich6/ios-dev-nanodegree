@@ -17,7 +17,7 @@ class UserData {
     init() {
         userKey = ""
         sessionID = ""
-        firstName = "Sam"
-        lastName = "Test"
+        firstName = ""
+        lastName = ""
     }
 }

@@ -18,6 +18,22 @@ class MapVC: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addPins()
+        if DataModel.user.firstName == "" && DataModel.user.lastName == "" {
+            DataModel.user.firstName = "Sam"
+            DataModel.user.lastName = "Test"
+            // I wasn't sure if this was totally required - especially when I log in with my creds,
+            // I'm getting someone else's info back (I'm guessing it's the randomized data, but still)
+            //UdacityClient.getUserData(completion: handleUserData(bool:error:))
+        }
+    }
+    
+    func handleUserData(bool: Bool, error: Error?) {
+        if error != nil {
+            showNoUserDataAlert()
+        } else {
+            print("made it to success in user data handler")
+            //TODO: do stuff here
+        }
     }
     
     override func viewDidLoad() {
@@ -62,6 +78,12 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     func showNoPinsAlert() {
         let alert = UIAlertController(title: "No Pins Available", message: "There are no pins available to view.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showNoUserDataAlert() {
+        let alert = UIAlertController(title: "No User Data", message: "There was a problem fetching your user data to use when creating new pins. Defaulting to test values.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

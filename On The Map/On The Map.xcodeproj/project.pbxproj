@@ -24,6 +24,7 @@
 		61F9E58B22B5A3C4009FD0E6 /* GetPinsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58A22B5A3C4009FD0E6 /* GetPinsResponse.swift */; };
 		61F9E58D22B5D120009FD0E6 /* AddPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58C22B5D120009FD0E6 /* AddPinVC.swift */; };
 		61F9E58F22B672DD009FD0E6 /* EnterLinkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9E58E22B672DD009FD0E6 /* EnterLinkVC.swift */; };
+		61FC9AA322CB8CB7009DB8AB /* GetUserDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC9AA222CB8CB7009DB8AB /* GetUserDataResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		61F9E58A22B5A3C4009FD0E6 /* GetPinsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPinsResponse.swift; sourceTree = "<group>"; };
 		61F9E58C22B5D120009FD0E6 /* AddPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPinVC.swift; sourceTree = "<group>"; };
 		61F9E58E22B672DD009FD0E6 /* EnterLinkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterLinkVC.swift; sourceTree = "<group>"; };
+		61FC9AA222CB8CB7009DB8AB /* GetUserDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				61F9E57922AEDA1B009FD0E6 /* LoginResponse.swift */,
 				61F9E58A22B5A3C4009FD0E6 /* GetPinsResponse.swift */,
 				61DF94B722C264ED00E1752E /* PostPinResponse.swift */,
+				61FC9AA222CB8CB7009DB8AB /* GetUserDataResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				61F9E58422AFF1DB009FD0E6 /* UdacityClient.swift in Sources */,
 				61F9E58F22B672DD009FD0E6 /* EnterLinkVC.swift in Sources */,
 				61F9E58922B59FCE009FD0E6 /* PinClient.swift in Sources */,
+				61FC9AA322CB8CB7009DB8AB /* GetUserDataResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
