@@ -125,16 +125,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
     }
     
     func showOverwritePinPrompt() {
-//        let alertVC = UIAlertController(title: "Pin already exists", message: "A pin already exists for your acount. Do you want to overwrite the existing pin?", preferredStyle: .alert)
-//        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
-//           self.handleOverwrite()
-//        }))
-//       // alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-//        //self.present(UIViewController, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)(alertVC, sender: nil)
-//        show(alertVC, sender: nil)
+        let alert = UIAlertController(title: "Pin for user already exists", message: "You have already created a pin. Would you like to overwrite it?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: handleOverwrite))
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func handleOverwrite() {
+    func handleOverwrite(action: UIAlertAction) {
         isPost = false
         performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
     }

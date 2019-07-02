@@ -9,6 +9,7 @@
 import Foundation
 
 class PinClient {
+    // get the latest 100 pins
     class func getPins(completion: @escaping ([StudentInformation]?, Error?) -> Void) {
         let responseType = GetPinsResponse.self
         let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/StudentLocation?limit=100&order=-updatedAt")!)
@@ -31,6 +32,7 @@ class PinClient {
         task.resume()
     }
     
+    // get the pin for the user to see if they already have one?
     class func getUsersPin(completion: @escaping (Bool, Error?) -> Void) {
         let responseType = GetPinsResponse.self
         let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/StudentLocation?uniqueKey=\(DataModel.user.userKey)")!)
@@ -38,7 +40,7 @@ class PinClient {
         let task = session.dataTask(with: request) { data, response, error in
             //if there is an error with the datatask
             if error != nil {
-                return
+                completion(false, error)
             }
             let decoder = JSONDecoder()
             do {
@@ -54,6 +56,7 @@ class PinClient {
         task.resume()
     }
     
+    // create a new pin
     class func postPin(pin: StudentInformation, completion: @escaping (Bool, Error?) -> Void) {
         var pin = pin
         let responseType = PostPinResponse.self
@@ -83,4 +86,25 @@ class PinClient {
         task.resume()
         
     }
+    
+    //update an existing pin
+    class func putPin(pin: StudentInformation, completion: @escaping (Bool, Error?) -> Void) {
+        let urlString = "https://onthemap-api.udacity.com/v1/StudentLocation/\(pin.objectId)"
+        let url = URL(string: urlString)
+        var request = URLRequest(url: url!)
+        request.httpMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "{\"uniqueKey\": \"\(pin.uniqueKey)\", \"firstName\": \"\(pin.firstName)\", \"lastName\": \"\(pin.lastName)\",\"mapString\": \"\(pin.mapString)\", \"mediaURL\": \"\(pin.mediaURL)\",\"latitude\": \(pin.latitude), \"longitude\": \(pin.longitude)}".data(using: .utf8)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            if error != nil { // Handle error…
+                completion(false, error)
+            } else {
+                print(String(data: data!, encoding: .utf8)!)
+                completion(true, nil)
+            }
+        }
+        task.resume()
+    }
+        
 }

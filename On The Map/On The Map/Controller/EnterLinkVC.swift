@@ -38,8 +38,8 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         if isPost {
             PinClient.postPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
         } else {
-            print("TODO: add put here")
-           // PinClient.putPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
+            print("TODO: complete this somehow")
+           PinClient.putPin(pin: temporaryPin, completion: handleSuccessfulPinPostPut(result:error:))
         }
         
     }
@@ -51,9 +51,15 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
                 self.performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
             }
         } else {
-            // TODO: change this to a popup to alert the user?
             print("Error during post process")
+            showPostErrorAlert()
         }
+    }
+    
+    func showPostErrorAlert() {
+        let alert = UIAlertController(title: "POST Pin Error", message: "There was a problem adding the new pin. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Adapted from the example PinApp
