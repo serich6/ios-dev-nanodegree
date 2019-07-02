@@ -12,6 +12,7 @@ class TableListVC: UITableViewController {
 
     @IBOutlet weak var pinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
+    var isPost: Bool!
     
     // TODO: on initial load, nothing is there, but hitting the refresh button solves the issue.
     override func viewDidLoad() {
@@ -56,14 +57,15 @@ class TableListVC: UITableViewController {
     }
     
     func showOverwritePinPrompt() {
-        let alertVC = UIAlertController(title: "User Pin Exists", message: "A pin already exists for your user and current session. Press OK to overwrite the current pin.", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
+        let alert = UIAlertController(title: "Pin for user already exists", message: "You have already created a pin. Would you like to overwrite it?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: handleOverwrite))
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func handleOverwrite() {
-        print("reached handle overwrite method")
-         // if accept alert, bring up new view,
+    func handleOverwrite(action: UIAlertAction) {
+        isPost = false
+        performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
     }
     
     
