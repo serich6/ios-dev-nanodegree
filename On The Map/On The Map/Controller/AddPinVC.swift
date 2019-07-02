@@ -17,7 +17,7 @@ class AddPinVC: UIViewController {
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
     var newPin: StudentInformation!
-    var isPost: Bool!
+    var isPost: Bool! = true
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {

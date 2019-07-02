@@ -65,7 +65,7 @@ class TableListVC: UITableViewController {
     
     func handleOverwrite(action: UIAlertAction) {
         isPost = false
-        performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
+        performSegue(withIdentifier: "addPinFromTableSegue", sender: nil)
     }
     
     
