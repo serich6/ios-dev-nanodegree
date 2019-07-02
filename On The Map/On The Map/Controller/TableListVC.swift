@@ -78,7 +78,7 @@ class TableListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // From course instructions/examples
+        // From course instructions/examples and MemeMe
         let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell")!
         let displayName = "\(DataModel.pinData[(indexPath as NSIndexPath).row].firstName) \(DataModel.pinData[(indexPath as NSIndexPath).row].lastName)"
         cell.textLabel?.text = displayName

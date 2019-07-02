@@ -76,24 +76,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func showNoPinsAlert() {
-        let alert = UIAlertController(title: "No Pins Available", message: "There are no pins available to view.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showNoUserDataAlert() {
-        let alert = UIAlertController(title: "No User Data", message: "There was a problem fetching your user data to use when creating new pins. Defaulting to test values.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showPinDownloadIssueAlert() {
-        let alert = UIAlertController(title: "Download Pin Error", message: "There was a problem downloading the pins. Please try again.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // Adapted from the example PinApp
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
@@ -146,6 +128,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func handleOverwrite(action: UIAlertAction) {
+        isPost = false
+        performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
+    }
+    
     func showOverwritePinPrompt() {
         let alert = UIAlertController(title: "Pin for user already exists", message: "You have already created a pin. Would you like to overwrite it?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: handleOverwrite))
@@ -153,9 +140,22 @@ class MapVC: UIViewController, MKMapViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func handleOverwrite(action: UIAlertAction) {
-        isPost = false
-        performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
+    func showNoPinsAlert() {
+        let alert = UIAlertController(title: "No Pins Available", message: "There are no pins available to view.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showNoUserDataAlert() {
+        let alert = UIAlertController(title: "No User Data", message: "There was a problem fetching your user data to use when creating new pins. Defaulting to test values.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showPinDownloadIssueAlert() {
+        let alert = UIAlertController(title: "Download Pin Error", message: "There was a problem downloading the pins. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

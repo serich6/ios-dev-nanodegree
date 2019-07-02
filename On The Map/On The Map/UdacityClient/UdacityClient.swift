@@ -43,6 +43,7 @@ class UdacityClient {
         task.resume()
     }
     
+    // From class provided code example
     class func getUserData(completion: @escaping (Bool, Error?) -> Void) {
         let responseType = GetUserDataResponse.self
         let request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/users/\(DataModel.user.userKey)")!)

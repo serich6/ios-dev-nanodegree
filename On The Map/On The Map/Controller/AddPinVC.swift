@@ -37,7 +37,6 @@ class AddPinVC: UIViewController {
         
         geocoder.geocodeAddressString(locationString) { (placemarkers, error) in
             if error != nil {
-                print(error)
                 self.showGeocodeAlert()
             } else {
                 var place: CLPlacemark!

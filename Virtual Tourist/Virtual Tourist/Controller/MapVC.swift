@@ -69,8 +69,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
     func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
         //TODO: stuff here
         // bring up the view controller/segue
-        print("in handle photo response block")
-        print(photos)
+        DispatchQueue.main.async {
+            print("in handle photo response block")
+            //print(photos)
+            self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
+        }
     }
 }
 
