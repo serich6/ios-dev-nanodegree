@@ -44,6 +44,9 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
     }
     
     func handleSuccessfulPinPostPut(result: Bool, error: Error?) {
+        if error != nil {
+            showPostErrorAlert()
+        }
         if result {
             DataModel.userPinAddedForSession = true
             DispatchQueue.main.async {

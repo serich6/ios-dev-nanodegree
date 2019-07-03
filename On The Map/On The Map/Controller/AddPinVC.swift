@@ -22,11 +22,6 @@ class AddPinVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isPost {
-            overwriteLabel.text = ""
-        } else {
-            overwriteLabel.text = "User pin already exists. To leave the pin as is, cancel at the top of the page. Otherwise, procede."
-        }
         activityIndicator.isHidden = true
     }
     

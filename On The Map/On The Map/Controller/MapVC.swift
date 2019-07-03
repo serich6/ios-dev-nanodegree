@@ -19,20 +19,14 @@ class MapVC: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(animated)
         addPins()
         if DataModel.user.firstName == "" && DataModel.user.lastName == "" {
-            DataModel.user.firstName = "Sam"
-            DataModel.user.lastName = "Test"
-            // I wasn't sure if this was totally required - especially when I log in with my creds,
-            // I'm getting someone else's info back (I'm guessing it's the randomized data, but still)
-            //UdacityClient.getUserData(completion: handleUserData(bool:error:))
+            UdacityClient.getUserData(completion: handleUserData(bool:error:))
         }
     }
     
     func handleUserData(bool: Bool, error: Error?) {
         if error != nil {
+            print(error)
             showNoUserDataAlert()
-        } else {
-            print("made it to success in user data handler")
-            //TODO: do stuff here
         }
     }
     
@@ -46,7 +40,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     func addPins() {
         _  = PinClient.getPins() { pins, error in
             if error != nil {
-                
+                self.showPinDownloadErrorAlert()
             } else {
                 DispatchQueue.main.async {
                     if let locations = pins{
@@ -97,6 +91,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // I think in the last test run, the links without http://www.*** stopped working. Will debug later.
         let urlString = view.annotation?.subtitle
         if let url = URL(string: urlString as! String) {
              UIApplication.shared.open(url)
@@ -113,6 +108,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 print(error)
+                self.showNoPinsAlert()
             }
         }
     }
@@ -140,8 +136,20 @@ class MapVC: UIViewController, MKMapViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showLoginErrorAlert() {
+        let alert = UIAlertController(title: "There was an error attempting to log out", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func showNoPinsAlert() {
         let alert = UIAlertController(title: "No Pins Available", message: "There are no pins available to view.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showPinDownloadErrorAlert() {
+        let alert = UIAlertController(title: "Unable to download pins", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

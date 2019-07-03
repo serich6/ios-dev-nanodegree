@@ -55,7 +55,7 @@ class UdacityClient {
             } else {
                 let range = Range(5..<data!.count)
                 let newData = data?.subdata(in: range) /* subset response data! */
-                print(String(data: newData!, encoding: .utf8)!)
+                //print(String(data: newData!, encoding: .utf8)!)
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(responseType.self, from: newData!)
