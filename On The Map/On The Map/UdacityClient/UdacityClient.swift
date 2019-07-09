@@ -10,7 +10,7 @@ import Foundation
 
 class UdacityClient {
     //refactor out post request stuff to another class
-    class func loginRequest(password: String, emailAddress: String, completion: @escaping (Bool, Error?) -> Void) {
+    class func loginRequest(password: String, emailAddress: String, completion: @escaping (Bool, String?) -> Void) {
         let body = "{\"udacity\": {\"username\": \"\(emailAddress)\", \"password\": \"\(password)\"}}"
         let responseType = LoginResponse.self
         
@@ -23,21 +23,63 @@ class UdacityClient {
         let session = URLSession.shared
         
         let task = session.dataTask(with: request) { data, response, error in
-            let range = Range(5..<data!.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
+            // From Code review feedback
+            if error != nil {
+                completion(false, error?.localizedDescription)
+            }
             
-            let decoder = JSONDecoder()
-            do {
-                let response = try decoder.decode(responseType.self, from: newData!)
-                if response.account.key != "" {
-                    DataModel.user.userKey = response.account.key
-                    DataModel.user.sessionID = response.session.id
-                    completion(true, nil)
+             // From Code review feedback
+            guard let httpStatusCode = (response as? HTTPURLResponse)?.statusCode else {
+                completion(false, error?.localizedDescription)
+                return
+            }
+            
+             // From Code review feedback
+            if httpStatusCode >= 200 && httpStatusCode < 300 {
+                // Since Status Code is valid. Process Data here only.
+                guard let data = data else {
+                    completion(false, error?.localizedDescription)
+                    return
+                }
+                 // This is syntax to create Range in Swift 5
+                let range = 5..<data.count
+                let newData = data.subdata(in: range) /* subset response data! */
+                // Continue processing the data and deserialize it
+
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(responseType.self, from: newData)
+                    if response.account.key != "" {
+                        DataModel.user.userKey = response.account.key
+                        DataModel.user.sessionID = response.session.id
+                        completion(true, nil)
+                    }
+                }
+                catch {
+                    completion(false, error.localizedDescription)
+                    return
                 }
             }
-            catch {
-                completion(false, nil)
-                return
+                 // From Code review feedback
+            else {
+                var errorMessage: String
+                switch httpStatusCode {
+                case 400:
+                   errorMessage = "Bad Request"
+                case 401:
+                    errorMessage = "Unauthorized"
+                case 403:
+                    errorMessage = "Invalid Credentials"
+                case 405:
+                    errorMessage = "HttpMethod Not Allowed"
+                case 410:
+                    errorMessage = "URL Changed"
+                case 500:
+                    errorMessage = "A Server Error error occurred. Please try again"
+                default:
+                    errorMessage = "An unknown error occurred. Please try again"
+                }
+                completion(false, errorMessage)
             }
         }
         task.resume()
@@ -51,12 +93,27 @@ class UdacityClient {
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error...
                 completion(false, error)
-            } else {
-                let range = Range(5..<data!.count)
-                let newData = data?.subdata(in: range) /* subset response data! */
+            }
+            
+            // From Code review feedback
+            guard let httpStatusCode = (response as? HTTPURLResponse)?.statusCode else {
+                completion(false, error)
+                return
+            }
+            
+            // From Code review feedback
+            if httpStatusCode >= 200 && httpStatusCode < 300 {
+                // Since Status Code is valid. Process Data here only.
+                guard let data = data else {
+                    completion(false, error)
+                    return
+                }
+                // This is syntax to create Range in Swift 5
+                let range = 5..<data.count
+                let newData = data.subdata(in: range) /* subset response data! */
                 let decoder = JSONDecoder()
                 do {
-                    let response = try decoder.decode(responseType.self, from: newData!)
+                    let response = try decoder.decode(responseType.self, from: newData)
                     DataModel.user.lastName = response.lastName
                     DataModel.user.firstName = response.firstName
                     completion(true, nil)
@@ -66,7 +123,6 @@ class UdacityClient {
                     return
                 }
             }
-            
         }
         task.resume()
     }

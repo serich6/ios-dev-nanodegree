@@ -38,11 +38,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     //    MARK: Button Handlers
     @IBAction func clickLoginButton(_ sender: Any) {
         isLogginIn(inProgress: true)
-        UdacityClient.loginRequest(password: passwordTextField.text ?? "", emailAddress: emailAddressTextField.text ?? "", completion: handleLoginRequest(success:error:))
+        UdacityClient.loginRequest(password: passwordTextField.text ?? "", emailAddress: emailAddressTextField.text ?? "", completion: handleLoginRequest(success:errorMsg:))
         isLogginIn(inProgress: false)
     }
     
-    func handleLoginRequest(success: Bool, error: Error?) {
+    func handleLoginRequest(success: Bool, errorMsg: String?) {
         if success {
             DispatchQueue.main.async {
                 self.emailAddressTextField.text = ""
@@ -53,8 +53,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 }
             }
         } else {
+            guard let message = errorMsg else {
+                return
+            }
             DispatchQueue.main.async {
-                self.showLoginFailure(message: "Invalid credentials")
+                self.showLoginFailure(message: message)
             }
         }
     }
