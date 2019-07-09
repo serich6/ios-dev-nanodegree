@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class AddPinVC: UIViewController {
+class AddPinVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
-    @IBOutlet weak var overwriteLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
     var newPin: StudentInformation!
@@ -23,6 +22,7 @@ class AddPinVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.isHidden = true
+        searchField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,5 +109,14 @@ class AddPinVC: UIViewController {
     func unsubscribeFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // Advance the keyboard in the case of smaller devices
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == searchField {
+            searchField.resignFirstResponder()
+            findButtonClicked(self)
+        }
+        return true
     }
 }

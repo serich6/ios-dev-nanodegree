@@ -90,6 +90,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
         } else {
             passwordTextField.resignFirstResponder()
+            clickLoginButton(self)
         }
         return true
     }

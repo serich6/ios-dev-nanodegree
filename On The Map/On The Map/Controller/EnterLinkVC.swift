@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
-class EnterLinkVC: UIViewController, MKMapViewDelegate {
+class EnterLinkVC: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
@@ -23,6 +23,16 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         addPin()
+        linkTextField.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
     
     @IBAction func submitButtonClicked() {
@@ -104,5 +114,48 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
             pinView!.annotation = annotation
         }
         return pinView
+    }
+    
+    // Advance the keyboard in the case of smaller devices
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == linkTextField {
+            linkTextField.resignFirstResponder()
+           submitButtonClicked()
+        }
+        return true
+    }
+    
+    // MARK: Keyboard Methods from my MemeMe project
+    // Behavior for keyboard hiding -> reset the view to its base level
+    @objc func keyboardWillHide(_ notification:Notification) {
+        view.frame.origin.y = 0
+    }
+    
+    //Behavior for keyboard showing: move the frame up vertically per the height of the keyboard
+    @objc func keyboardWillShow(_ notification:Notification) {
+        // TODO: I'm getting some odd jumping behavior on this animation, but it could be the toolbar constraints?
+        if (linkTextField.isEditing){
+            // Used divide by 3 since otherwise it was a very drastic shift.
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+    }
+    
+    //Determine the keyboard height
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
+    }
+    
+    //Add keyboard notifications
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    //Remove keyboard notifications
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
