@@ -15,8 +15,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var udacityLogo: UIImageView!
     
-    // TODO: add back in the activity spinner
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         emailAddressTextField.delegate = self
@@ -27,12 +25,12 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //subscribeToKeyboardNotifications()
+        subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //unsubscribeFromKeyboardNotifications()
+        unsubscribeFromKeyboardNotifications()
     }
     
     //    MARK: Button Handlers
@@ -86,7 +84,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     // Advance the keyboard in the case of smaller devices
-    // TODO: This doest seem to be quite working as I thought...check on this again
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailAddressTextField {
             emailAddressTextField.resignFirstResponder()
@@ -108,7 +105,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @objc func keyboardWillShow(_ notification:Notification) {
         // TODO: I'm getting some odd jumping behavior on this animation, but it could be the toolbar constraints?
         if (emailAddressTextField.isEditing){
-            view.frame.origin.y -= getKeyboardHeight(notification)
+            // Used divide by 3 since otherwise it was a very drastic shift.
+            view.frame.origin.y -= getKeyboardHeight(notification) / 3
         }
     }
     
