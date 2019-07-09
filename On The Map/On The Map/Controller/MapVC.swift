@@ -18,18 +18,8 @@ class MapVC: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addPins()
-        if DataModel.user.firstName == "" && DataModel.user.lastName == "" {
-            UdacityClient.getUserData(completion: handleUserData(bool:error:))
-        }
     }
-    
-    func handleUserData(bool: Bool, error: Error?) {
-        if error != nil {
-            print(error)
-            showNoUserDataAlert()
-        }
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -105,10 +95,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
     func handleLogOut(bool: Bool, error: Error?){
         DispatchQueue.main.async {
             if bool {
+                DataModel.user.firstName = ""
+                DataModel.user.lastName = ""
                 self.dismiss(animated: true, completion: nil)
             } else {
-                print(error)
-                self.showNoPinsAlert()
+                self.showLogoutErrorAlert()
             }
         }
     }
@@ -129,16 +120,16 @@ class MapVC: UIViewController, MKMapViewDelegate {
         performSegue(withIdentifier: "addPinFromMapSegue", sender: nil)
     }
     
+    func showLogoutErrorAlert() {
+        let alert = UIAlertController(title: "There was an error attempting to log out", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func showOverwritePinPrompt() {
         let alert = UIAlertController(title: "Pin for user already exists", message: "You have already created a pin. Would you like to overwrite it?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: handleOverwrite))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showLoginErrorAlert() {
-        let alert = UIAlertController(title: "There was an error attempting to log out", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -150,12 +141,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     func showPinDownloadErrorAlert() {
         let alert = UIAlertController(title: "Unable to download pins", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showNoUserDataAlert() {
-        let alert = UIAlertController(title: "No User Data", message: "There was a problem fetching your user data to use when creating new pins. Defaulting to test values.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

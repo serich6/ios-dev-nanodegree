@@ -50,7 +50,7 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         if result {
             DataModel.userPinAddedForSession = true
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
+               self.performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
             }
         } else {
             showPostErrorAlert()
@@ -75,6 +75,9 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate {
         
         // The lat and long are used to create a CLLocationCoordinates2D instance.
         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        // From code review feedback
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
+        mapView.setRegion(region, animated: true)
         // Here we create the annotation and set its coordiate, title, and subtitle properties
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate

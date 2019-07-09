@@ -32,16 +32,6 @@ class TableListVC: UITableViewController {
         UdacityClient.logoutRequest(completion: handleLogOut(bool:error:))
     }
     
-    func handleLogOut(bool: Bool, error: Error?){
-        DispatchQueue.main.async {
-            if bool {
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                print(error)
-            }
-        }
-    }
-    
     @IBAction func clickPinButton(_ sender: Any) {
        PinClient.getUsersPin(completion: handleCheckForUserPin(bool:error:))
     }
@@ -54,6 +44,24 @@ class TableListVC: UITableViewController {
                 self.performSegue(withIdentifier: "addPinFromTableSegue", sender: nil)
             }
         }
+    }
+    
+    func handleLogOut(bool: Bool, error: Error?){
+        DispatchQueue.main.async {
+            if bool {
+                DataModel.user.firstName = ""
+                DataModel.user.lastName = ""
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.showLogoutErrorAlert()
+            }
+        }
+    }
+    
+    func showLogoutErrorAlert() {
+        let alert = UIAlertController(title: "There was an error attempting to log out", message: "Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func showOverwritePinPrompt() {

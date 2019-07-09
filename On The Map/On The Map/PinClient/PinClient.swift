@@ -25,7 +25,6 @@ class PinClient {
                 completion(response.results, nil)
             }
             catch {
-                print(error)
                 completion(nil, error)
             }
         }
@@ -48,7 +47,6 @@ class PinClient {
                 completion(true, nil)
             }
             catch {
-                print(error)
                 completion(false, error)
             }
         }
@@ -77,7 +75,6 @@ class PinClient {
                 completion(true, nil)
             }
             catch {
-                print(error)
                 completion(false, error)
             }
         }

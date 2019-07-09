@@ -50,12 +50,10 @@ class UdacityClient {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error...
-                print("There was an error retrieving user data. Defaulting to test values")
                 completion(false, error)
             } else {
                 let range = Range(5..<data!.count)
                 let newData = data?.subdata(in: range) /* subset response data! */
-                //print(String(data: newData!, encoding: .utf8)!)
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(responseType.self, from: newData!)

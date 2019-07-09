@@ -48,12 +48,27 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.emailAddressTextField.text = ""
                 self.passwordTextField.text = ""
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                if DataModel.user.firstName == "" && DataModel.user.lastName == "" {
+                    UdacityClient.getUserData(completion: self.handleUserData(bool:error:))
+                }
             }
         } else {
             DispatchQueue.main.async {
                 self.showLoginFailure(message: "Invalid credentials")
             }
         }
+    }
+    
+    func handleUserData(bool: Bool, error: Error?) {
+        if error != nil {
+            showNoUserDataAlert()
+        }
+    }
+    
+    func showNoUserDataAlert() {
+        let alert = UIAlertController(title: "No User Data", message: "There was a problem fetching your user data to use when creating new pins. Defaulting to test values.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func isLogginIn(inProgress: Bool) {
