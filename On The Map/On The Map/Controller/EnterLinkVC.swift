@@ -40,7 +40,7 @@ class EnterLinkVC: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     }
     
     @IBAction func cancelButtonClicked(_ sender: Any) {
-        performSegue(withIdentifier: "returnToTabView", sender: nil)
+        performSegue(withIdentifier: "pinSubmittedSegue", sender: nil)
     }
     
     func updateStudentPin() {

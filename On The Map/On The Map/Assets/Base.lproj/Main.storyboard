@@ -125,8 +125,8 @@
                         <outlet property="cancelButton" destination="Tmn-Ug-tAq" id="XGn-Nc-n63"/>
                         <outlet property="findLocationButton" destination="Wxp-cz-Nh4" id="Pwd-EH-i00"/>
                         <outlet property="searchField" destination="TmC-PK-COi" id="RqT-kZ-oV7"/>
-                        <segue destination="49e-Tb-3d3" kind="show" identifier="returnToTabView" id="6Nw-S1-z2k"/>
                         <segue destination="A4d-h1-Ldy" kind="show" identifier="showEnterLinkScreen" id="bM8-HU-XIJ"/>
+                        <segue destination="9pv-A4-QxB" kind="show" identifier="returnToTabView" id="F3Z-ej-LcH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SJu-rQ-nEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -142,13 +142,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZMg-wE-NMq">
-                                <rect key="frame" x="0.0" y="84" width="320" height="287"/>
+                                <rect key="frame" x="0.0" y="128" width="320" height="287"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ZMg-wE-NMq" secondAttribute="height" multiplier="414:371" id="Xrl-jL-nyu" userLabel="aspect = 414:50"/>
                                 </constraints>
                             </mapView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Link" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O0L-vl-uca">
-                                <rect key="frame" x="29" y="402" width="262" height="30"/>
+                                <rect key="frame" x="29" y="446" width="262" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="262" id="MnP-os-Jqk"/>
                                 </constraints>
@@ -157,14 +157,14 @@
                                 <textInputTraits key="textInputTraits" textContentType="url"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNY-dq-TfQ">
-                                <rect key="frame" x="135.5" y="437" width="49" height="30"/>
+                                <rect key="frame" x="135.5" y="481" width="49" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitButtonClicked" destination="A4d-h1-Ldy" eventType="touchUpInside" id="lOx-kd-PwD"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JA9-7E-TuY">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Add Link" id="qHv-Fo-yHK">
                                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="j7k-8k-VFc">
@@ -176,7 +176,7 @@
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a link here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="na3-gv-9IG">
-                                <rect key="frame" x="98.5" y="376" width="123" height="21"/>
+                                <rect key="frame" x="98.5" y="420" width="123" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -395,8 +395,7 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Nw-S1-z2k"/>
         <segue reference="lpO-rD-S0G"/>
-        <segue reference="OfT-Hz-nW8"/>
+        <segue reference="F3Z-ej-LcH"/>
     </inferredMetricsTieBreakers>
 </document>

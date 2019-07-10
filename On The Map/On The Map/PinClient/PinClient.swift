@@ -18,6 +18,7 @@ class PinClient {
             //if there is an error with the datatask
             if error != nil {
                 completion(nil, error)
+                return
             }
             let decoder = JSONDecoder()
             do {
@@ -26,6 +27,7 @@ class PinClient {
             }
             catch {
                 completion(nil, error)
+                return
             }
         }
         task.resume()
@@ -40,14 +42,17 @@ class PinClient {
             //if there is an error with the datatask
             if error != nil {
                 completion(false, error)
+                return
             }
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
                 completion(true, nil)
+                return
             }
             catch {
                 completion(false, error)
+                return
             }
         }
         task.resume()
@@ -94,6 +99,7 @@ class PinClient {
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error…
                 completion(false, error)
+                return
             } else {
                 completion(true, nil)
             }

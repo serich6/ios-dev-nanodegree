@@ -26,6 +26,7 @@ class UdacityClient {
             // From Code review feedback
             if error != nil {
                 completion(false, error?.localizedDescription)
+                return
             }
             
              // From Code review feedback
@@ -93,6 +94,7 @@ class UdacityClient {
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error...
                 completion(false, error)
+                return
             }
             
             // From Code review feedback
@@ -143,6 +145,7 @@ class UdacityClient {
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil { // Handle error…
                 completion(false, error)
+                return
             } else {
                 let range = 5..<data!.count
                 let newData = data?.subdata(in: range) /* subset response data! */
