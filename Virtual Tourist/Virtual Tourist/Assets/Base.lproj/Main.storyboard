@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--MapVC-->
+        <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapVC" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,7 +31,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="FLg-mm-gia"/>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" leftItemsSupplementBackButton="YES" id="FLg-mm-gia">
+                        <barButtonItem key="backBarButtonItem" title="OK" id="16F-Ln-OEZ"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="alM-u1-R8l" id="Kq0-wA-rPM"/>
                         <segue destination="BOt-FA-SMs" kind="show" identifier="showCollectionSegue" id="ph4-cZ-3xB"/>
@@ -79,7 +81,7 @@
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dmg-dh-WK3"/>
-                                    <barButtonItem title="New Collection" id="cGW-Uw-Rx6"/>
+                                    <barButtonItem id="cGW-Uw-Rx6"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ubp-uN-nro"/>
                                 </items>
                             </toolbar>
@@ -102,6 +104,7 @@
                     <connections>
                         <outlet property="collectionView" destination="Tfy-ck-qz7" id="2eQ-nu-p3V"/>
                         <outlet property="mapView" destination="99e-cP-3iQ" id="cem-ET-D1k"/>
+                        <outlet property="toolBarTitle" destination="cGW-Uw-Rx6" id="2uu-ok-yPH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4zB-Ps-1FO" userLabel="First Responder" sceneMemberID="firstResponder"/>

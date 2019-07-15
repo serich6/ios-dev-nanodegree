@@ -13,7 +13,11 @@ import MapKit
 class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
+   // @IBOutlet weak var toolBarTitle: UIBarButtonItem!
+    // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
+    var hasPhotos: Bool = false
     
+    @IBOutlet weak var toolBarTitle: UIBarButtonItem!
     var mapCenterCoordinate: CLLocationCoordinate2D!
     
     
@@ -25,5 +29,12 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
+        if hasPhotos {
+            toolBarTitle.title = "New Collection"
+            
+        } else {
+            toolBarTitle.title = "No Images"
+        }
+        
     }
 }
