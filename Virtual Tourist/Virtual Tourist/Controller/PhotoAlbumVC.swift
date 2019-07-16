@@ -13,12 +13,15 @@ import MapKit
 class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
-   // @IBOutlet weak var toolBarTitle: UIBarButtonItem!
+    @IBOutlet weak var toolBarTitle: UIBarButtonItem!
+    var temporaryPin: MKAnnotationView!
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var hasPhotos: Bool = false
-    
-    @IBOutlet weak var toolBarTitle: UIBarButtonItem!
+    // TODO: figure out if I need to use this to save off the coordinate in user defaults
     var mapCenterCoordinate: CLLocationCoordinate2D!
+
+    
+
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,12 +32,46 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
+        setToolBarTitle()
+        drawPin()
+        setMapZoom()
+    }
+    
+    // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
+    func setToolBarTitle() {
         if hasPhotos {
             toolBarTitle.title = "New Collection"
             
         } else {
             toolBarTitle.title = "No Images"
         }
-        
+    }
+    
+    func drawPin(){
+        guard let pin = temporaryPin else {
+            showDisplayPinErrorAlert()
+            return
+        }
+        let annotation = MKPointAnnotation()
+        //TODO: remove force unwrap here
+        annotation.coordinate = pin.annotation!.coordinate
+        self.mapView.addAnnotations([annotation])
+    }
+    
+    func showDisplayPinErrorAlert() {
+        let alert = UIAlertController(title: "Unable to display placed pin.", message: "There was a problem displaying the pin you dropped. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func setMapZoom() {
+        guard let coordinate = temporaryPin.annotation?.coordinate else {
+            print("no coordinate available for setting map zoom")
+            return
+        }
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100000, longitudinalMeters: 100000)
+        mapView.setRegion(region, animated: true)
+        mapView.setCenter(coordinate, animated: false)
     }
 }
