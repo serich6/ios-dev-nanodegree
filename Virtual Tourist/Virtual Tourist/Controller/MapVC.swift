@@ -103,7 +103,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         if let coordinate = view.annotation?.coordinate {
             let foundPins = fetchPinFromDataModel(lat: coordinate.latitude, long: coordinate.longitude)
             guard foundPins.first != nil else {
-                showPinQueryErrorAlert()
+                showCustomErrorAlert(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.")
                 return
             }
            checkForPinPhotos(foundPins: foundPins, coordinate: coordinate)
@@ -140,29 +140,48 @@ class MapVC: UIViewController, MKMapViewDelegate {
     // Otherwise, throw up an error that there was a problem
     func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
         if error != nil {
-            showGetPhotosErrorAlert()
+            showCustomErrorAlert(title: "Photo download error", message: "There was a problem downloading the photos from Flickr. Please try again.")
             return
         }
         if let photosToID = photos {
             let photoIDs = FlickerClient.convertFlikrPhotosToIDArray(photoSearchResults: photosToID)
-            print(photoIDs)
-            //FlickerClient.getPhotoImageData(photoID: <#T##String#>, completion: <#T##(Bool, Error?) -> Void#>)
+            FlickerClient.getPhotoImageURL(photoID: photoIDs.first ?? "", completion: handleGetPhotoImageURLResponse(photoURLs:error:))
+        }
+       
+    }
+    
+    func handleGetPhotoImageURLResponse(photoURLs: [String]?, error: Error?) {
+        if error != nil {
+            print(error)
+            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
+            return
+        }
+        if let urlArray = photoURLs {
+            print(urlArray)
             DispatchQueue.main.async {
                 print("in handle photo response block")
                 self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
             }
         }
-       
     }
     
-    func showGetPhotosErrorAlert() {
-        let alert = UIAlertController(title: "Photo download error", message: "There was a problem downloading the photos from Flickr. Please try again.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    func handleGetImageDataResponse(photoURLs: [String]?, error: Error?) {
+        if error != nil {
+            print(error)
+            showCustomErrorAlert(title: "Photo url fetch error", message: "There was a problem fetching the photo urls from Flickr. Please try again.")
+            return
+        }
+        if let urlArray = photoURLs {
+            print(urlArray)
+            DispatchQueue.main.async {
+                print("in handle photo response block")
+                self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
+            }
+        }
     }
-
-    func showPinQueryErrorAlert() {
-        let alert = UIAlertController(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.", preferredStyle: UIAlertController.Style.alert)
+    
+    func showCustomErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

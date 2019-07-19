@@ -38,31 +38,49 @@ class FlickerClient {
     class func convertFlikrPhotosToIDArray(photoSearchResults: [FlickrPhoto]) -> [String] {
         var photoIDs: [String] = []
         for photo in photoSearchResults {
-            print(photo.id)
             photoIDs.append(photo.id)
         }
         return photoIDs
     }
     
-    class func getPhotoImageData(photoID: String, completion: @escaping (Bool, Error?) -> Void) {
+//    class func getPhotoImageArray(photoIDs: [String]) -> [String] {
+//        var imageURLArray: [String] = []
+//        for id in photoIDs {
+//            imageURLArray.append(getPhotoImageURL(photoID: id, completion: handleGetImageURL(response:)))
+//        }
+//        return imageURLArray
+//    }
+    
+    class func getPhotoImageURL(photoID: String, completion: @escaping ([String]?, Error?) -> Void) {
         let responseType = GetPhotoInfoResponse.self
-        let request = URLRequest(url: URL(string:"")!)
+        let urlString = "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=\(apiKey)&photo_id=\(photoID)&format=json&nojsoncallback=1"
+        let request = URLRequest(url: URL(string:urlString)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             //if there is an error with the datatask
             if error != nil {
+                print(error)
+                completion(nil, error)
                 return
             }
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
-                completion(true, nil)
+                if let imageURL = response.sizes.sizeWithLinks.first?.source {
+                    completion([imageURL], nil)
+                }
             }
             catch {
                 print(error)
-                completion(false, error)
+                completion(nil, error)
+                return
             }
         }
         task.resume()
     }
+    
+    
+//    class func handleGetImageURL(response: GetPhotoInfoResponse) -> String {
+//        return response.sizes.size.url
+//    }
 }
