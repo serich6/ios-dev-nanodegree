@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     // TODO: Save off the map center coordinates for next launch (UserDefaults?)
     var mapCenterCoordinate: CLLocationCoordinate2D!
-    var temporaryPin: MKAnnotationView!
+    var currentPin: Pin!
+    var dataController:DataController!
+    var fetchedResultsController:NSFetchedResultsController<Pin>!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,8 +32,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        UserDefaults.standard.set(mapView.centerCoordinate.latitude, forKey: "userCenterLat")
-//        UserDefaults.standard.set(mapView.centerCoordinate.longitude, forKey: "userCenterLong")
     }
     
     //TODO: Cite stack overflow idea here
@@ -49,8 +50,14 @@ class MapVC: UIViewController, MKMapViewDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         self.mapView.addAnnotations([annotation])
-        //TODO: Add pin to data model
-        
+        addPinToModel(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+    
+    func addPinToModel(latitude: Double, longitude: Double) {
+        let pin = Pin(context: dataController.viewContext)
+        pin.latitude = latitude as NSNumber
+        pin.longitude = longitude as NSNumber
+        try? dataController.viewContext.save()
     }
     
     // Adapted from the example PinApp
@@ -71,12 +78,41 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     // For when the pin is tapped
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        temporaryPin = view
-        // pull the pin from data model instead, and use that lat/long
-        let lat = view.annotation?.coordinate.latitude
-        let long = view.annotation?.coordinate.longitude
-        //TODO: only call this if there isn't already photos added for this pin!
-        FlickerClient.getPhotoPage(latitude: lat!, longitude: long!, completion: handlePhotoResponse)
+        if let coordinate = view.annotation?.coordinate {
+            let foundPins = fetchPinFromDataModel(lat: coordinate.latitude, long: coordinate.longitude)
+            guard foundPins.first != nil else {
+                showPinQueryErrorAlert()
+                return
+            }
+           checkForPinPhotos(foundPins: foundPins, coordinate: coordinate)
+        }
+    }
+    
+    func checkForPinPhotos(foundPins: [Pin], coordinate: CLLocationCoordinate2D) {
+        currentPin = foundPins.first
+        if let photos = currentPin.photos {
+            if photos.count == 0 {
+                FlickerClient.getPhotoPage(latitude: coordinate.latitude , longitude: coordinate.longitude , completion: handlePhotoResponse)
+                return
+            } else {
+                // would we perform the segue here, but load the [Photo] in the next vc with data that we pass/currentPin.photos? Do we even need to set that, or can we just check it in view did load?
+                print("Pin exists, and has \(photos.count) associated photos")
+            }
+        }
+    }
+    
+    func fetchPinFromDataModel(lat: Double, long: Double) -> [Pin] {
+        let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
+        let predicateString = "latitude = \(lat) AND longitude = \(long)"
+        print(predicateString)
+        fetchRequest.predicate = NSPredicate(format: predicateString)
+        do {
+            let fetchedPins = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [Pin]
+            print(fetchedPins)
+            return fetchedPins
+        } catch {
+            fatalError("Failed to fetch pin: \(error)")
+        }
     }
     
     // Open the new view, passing along the photos that need to be populated
@@ -99,11 +135,17 @@ class MapVC: UIViewController, MKMapViewDelegate {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+
+    func showPinQueryErrorAlert() {
+        let alert = UIAlertController(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCollectionSegue"{
             let photoAlbumVC = segue.destination as! PhotoAlbumVC
-            photoAlbumVC.temporaryPin = temporaryPin
+            photoAlbumVC.temporaryPin = currentPin
         }
     }
 }

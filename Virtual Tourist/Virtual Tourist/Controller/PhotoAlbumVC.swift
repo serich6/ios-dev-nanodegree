@@ -14,7 +14,8 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
-    var temporaryPin: MKAnnotationView!
+   // var temporaryPin: MKAnnotationView!
+    var temporaryPin: Pin!
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var hasPhotos: Bool = false
     // TODO: figure out if I need to use this to save off the coordinate in user defaults
@@ -50,7 +51,8 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         }
         let annotation = MKPointAnnotation()
         //TODO: remove force unwrap here
-        annotation.coordinate = pin.annotation!.coordinate
+        //annotation.coordinate = pin.annotation!.coordinate
+        annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude as! CLLocationDegrees, longitude: pin.longitude as! CLLocationDegrees)
         self.mapView.addAnnotations([annotation])
     }
     
@@ -67,12 +69,21 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     }
     
     func setMapZoom() {
-        guard let coordinate = temporaryPin.annotation?.coordinate else {
+        if let pin = temporaryPin {
+            let coordinate = CLLocationCoordinate2D(latitude: pin.latitude as! CLLocationDegrees, longitude: pin.longitude as! CLLocationDegrees)
+            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
+            mapView.setRegion(region, animated: true)
+            mapView.setCenter(coordinate, animated: false)
+        } else {
             showMapZoomErrorAlert()
             return
         }
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
-        mapView.setRegion(region, animated: true)
-        mapView.setCenter(coordinate, animated: false)
+        //        guard let coordinate = temporaryPin.annotation?.coordinate else {
+        //            showMapZoomErrorAlert()
+        //            return
+        //        }
+        //        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
+        //        mapView.setRegion(region, animated: true)
+        //        mapView.setCenter(coordinate, animated: false)
     }
 }
