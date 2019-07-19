@@ -40,6 +40,7 @@ class FlickerClient {
         for photo in photoSearchResults {
             photoIDs.append(photo.id)
         }
+        print(photoIDs)
         return photoIDs
     }
     
@@ -51,7 +52,32 @@ class FlickerClient {
 //        return imageURLArray
 //    }
     
-    class func getPhotoImageURL(photoID: String, completion: @escaping ([String]?, Error?) -> Void) {
+    class func downloadImageData(photoURL: String, completion: @escaping (Data?, Error?) -> Void) {
+        let responseType = GetPhotoInfoResponse.self
+        let request = URLRequest(url: URL(string:photoURL)!)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            if error != nil {
+                print(error)
+                completion(nil, error)
+                return
+            }
+            let decoder = JSONDecoder()
+            do {
+                let response = try decoder.decode(responseType.self, from: data!)
+                print(response)
+            }
+            catch {
+                print(error)
+                completion(nil, error)
+                return
+            }
+        }
+        task.resume()
+        
+    }
+    
+    class func getPhotoImageURL(photoID: String, completion: @escaping (String?, Error?) -> Void) {
         let responseType = GetPhotoInfoResponse.self
         let urlString = "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=\(apiKey)&photo_id=\(photoID)&format=json&nojsoncallback=1"
         let request = URLRequest(url: URL(string:urlString)!)
@@ -67,7 +93,7 @@ class FlickerClient {
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
                 if let imageURL = response.sizes.sizeWithLinks.first?.source {
-                    completion([imageURL], nil)
+                    completion(imageURL, nil)
                 }
             }
             catch {

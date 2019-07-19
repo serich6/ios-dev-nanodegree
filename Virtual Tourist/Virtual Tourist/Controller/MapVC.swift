@@ -15,8 +15,10 @@ class MapVC: UIViewController, MKMapViewDelegate {
     // TODO: Save off the map center coordinates for next launch (UserDefaults?)
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var currentPin: Pin!
+    var currentPhotoArray: [String]!
     var dataController:DataController!
     var fetchedResultsController:NSFetchedResultsController<Pin>!
+    var downloadedPhotos: [Data]!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -145,38 +147,29 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
         if let photosToID = photos {
             let photoIDs = FlickerClient.convertFlikrPhotosToIDArray(photoSearchResults: photosToID)
-            FlickerClient.getPhotoImageURL(photoID: photoIDs.first ?? "", completion: handleGetPhotoImageURLResponse(photoURLs:error:))
+            currentPhotoArray = []
+            for id in photoIDs {
+                FlickerClient.getPhotoImageURL(photoID: id, completion: handleGetPhotoImageURLResponse(photoURLs:error:))
+            }
         }
-       
     }
     
-    func handleGetPhotoImageURLResponse(photoURLs: [String]?, error: Error?) {
+    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
         if error != nil {
-            print(error)
+            print(error as Any)
             showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
             return
         }
-        if let urlArray = photoURLs {
-            print(urlArray)
-            DispatchQueue.main.async {
-                print("in handle photo response block")
-                self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
-            }
+        if let url = photoURLs {
+            print("Adding url \(url)")
+            currentPhotoArray.append(url)
         }
     }
     
-    func handleGetImageDataResponse(photoURLs: [String]?, error: Error?) {
-        if error != nil {
-            print(error)
-            showCustomErrorAlert(title: "Photo url fetch error", message: "There was a problem fetching the photo urls from Flickr. Please try again.")
-            return
-        }
-        if let urlArray = photoURLs {
-            print(urlArray)
-            DispatchQueue.main.async {
-                print("in handle photo response block")
-                self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
-            }
+    func handleArrayComplete() {
+        DispatchQueue.main.async {
+            print("in handle photo response block")
+            self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
         }
     }
     
@@ -190,6 +183,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         if segue.identifier == "showCollectionSegue"{
             let photoAlbumVC = segue.destination as! PhotoAlbumVC
             photoAlbumVC.temporaryPin = currentPin
+            photoAlbumVC.temporaryPhotoURLs = currentPhotoArray
         }
     }
 }

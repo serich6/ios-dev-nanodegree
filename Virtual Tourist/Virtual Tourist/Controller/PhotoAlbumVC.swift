@@ -16,6 +16,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
    // var temporaryPin: MKAnnotationView!
     var temporaryPin: Pin!
+    var temporaryPhotoURLs: [String]!
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var hasPhotos: Bool = false
     // TODO: figure out if I need to use this to save off the coordinate in user defaults
@@ -33,6 +34,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         setToolBarTitle()
         drawPin()
         setMapZoom()
+        print(temporaryPhotoURLs)
     }
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
@@ -81,12 +83,5 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
             showMapZoomErrorAlert()
             return
         }
-        //        guard let coordinate = temporaryPin.annotation?.coordinate else {
-        //            showMapZoomErrorAlert()
-        //            return
-        //        }
-        //        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
-        //        mapView.setRegion(region, animated: true)
-        //        mapView.setCenter(coordinate, animated: false)
     }
 }
