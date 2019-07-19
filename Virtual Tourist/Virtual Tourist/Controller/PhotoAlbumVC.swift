@@ -21,9 +21,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     var mapCenterCoordinate: CLLocationCoordinate2D!
 
     
-
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -41,7 +38,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     func setToolBarTitle() {
         if hasPhotos {
             toolBarTitle.title = "New Collection"
-            
         } else {
             toolBarTitle.title = "No Images"
         }
@@ -64,13 +60,18 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showMapZoomErrorAlert() {
+        let alert = UIAlertController(title: "Unable to zoom and center the map.", message: "There was a problem setting the map zoom. Please try again.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func setMapZoom() {
         guard let coordinate = temporaryPin.annotation?.coordinate else {
-            print("no coordinate available for setting map zoom")
+            showMapZoomErrorAlert()
             return
         }
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100000, longitudinalMeters: 100000)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
         mapView.setRegion(region, animated: true)
         mapView.setCenter(coordinate, animated: false)
     }

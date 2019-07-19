@@ -24,16 +24,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         addLongPressRecognizer()
-        //TODO: figure out how to remove force downcasting
-//        if let userCenterLat = UserDefaults.standard.value(forKey: "userCenterLat"), let userCenterLong = UserDefaults.standard.value(forKey: "userCenterLong") {
-//            print("there is a user lat long present")
-//            let coordinate = CLLocationCoordinate2D(latitude: userCenterLat as! CLLocationDegrees, longitude: userCenterLong as! CLLocationDegrees)
-//            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
-//            mapView.setRegion(region, animated: true)
-//            mapView.setCenter(coordinate, animated: false)
-//        } else {
-//            print("this is a first launch, using default center")
-//        }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,20 +71,17 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     // For when the pin is tapped
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("something was tapped!")
         temporaryPin = view
         // pull the pin from data model instead, and use that lat/long
         let lat = view.annotation?.coordinate.latitude
         let long = view.annotation?.coordinate.longitude
+        //TODO: only call this if there isn't already photos added for this pin!
         FlickerClient.getPhotoPage(latitude: lat!, longitude: long!, completion: handlePhotoResponse)
-        //need to also pass the pin information in the segue so that the next view is correctly centered
     }
     
     // Open the new view, passing along the photos that need to be populated
     // Otherwise, throw up an error that there was a problem
     func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
-        //TODO: stuff here
-        // bring up the view controller/segue
         if error != nil {
             showGetPhotosErrorAlert()
             return

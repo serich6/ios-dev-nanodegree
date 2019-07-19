@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6172C79D22E16240002EEDA3 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172C79C22E16240002EEDA3 /* DataController.swift */; };
 		6184B43622CA7098007AECC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B43522CA7098007AECC1 /* AppDelegate.swift */; };
 		6184B43822CA7098007AECC1 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B43722CA7098007AECC1 /* MapVC.swift */; };
 		6184B43B22CA7098007AECC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6184B43922CA7098007AECC1 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6172C79C22E16240002EEDA3 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		6184B43222CA7098007AECC1 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6184B43522CA7098007AECC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6184B43722CA7098007AECC1 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */,
 				61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */,
+				6172C79C22E16240002EEDA3 /* DataController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				61FC9AA122CA8FAB009DB8AB /* GetPhotoInfoResponse.swift in Sources */,
 				6184B43822CA7098007AECC1 /* MapVC.swift in Sources */,
 				6184B43E22CA7098007AECC1 /* Virtual_Tourist.xcdatamodeld in Sources */,
+				6172C79D22E16240002EEDA3 /* DataController.swift in Sources */,
 				6184B45422CA82AA007AECC1 /* GetPhotoListResponse.swift in Sources */,
 				6184B43622CA7098007AECC1 /* AppDelegate.swift in Sources */,
 			);
