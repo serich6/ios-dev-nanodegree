@@ -35,6 +35,15 @@ class FlickerClient {
         task.resume()
     }
     
+    class func convertFlikrPhotosToIDArray(photoSearchResults: [FlickrPhoto]) -> [String] {
+        var photoIDs: [String] = []
+        for photo in photoSearchResults {
+            print(photo.id)
+            photoIDs.append(photo.id)
+        }
+        return photoIDs
+    }
+    
     class func getPhotoImageData(photoID: String, completion: @escaping (Bool, Error?) -> Void) {
         let responseType = GetPhotoInfoResponse.self
         let request = URLRequest(url: URL(string:"")!)

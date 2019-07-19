@@ -37,10 +37,13 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
     func setToolBarTitle() {
-        if hasPhotos {
-            toolBarTitle.title = "New Collection"
-        } else {
-            toolBarTitle.title = "No Images"
+        if let photos = temporaryPin.photos {
+            if photos.count > 0 {
+                toolBarTitle.title = "New Collection"
+            }
+            else {
+                toolBarTitle.title = "No Images"
+            }
         }
     }
     

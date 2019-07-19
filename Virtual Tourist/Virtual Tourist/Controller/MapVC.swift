@@ -27,11 +27,33 @@ class MapVC: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         addLongPressRecognizer()
-
+        drawPinsFromCoreData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    
+    func drawPinsFromCoreData() {
+        let pins = fetchAllPinsFromDataModel()
+        for pin in pins {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude as! CLLocationDegrees, longitude: pin.longitude as! CLLocationDegrees)
+            self.mapView.addAnnotations([annotation])
+        }
+        
+    }
+    
+    func fetchAllPinsFromDataModel() -> [Pin] {
+        let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
+        let predicateString = "latitude != 0"
+        fetchRequest.predicate = NSPredicate(format: predicateString)
+        do {
+            let fetchedPins = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [Pin]
+            return fetchedPins
+        } catch {
+            fatalError("Failed to fetch pin: \(error)")
+        }
     }
     
     //TODO: Cite stack overflow idea here
@@ -101,14 +123,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // Modeled after mooskine example
     func fetchPinFromDataModel(lat: Double, long: Double) -> [Pin] {
         let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
         let predicateString = "latitude = \(lat) AND longitude = \(long)"
-        print(predicateString)
         fetchRequest.predicate = NSPredicate(format: predicateString)
         do {
             let fetchedPins = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [Pin]
-            print(fetchedPins)
             return fetchedPins
         } catch {
             fatalError("Failed to fetch pin: \(error)")
@@ -121,13 +142,17 @@ class MapVC: UIViewController, MKMapViewDelegate {
         if error != nil {
             showGetPhotosErrorAlert()
             return
-        } else {
+        }
+        if let photosToID = photos {
+            let photoIDs = FlickerClient.convertFlikrPhotosToIDArray(photoSearchResults: photosToID)
+            print(photoIDs)
+            //FlickerClient.getPhotoImageData(photoID: <#T##String#>, completion: <#T##(Bool, Error?) -> Void#>)
             DispatchQueue.main.async {
                 print("in handle photo response block")
                 self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
             }
         }
-        
+       
     }
     
     func showGetPhotosErrorAlert() {
