@@ -15,7 +15,6 @@ class CategoryListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Select Category"
-        print(categoryList)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -30,14 +29,29 @@ class CategoryListVC: UITableViewController {
         // From course instructions/examples
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell")!
         let category = self.categoryList[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = "\(category.name ?? "Category Name Unavailable")"
+        cell.textLabel?.text = "\(category.name)"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //performSegue(withIdentifier: "tableCellDetailSegue", sender: nil)
-        print("cell has been tapped")
+        OpenDBClient.getQuestions(completion: handleGetQuestionsResponse(questions:error:))
     }
     
+    func handleGetQuestionsResponse(questions: [Question]?, error: Error?) {
+        DispatchQueue.main.async {
+            if error != nil {
+                self.showGetQuestionsErrorAlert(message: error?.localizedDescription ?? "There was an issue downloading the questions, please try again.")
+            } else {
+                print(questions)
+                self.performSegue(withIdentifier: "showGame", sender: nil)
+            }
+        }
+    }
+    
+    func showGetQuestionsErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Fetch questions error", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }

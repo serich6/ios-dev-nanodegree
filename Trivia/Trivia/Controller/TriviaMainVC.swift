@@ -23,6 +23,8 @@ class TriviaMainVC: UIViewController {
     }
     
     @IBAction func playButtonTapped() {
+        // Disabling in case there is some lag so the user doesn't tap multiple times
+        playGameButton.isEnabled = false
         OpenDBClient.getCategories(completion: handleGetCategoriesResponse(categories:error:))
     }
     
@@ -32,6 +34,7 @@ class TriviaMainVC: UIViewController {
         } else {
             categoriesList = categories
             DispatchQueue.main.async {
+                self.playGameButton.isEnabled = true
                 self.performSegue(withIdentifier: "showCategories", sender: nil)
             }
         }

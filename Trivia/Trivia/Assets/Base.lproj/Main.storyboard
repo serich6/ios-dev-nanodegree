@@ -64,10 +64,28 @@
                             <outlet property="delegate" destination="KoT-e1-8r1" id="rdd-o2-HJA"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="Jph-dc-RzK" kind="show" identifier="showGame" id="mjh-hH-75O"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8BC-is-mUR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="319" y="629"/>
+        </scene>
+        <!--GameVC-->
+        <scene sceneID="iqv-77-5jb">
+            <objects>
+                <viewController id="Jph-dc-RzK" customClass="GameVC" customModule="Trivia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mzU-3L-0sn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ZuZ-6t-Nzd"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1zI-ky-W3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1332" y="635"/>
         </scene>
         <!--Trivia MainVC-->
         <scene sceneID="tne-QT-ifu">
