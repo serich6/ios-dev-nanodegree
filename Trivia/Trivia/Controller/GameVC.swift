@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class GameVC: UIViewController {
     var questions: [Question]!
@@ -79,16 +80,19 @@ class GameVC: UIViewController {
         }
         toggleAnswerButtons(enabled: false)
         nextButton.isHidden = false
-        // TODO: remove force unwrap
+        
+        // TODO: remove force unwrapping in this method
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
             button.backgroundColor = UIColor.green
             correct += 1
+            addQuestionToCategoryCoreData(question: currentQuestion, yourAnswer: selectedAnswer!, didAnswerCorrectly: true)
         } else {
             button.backgroundColor = UIColor.red
             let correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
             correctButton.backgroundColor = UIColor.green
             correctButton.setTitleColor(UIColor.black, for: .normal)
+            addQuestionToCategoryCoreData(question: currentQuestion, yourAnswer: selectedAnswer!, didAnswerCorrectly: false)
         }
     }
     
@@ -102,6 +106,30 @@ class GameVC: UIViewController {
         } else {
             return answer4
         }
+    }
+    
+    func checkForCategoryInCoreData(id: Int) -> LocalCategory {
+        let fetchRequest:NSFetchRequest<LocalCategory> = LocalCategory.fetchRequest()
+        let predicateString = "id = \(id)"
+        fetchRequest.predicate = NSPredicate(format: predicateString)
+        do {
+            let fetchedCategories = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [LocalCategory]
+            return fetchedCategories.first!
+        } catch {
+            fatalError("Failed to fetch category: \(error)")
+        }
+    }
+    
+    func addQuestionToCategoryCoreData(question: Question, yourAnswer: String, didAnswerCorrectly: Bool) {
+        let currentCategory = checkForCategoryInCoreData(id: selectedCategory.id)
+        let questionToSave = LocalQuestion(context: dataController.viewContext)
+        questionToSave.text = question.question
+        questionToSave.correctAnswer = question.correctAnswer
+        questionToSave.didAnswerCorrectly = didAnswerCorrectly
+        questionToSave.yourAnswer = yourAnswer
+        currentCategory.addToQuestions(questionToSave)
+        try? dataController.viewContext.save()
+        print(currentCategory)
     }
     
     func toggleAnswerButtons (enabled: Bool){
