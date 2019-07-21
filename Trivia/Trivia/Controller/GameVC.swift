@@ -26,28 +26,24 @@ class GameVC: UIViewController {
         questionCounterLabel.text = "Question 1/\(questions.count)"
     }
     
-    func toggleAnswersByQuestionType(isTrueFalse: Bool){
-        if isTrueFalse {
-            //print("found a true false question")
-            answer3.isHidden = true
-            answer4.isHidden = true
-        } else {
-            //print("found a mc question")
-            answer3.isHidden = false
-            answer4.isHidden = false
-        }
-    }
-    
     func displayAnswerChoices(question: Question) {
         // add all of the answers to an array and display them randomly (so we don't have the correct answer in the same place all the time)
         var answerSet = question.incorrectAnswers
         answerSet.append(question.correctAnswer)
         answerSet = answerSet.shuffled()
+        answer1.setTitle(answerSet[0], for: .normal)
+        answer2.setTitle(answerSet[1], for: .normal)
+        if question.type == "multiple" {
+            answer3.setTitle(answerSet[2], for: .normal)
+            answer4.setTitle(answerSet[3], for: .normal)
+        } else {
+            answer3.isHidden = true
+            answer4.isHidden = true
+        }
     }
     
     func displayQuestion(question: Question) {
         questionTextView.text = question.question
-        toggleAnswersByQuestionType(isTrueFalse: question.type == "bool")
         displayAnswerChoices(question: question)
     }
     
