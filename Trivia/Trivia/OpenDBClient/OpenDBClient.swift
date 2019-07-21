@@ -50,7 +50,8 @@ class OpenDBClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
-                completion(response.questions, nil)
+                let questions = cleanQuestions(questions: response.questions)
+                completion(questions, nil)
                 return
             }
             catch {
@@ -86,5 +87,15 @@ class OpenDBClient {
         }
         
         return result
+    }
+    
+    
+    // TODO: implement to see if we can get some cleaner text from the api result
+    class func cleanQuestions(questions: [Question]) -> [Question] {
+        for q in questions {
+//            q.question.replacingOccurrences(of: "&quot;", with: "\"")
+
+        }
+        return questions
     }
 }
