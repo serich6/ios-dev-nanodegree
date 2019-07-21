@@ -32,11 +32,27 @@ class SettingsVC: UIViewController {
     }
     
     @IBAction func multipleChoiceSwitched(_ sender: Any) {
-        UserDefaults.standard.set(multipleChoiceSwitch.isOn, forKey: "multipleChoiceEnabled")
+        if !multipleChoiceSwitch.isOn && !trueFalseSwitch.isOn{
+            multipleChoiceSwitch.isOn = true
+            showAllDisabledAlert()
+        } else {
+            UserDefaults.standard.set(multipleChoiceSwitch.isOn, forKey: "multipleChoiceEnabled")
+        }
     }
     
     @IBAction func trueFalseSwitched(_ sender: Any) {
-        UserDefaults.standard.set(trueFalseSwitch.isOn, forKey: "trueFalseEnabled")
+        if !multipleChoiceSwitch.isOn && !trueFalseSwitch.isOn {
+            trueFalseSwitch.isOn = true
+            showAllDisabledAlert()
+        } else {
+           UserDefaults.standard.set(trueFalseSwitch.isOn, forKey: "trueFalseEnabled")
+        }
     }
+    func showAllDisabledAlert() {
+        let alert = UIAlertController(title: "Uh oh!", message: "At least one question type must be toggled on.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
 }
