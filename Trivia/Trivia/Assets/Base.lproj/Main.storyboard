@@ -140,9 +140,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5C-Pg-csZ">
-                                <rect key="frame" x="158" y="336" width="98" height="30"/>
+                                <rect key="frame" x="158" y="374" width="98" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Next Question"/>
+                                <connections>
+                                    <action selector="nextButtonClicked" destination="Jph-dc-RzK" eventType="touchUpInside" id="taZ-tj-TGE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -19,14 +19,13 @@ class GameVC: UIViewController {
     @IBOutlet weak var answer4: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     var currentQuestion: Question!
+    var currentIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Game"
         currentQuestion = questions.first!
         displayQuestion()
-        questionCounterLabel.text = "Question 1/\(questions.count)"
-        resetButtonBGs()
     }
     
     func displayAnswerChoices() {
@@ -48,8 +47,21 @@ class GameVC: UIViewController {
     }
     
     func displayQuestion() {
+        questionCounterLabel.text = "Question \(currentIndex + 1)/\(questions.count)"
+        resetButtons()
         questionTextView.text = currentQuestion.question
         displayAnswerChoices()
+    }
+    
+    @IBAction func nextButtonClicked() {
+        print("in next button click")
+        if currentIndex < questions.count - 1 {
+            currentIndex = currentIndex + 1
+            currentQuestion = questions[currentIndex]
+            displayQuestion()
+        } else {
+            print("reached the end of the question list")
+        }
     }
     
     @IBAction func checkAnswer(sender: AnyObject) {
@@ -91,11 +103,15 @@ class GameVC: UIViewController {
         answer4.isEnabled = enabled
     }
     
-    func resetButtonBGs() {
+    func resetButtons() {
         answer1.backgroundColor = UIColor.blue
         answer2.backgroundColor = UIColor.blue
         answer3.backgroundColor = UIColor.blue
         answer4.backgroundColor = UIColor.blue
+        answer1.setTitleColor(UIColor.white, for: .normal)
+        answer2.setTitleColor(UIColor.white, for: .normal)
+        answer3.setTitleColor(UIColor.white, for: .normal)
+        answer4.setTitleColor(UIColor.white, for: .normal)
     }
     
     
