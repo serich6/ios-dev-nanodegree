@@ -23,7 +23,7 @@ struct Question: Codable {
     let category: String
     let type: String
     let difficulty: String
-    let question: String
+    var question: String
     let correctAnswer: String
     let incorrectAnswers: Array<String>
     

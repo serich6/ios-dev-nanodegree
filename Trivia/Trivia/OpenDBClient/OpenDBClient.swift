@@ -89,10 +89,14 @@ class OpenDBClient {
     
     // TODO: implement to see if we can get some cleaner text from the api result
     class func cleanQuestions(questions: [Question]) -> [Question] {
-        for q in questions {
-//            q.question.replacingOccurrences(of: "&quot;", with: "\"")
-
+        var cleanedQuestions: [Question] = []
+        for var q in questions {
+            var modifiedString = q.question.replacingOccurrences(of: "&quot;", with: "\"")
+            modifiedString = modifiedString.replacingOccurrences(of: "&#039;", with: "'")
+            modifiedString = modifiedString.replacingOccurrences(of: "&amp;", with: "&")
+            q.question = modifiedString
+            cleanedQuestions.append(q)
         }
-        return questions
+        return cleanedQuestions
     }
 }
