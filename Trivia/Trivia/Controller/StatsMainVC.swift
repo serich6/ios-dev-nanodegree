@@ -74,15 +74,9 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryStatsCell")!
         let category = self.categoriesToDisplay[(indexPath as NSIndexPath).row]
         let score = self.scores[(indexPath as NSIndexPath).row]
-        var percentage = 0
-        // Handle divide by zero issue
-        if category.questions!.count > 0 {
-            percentage = score/category.questions!.count
-        }
-        
         // TODO: move the score portion to the right justified position
-        cell.textLabel?.text = category.name! + " \(score) / \(category.questions!.count)"
-        //cell.detailTextLabel?.text = "\(score)"
+        cell.textLabel?.text = category.name
+        cell.detailTextLabel?.text = "\(score) / \(category.questions!.count)"
         return cell
     }
     
