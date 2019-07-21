@@ -18,8 +18,11 @@ class TriviaMainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         navBar.title = "Trivia"
+    }
+    
+    @IBAction func playButtonTapped() {
+        performSegue(withIdentifier: "showCategories", sender: nil)
     }
 
 

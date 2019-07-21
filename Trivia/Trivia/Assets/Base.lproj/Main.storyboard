@@ -96,7 +96,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="KoT-e1-8r1" kind="show" identifier="showCategoriesList" id="rVL-Ij-NcX"/>
+                                    <action selector="playButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vu6-fY-Qhp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -121,6 +121,7 @@
                         <outlet property="playGameButton" destination="do1-Cn-K1G" id="a4U-WB-RWY"/>
                         <outlet property="settingsButton" destination="Rv1-R0-0J5" id="V62-f6-N0j"/>
                         <outlet property="statsButton" destination="mAL-Id-42F" id="mn2-fk-6li"/>
+                        <segue destination="KoT-e1-8r1" kind="show" identifier="showCategories" id="tdy-8x-MDO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
