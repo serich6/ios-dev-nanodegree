@@ -17,6 +17,7 @@ class GameVC: UIViewController {
     @IBOutlet weak var answer2: UIButton!
     @IBOutlet weak var answer3: UIButton!
     @IBOutlet weak var answer4: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     var currentQuestion: Question!
     
     override func viewDidLoad() {
@@ -25,10 +26,13 @@ class GameVC: UIViewController {
         currentQuestion = questions.first!
         displayQuestion()
         questionCounterLabel.text = "Question 1/\(questions.count)"
+        resetButtonBGs()
     }
     
     func displayAnswerChoices() {
         // add all of the answers to an array and display them randomly (so we don't have the correct answer in the same place all the time)
+        toggleAnswerButtons(enabled: true)
+        nextButton.isHidden = true
         var answerSet = currentQuestion.incorrectAnswers
         answerSet.append(currentQuestion.correctAnswer)
         answerSet = answerSet.shuffled()
@@ -52,13 +56,38 @@ class GameVC: UIViewController {
         guard let button = sender as? UIButton else {
             return
         }
+        toggleAnswerButtons(enabled: false)
+        nextButton.isHidden = false
         // TODO: remove force unwrap
-        var selectedAnswer = button.titleLabel!.text
+        let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
             print("that's correct!")
+            button.backgroundColor = UIColor.green
         } else {
+            button.backgroundColor = UIColor.red
             print("That's not right, looking for \(currentQuestion.correctAnswer)")
         }
+        
+        // disable the buttons
+        
+        // if correct -> hightlight that text in green
+        // if wrong -> highlight the correct answer in green, selected in red
+        // don't forget to reset for next question
+        
+    }
+    
+    func toggleAnswerButtons (enabled: Bool){
+        answer1.isEnabled = enabled
+        answer2.isEnabled = enabled
+        answer3.isEnabled = enabled
+        answer4.isEnabled = enabled
+    }
+    
+    func resetButtonBGs() {
+        answer1.backgroundColor = UIColor.blue
+        answer2.backgroundColor = UIColor.blue
+        answer3.backgroundColor = UIColor.blue
+        answer4.backgroundColor = UIColor.blue
     }
     
     

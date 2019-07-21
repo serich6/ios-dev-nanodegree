@@ -98,15 +98,32 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="mV0-vV-tnA">
                                 <rect key="frame" x="59" y="433" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A1"/>
+                                <state key="normal" title="A1">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="QPq-r9-I7f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
+                                <rect key="frame" x="59" y="508" width="292" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A2">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="mLe-R4-zwu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We8-Yc-MA9">
                                 <rect key="frame" x="59" y="583" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A3"/>
+                                <state key="normal" title="A3">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="ZVQ-IR-UtN"/>
                                 </connections>
@@ -114,18 +131,18 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cou-iG-jm5">
                                 <rect key="frame" x="59" y="650" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A4"/>
+                                <state key="normal" title="A4">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="MFZ-EG-8m6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
-                                <rect key="frame" x="59" y="508" width="292" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5C-Pg-csZ">
+                                <rect key="frame" x="158" y="336" width="98" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="A2"/>
-                                <connections>
-                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="mLe-R4-zwu"/>
-                                </connections>
+                                <state key="normal" title="Next Question"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -143,6 +160,7 @@
                         <outlet property="answer2" destination="A7n-uR-snl" id="9aG-so-ogI"/>
                         <outlet property="answer3" destination="We8-Yc-MA9" id="Jq6-UP-vzI"/>
                         <outlet property="answer4" destination="cou-iG-jm5" id="hJX-jr-oyQ"/>
+                        <outlet property="nextButton" destination="P5C-Pg-csZ" id="Vcw-EZ-GNg"/>
                         <outlet property="questionCounterLabel" destination="h52-vR-8Y3" id="QhE-gI-7gD"/>
                         <outlet property="questionTextView" destination="732-S5-iPM" id="6zV-4K-JXK"/>
                     </connections>
