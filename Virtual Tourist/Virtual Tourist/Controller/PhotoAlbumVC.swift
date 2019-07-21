@@ -10,18 +10,18 @@ import Foundation
 import UIKit
 import MapKit
 
-class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate {
+class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate{
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
    // var temporaryPin: MKAnnotationView!
     var temporaryPin: Pin!
-    var temporaryPhotoURLs: [String]!
+    // TODO: remove the hardcoded initial value later
+    var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var hasPhotos: Bool = false
     // TODO: figure out if I need to use this to save off the coordinate in user defaults
     var mapCenterCoordinate: CLLocationCoordinate2D!
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,7 +39,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
     func setToolBarTitle() {
-        if let photos = temporaryPin.photos {
+        if let photos = temporaryPhotoURLs {
             if photos.count > 0 {
                 toolBarTitle.title = "New Collection"
             }
@@ -56,7 +56,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         }
         let annotation = MKPointAnnotation()
         //TODO: remove force unwrap here
-        //annotation.coordinate = pin.annotation!.coordinate
         annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude as! CLLocationDegrees, longitude: pin.longitude as! CLLocationDegrees)
         self.mapView.addAnnotations([annotation])
     }

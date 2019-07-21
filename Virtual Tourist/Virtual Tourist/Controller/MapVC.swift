@@ -152,6 +152,8 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 FlickerClient.getPhotoImageURL(photoID: id, completion: handleGetPhotoImageURLResponse(photoURLs:error:))
             }
         }
+        // This needs to go somewhere else - it's getting called before the array has been processed.
+        handleArrayComplete()
     }
     
     func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
@@ -168,7 +170,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     func handleArrayComplete() {
         DispatchQueue.main.async {
-            print("in handle photo response block")
             self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
         }
     }
@@ -183,7 +184,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         if segue.identifier == "showCollectionSegue"{
             let photoAlbumVC = segue.destination as! PhotoAlbumVC
             photoAlbumVC.temporaryPin = currentPin
-            photoAlbumVC.temporaryPhotoURLs = currentPhotoArray
+            //photoAlbumVC.temporaryPhotoURLs = currentPhotoArray
         }
     }
 }
