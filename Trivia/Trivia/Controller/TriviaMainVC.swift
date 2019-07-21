@@ -14,6 +14,7 @@ class TriviaMainVC: UIViewController {
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var statsButton: UIButton!
     @IBOutlet weak var playGameButton: UIButton!
+    var categoriesList: [Category]!
     
     
     override func viewDidLoad() {
@@ -22,9 +23,21 @@ class TriviaMainVC: UIViewController {
     }
     
     @IBAction func playButtonTapped() {
-        performSegue(withIdentifier: "showCategories", sender: nil)
+        OpenDBClient.getCategories(completion: handleGetCategoriesResponse(categories:error:))
     }
-
-
+    
+    func handleGetCategoriesResponse(categories: [Category]?, error: Error?) {
+        categoriesList = categories
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showCategories", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCategories"{
+            let categoriesVC = segue.destination as! CategoryListVC
+            categoriesVC.categoryList = categoriesList
+        }
+    }
 }
 

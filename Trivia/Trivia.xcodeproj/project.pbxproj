@@ -14,6 +14,8 @@
 		6172C7C322E3F31B002EEDA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6172C7C222E3F31B002EEDA3 /* Assets.xcassets */; };
 		6172C7C622E3F31B002EEDA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6172C7C422E3F31B002EEDA3 /* LaunchScreen.storyboard */; };
 		6172C7D322E3F7A7002EEDA3 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172C7D222E3F7A7002EEDA3 /* SettingsVC.swift */; };
+		619B390D22E40DC0000CDF46 /* OpenDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B390C22E40DC0000CDF46 /* OpenDBClient.swift */; };
+		619B390F22E40ED4000CDF46 /* GetCategoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B390E22E40ED4000CDF46 /* GetCategoriesResponse.swift */; };
 		61DAE8FB22E3F83300353102 /* CategoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAE8FA22E3F83300353102 /* CategoryListVC.swift */; };
 		61DAE8FD22E3FF0A00353102 /* StatsMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAE8FC22E3FF0A00353102 /* StatsMainVC.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,8 @@
 		6172C7C522E3F31B002EEDA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6172C7C722E3F31B002EEDA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6172C7D222E3F7A7002EEDA3 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		619B390C22E40DC0000CDF46 /* OpenDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDBClient.swift; sourceTree = "<group>"; };
+		619B390E22E40ED4000CDF46 /* GetCategoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCategoriesResponse.swift; sourceTree = "<group>"; };
 		61DAE8FA22E3F83300353102 /* CategoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListVC.swift; sourceTree = "<group>"; };
 		61DAE8FC22E3FF0A00353102 /* StatsMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsMainVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +80,7 @@
 		6172C7CD22E3F6F1002EEDA3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				619B390E22E40ED4000CDF46 /* GetCategoriesResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -94,6 +99,7 @@
 		6172C7D022E3F720002EEDA3 /* OpenDBClient */ = {
 			isa = PBXGroup;
 			children = (
+				619B390C22E40DC0000CDF46 /* OpenDBClient.swift */,
 			);
 			path = OpenDBClient;
 			sourceTree = "<group>";
@@ -179,8 +185,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				619B390D22E40DC0000CDF46 /* OpenDBClient.swift in Sources */,
 				61DAE8FB22E3F83300353102 /* CategoryListVC.swift in Sources */,
 				6172C7BB22E3F318002EEDA3 /* TriviaMainVC.swift in Sources */,
+				619B390F22E40ED4000CDF46 /* GetCategoriesResponse.swift in Sources */,
 				6172C7D322E3F7A7002EEDA3 /* SettingsVC.swift in Sources */,
 				61DAE8FD22E3FF0A00353102 /* StatsMainVC.swift in Sources */,
 				6172C7B922E3F318002EEDA3 /* AppDelegate.swift in Sources */,

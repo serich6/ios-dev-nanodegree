@@ -14,11 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    // Adapted from course materials example
     func checkIfFirstLaunch() {
         if UserDefaults.standard.bool(forKey: "difficultyLevel") {
             print("App has launched before")
         } else {
-            print("This is the first launch ever!")
             UserDefaults.standard.set(true, forKey: "multipleChoiceEnabled")
             UserDefaults.standard.set(true, forKey: "trueFalseEnabled")
             UserDefaults.standard.set(0, forKey: "difficultyLevel")
