@@ -75,8 +75,6 @@ class OpenDBClient {
         case 2:
             result.append("&difficulty=hard")
         default:
-            // do nothing, pull any (not likely this will ever be hit
-            // TODO: refactor segment to take "any/all" difficulty level
             result.append("")
         }
         
@@ -85,7 +83,6 @@ class OpenDBClient {
         } else if !UserDefaults.standard.bool(forKey: "trueFalseEnabled") {
             result.append("&type=boolean")
         }
-        
         return result
     }
     

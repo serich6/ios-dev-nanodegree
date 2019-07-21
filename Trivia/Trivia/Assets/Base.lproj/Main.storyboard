@@ -95,6 +95,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mV0-vV-tnA">
+                                <rect key="frame" x="192" y="433" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We8-Yc-MA9">
+                                <rect key="frame" x="192" y="583" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A3"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cou-iG-jm5">
+                                <rect key="frame" x="200" y="650" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A4"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
+                                <rect key="frame" x="200" y="508" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A2"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -107,6 +127,10 @@
                         <viewLayoutGuide key="safeArea" id="ZuZ-6t-Nzd"/>
                     </view>
                     <connections>
+                        <outlet property="answer1" destination="mV0-vV-tnA" id="G6s-Gk-4XS"/>
+                        <outlet property="answer2" destination="A7n-uR-snl" id="9aG-so-ogI"/>
+                        <outlet property="answer3" destination="We8-Yc-MA9" id="Jq6-UP-vzI"/>
+                        <outlet property="answer4" destination="cou-iG-jm5" id="hJX-jr-oyQ"/>
                         <outlet property="questionCounterLabel" destination="h52-vR-8Y3" id="QhE-gI-7gD"/>
                         <outlet property="questionTextView" destination="732-S5-iPM" id="6zV-4K-JXK"/>
                     </connections>
@@ -224,6 +248,7 @@
                                     <segment title="Easy"/>
                                     <segment title="Medium"/>
                                     <segment title="Hard"/>
+                                    <segment title="Any"/>
                                 </segments>
                                 <connections>
                                     <action selector="difficultySelected:" destination="2js-hF-yuZ" eventType="valueChanged" id="Ojy-Rl-uqE"/>
