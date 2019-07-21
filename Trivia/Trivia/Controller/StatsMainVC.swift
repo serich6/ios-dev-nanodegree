@@ -17,6 +17,7 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     var dataController: DataController!
     var categoriesToDisplay: [LocalCategory]!
     var scores: [Int] = []
+    var selectedCategory: LocalCategory!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,13 +75,22 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryStatsCell")!
         let category = self.categoriesToDisplay[(indexPath as NSIndexPath).row]
         let score = self.scores[(indexPath as NSIndexPath).row]
-        // TODO: move the score portion to the right justified position
         cell.textLabel?.text = category.name
         cell.detailTextLabel?.text = "\(score) / \(category.questions!.count)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row tapped")
+        let category = self.categoriesToDisplay[(indexPath as NSIndexPath).row]
+        selectedCategory = category
+        performSegue(withIdentifier: "showQuestions", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showQuestions" {
+            let questionListVC = segue.destination as! QuestionListVC
+            questionListVC.dataController = dataController
+            questionListVC.category = selectedCategory
+        }
     }
 }
