@@ -55,10 +55,9 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("created cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryStatsCell")!
         let category = self.categoriesToDisplay[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = "\(category.name)"
+        cell.textLabel?.text = category.name
         return cell
     }
     
