@@ -48,6 +48,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="0fS-72-PFs" id="LVI-QR-aDp"/>
+                                    <outlet property="delegate" destination="0fS-72-PFs" id="cYi-Yk-Hu8"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CorrectAnswer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YeI-lH-RY2">
                                 <rect key="frame" x="143" y="257" width="115" height="21"/>
@@ -91,6 +95,7 @@
                     <connections>
                         <outlet property="correctAnswerLabel" destination="YeI-lH-RY2" id="Q5p-Uu-Zpu"/>
                         <outlet property="questionTextLabel" destination="GAM-oJ-QvO" id="rhC-j7-TYp"/>
+                        <outlet property="tableView" destination="Fzt-nS-w0N" id="PqY-ae-fqZ"/>
                         <outlet property="yourAnswerLabel" destination="4yo-yu-lvj" id="gAm-XC-dda"/>
                     </connections>
                 </viewController>
