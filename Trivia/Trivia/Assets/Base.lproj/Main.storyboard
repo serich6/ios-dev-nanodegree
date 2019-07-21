@@ -67,7 +67,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Gimme some questions"/>
                                 <connections>
-                                    <segue destination="KoT-e1-8r1" kind="show" id="rVL-Ij-NcX"/>
+                                    <segue destination="KoT-e1-8r1" kind="show" identifier="showCategoriesList" id="rVL-Ij-NcX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAL-Id-42F">
@@ -82,7 +82,7 @@
                     <navigationItem key="navigationItem" id="Wck-gq-vZJ">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Rv1-R0-0J5">
                             <connections>
-                                <segue destination="2js-hF-yuZ" kind="show" id="UUd-MO-GYm"/>
+                                <segue destination="2js-hF-yuZ" kind="show" identifier="showSettings" id="UUd-MO-GYm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -97,10 +97,10 @@
             </objects>
             <point key="canvasLocation" x="-483" y="-97"/>
         </scene>
-        <!--View Controller-->
+        <!--SettingsVC-->
         <scene sceneID="6OI-oo-ka4">
             <objects>
-                <viewController id="2js-hF-yuZ" sceneMemberID="viewController">
+                <viewController id="2js-hF-yuZ" customClass="SettingsVC" customModule="Trivia" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6ad-6w-tGS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

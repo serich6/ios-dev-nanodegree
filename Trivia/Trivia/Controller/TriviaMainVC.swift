@@ -19,7 +19,7 @@ class TriviaMainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //navBar.title = "Trivia"
+        navBar.title = "Trivia"
     }
 
 
