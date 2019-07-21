@@ -129,7 +129,6 @@ class GameVC: UIViewController {
         questionToSave.yourAnswer = yourAnswer
         currentCategory.addToQuestions(questionToSave)
         try? dataController.viewContext.save()
-        print(currentCategory)
     }
     
     func toggleAnswerButtons (enabled: Bool){

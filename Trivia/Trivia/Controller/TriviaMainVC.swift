@@ -29,6 +29,10 @@ class TriviaMainVC: UIViewController {
         OpenDBClient.getCategories(completion: handleGetCategoriesResponse(categories:error:))
     }
     
+    @IBAction func statsButtonTapped() {
+        performSegue(withIdentifier: "showStats", sender: nil)
+    }
+    
     func handleGetCategoriesResponse(categories: [Category]?, error: Error?) {
         if error != nil {
             showGetCategoriesErrorAlert(message: error?.localizedDescription ?? "Error downloading categories, please try again.")
@@ -52,6 +56,9 @@ class TriviaMainVC: UIViewController {
             let categoriesVC = segue.destination as! CategoryListVC
             categoriesVC.categoryList = categoriesList
             categoriesVC.dataController = dataController
+        } else if segue.identifier == "showStats" {
+            let statsVC = segue.destination as! StatsMainVC
+            statsVC.dataController = dataController
         }
     }
 }

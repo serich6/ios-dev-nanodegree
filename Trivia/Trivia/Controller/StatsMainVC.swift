@@ -9,11 +9,16 @@
 import Foundation
 import UIKit
 
-class StatsMainVC: UIViewController {
+class StatsMainVC: UIViewController, UITableViewDelegate {
+    @IBOutlet weak var bestCategoryLabel: UILabel!
+    @IBOutlet weak var worseCategoryLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    var dataController: DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My Stats"
+        //tableView.delegate = self
     }
     
     
