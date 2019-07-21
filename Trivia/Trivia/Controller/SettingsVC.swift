@@ -20,6 +20,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // todo: update nav bar title to Game Settings
+        self.title = "Settings"
     }
     
 }
