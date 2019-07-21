@@ -13,9 +13,13 @@ class EndGameVC: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var winLoseLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    var winLoseLabelText: String!
+    var scoreLabelText: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        winLoseLabel.text = winLoseLabelText
+        scoreLabel.text = scoreLabelText
     }
     
     @IBAction func doneButtonClicked() {

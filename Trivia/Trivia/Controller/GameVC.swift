@@ -21,8 +21,8 @@ class GameVC: UIViewController {
     @IBOutlet weak var exitButton: UIButton!
     var currentQuestion: Question!
     var currentIndex: Int = 0
-    var scoredQuestions: [Question] = []
     var selectedCategory: Category!
+    var correct: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +82,7 @@ class GameVC: UIViewController {
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
             button.backgroundColor = UIColor.green
+            correct += 1
         } else {
             button.backgroundColor = UIColor.red
             let correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
@@ -119,5 +120,17 @@ class GameVC: UIViewController {
         answer2.setTitleColor(UIColor.white, for: .normal)
         answer3.setTitleColor(UIColor.white, for: .normal)
         answer4.setTitleColor(UIColor.white, for: .normal)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEndGame"{
+            let endGameVC = segue.destination as! EndGameVC
+            if correct == questions.count {
+                endGameVC.winLoseLabelText = "Perfect!"
+            } else {
+                endGameVC.winLoseLabelText = "Game over"
+            }
+            endGameVC.scoreLabelText = "\(correct)" + "/" + "\(questions.count)"
+        }
     }
 }
