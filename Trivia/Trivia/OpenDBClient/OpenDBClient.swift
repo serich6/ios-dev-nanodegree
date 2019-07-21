@@ -18,16 +18,19 @@ class OpenDBClient {
         let task = session.dataTask(with: request) { data, response, error in
             //if there is an error with the datatask
             if error != nil {
+                completion(nil, error)
                 return
             }
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
                 completion(response.triviaCategories, nil)
+                return
             }
             catch {
                 print(error)
                 completion(nil, error)
+                return
             }
         }
         task.resume()

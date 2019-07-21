@@ -27,10 +27,20 @@ class TriviaMainVC: UIViewController {
     }
     
     func handleGetCategoriesResponse(categories: [Category]?, error: Error?) {
-        categoriesList = categories
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "showCategories", sender: nil)
+        if error != nil {
+            showGetCategoriesErrorAlert(message: error?.localizedDescription ?? "Error downloading categories, please try again.")
+        } else {
+            categoriesList = categories
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showCategories", sender: nil)
+            }
         }
+    }
+    
+    func showGetCategoriesErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Fetch categories error", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
