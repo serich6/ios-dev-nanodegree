@@ -99,21 +99,33 @@
                                 <rect key="frame" x="59" y="433" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="A1"/>
+                                <connections>
+                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="QPq-r9-I7f"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We8-Yc-MA9">
                                 <rect key="frame" x="59" y="583" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="A3"/>
+                                <connections>
+                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="ZVQ-IR-UtN"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cou-iG-jm5">
                                 <rect key="frame" x="59" y="650" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="A4"/>
+                                <connections>
+                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="MFZ-EG-8m6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
                                 <rect key="frame" x="59" y="508" width="292" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="A2"/>
+                                <connections>
+                                    <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="mLe-R4-zwu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
