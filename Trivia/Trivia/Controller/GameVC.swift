@@ -75,19 +75,20 @@ class GameVC: UIViewController {
     }
     
     @IBAction func checkAnswer(sender: AnyObject) {
+        nextButton.isHidden = false
+        toggleAnswerButtons(enabled: false)
         guard let button = sender as? UIButton else {
             return
         }
-        toggleAnswerButtons(enabled: false)
-        nextButton.isHidden = false
-        
         // TODO: remove force unwrapping in this method
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
+            print("that was correct: \(currentQuestion.correctAnswer)")
             button.backgroundColor = UIColor.green
             correct += 1
             addQuestionToCategoryCoreData(question: currentQuestion, yourAnswer: selectedAnswer!, didAnswerCorrectly: true)
         } else {
+            print("that wasn't right: \(currentQuestion.correctAnswer)")
             button.backgroundColor = UIColor.red
             let correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
             correctButton.backgroundColor = UIColor.green
@@ -97,6 +98,7 @@ class GameVC: UIViewController {
     }
     
     func findCorrectAnswerButton(answer: String) -> UIButton {
+        print("looking for correct answer: \(answer)")
         if answer1.titleLabel!.text == answer {
             return answer1
         } else if answer2.titleLabel!.text == answer {
@@ -139,6 +141,8 @@ class GameVC: UIViewController {
     }
     
     func resetButtons() {
+        answer3.isHidden = false
+        answer4.isHidden = false
         toggleAnswerButtons(enabled: true)
         answer1.backgroundColor = UIColor.blue
         answer2.backgroundColor = UIColor.blue
