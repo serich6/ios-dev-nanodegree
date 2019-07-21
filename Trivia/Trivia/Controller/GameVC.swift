@@ -102,9 +102,9 @@ class GameVC: UIViewController {
         if answer1.titleLabel!.text == answer {
             return answer1
         } else if answer2.titleLabel!.text == answer {
-            return answer1
+            return answer2
         } else if answer3.titleLabel!.text == answer {
-            return answer1
+            return answer3
         } else {
             return answer4
         }
