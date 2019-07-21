@@ -39,7 +39,6 @@ class OpenDBClient {
     class func getQuestions(category: Int, completion: @escaping ([Question]?, Error?) -> Void) {
         let responseType = GetQuestionsResponse.self
         let urlString = buildUserDefaultsString(category: category)
-        print(urlString)
         let request = URLRequest(url: URL(string: urlString)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
@@ -66,7 +65,7 @@ class OpenDBClient {
     class func buildUserDefaultsString(category: Int) -> String {
         //trueFalseEnabled
         // multipleChoiceEnabled
-        var result = "https://opentdb.com/api.php?amount=2&category=\(category)"
+        var result = "https://opentdb.com/api.php?amount=5&category=\(category)"
         switch UserDefaults.standard.integer(forKey: "difficultyLevel") {
         case 0:
             result.append("&difficulty=easy")

@@ -11,6 +11,7 @@ import UIKit
 
 class CategoryListVC: UITableViewController {
     var categoryList: [Category]!
+    var fetchedQuestions: [Question]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class CategoryListVC: UITableViewController {
             if error != nil {
                 self.showGetQuestionsErrorAlert(message: error?.localizedDescription ?? "There was an issue downloading the questions, please try again.")
             } else {
-                print(questions)
+                self.fetchedQuestions = questions
                 self.performSegue(withIdentifier: "showGame", sender: nil)
             }
         }
@@ -53,6 +54,13 @@ class CategoryListVC: UITableViewController {
         let alert = UIAlertController(title: "Fetch questions error", message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showGame"{
+            let gameVC = segue.destination as! GameVC
+            gameVC.questions = fetchedQuestions
+        }
     }
     
 }

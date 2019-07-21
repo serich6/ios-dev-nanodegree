@@ -10,10 +10,13 @@ import Foundation
 import UIKit
 
 class GameVC: UIViewController {
+    var questions: [Question]!
+    @IBOutlet weak var questionText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Game"
+        questionText.text = questions.first?.question
     }
     
     
