@@ -23,6 +23,7 @@ class GameVC: UIViewController {
     var currentIndex: Int = 0
     var selectedCategory: Category!
     var correct: Int = 0
+    var dataController:DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +131,8 @@ class GameVC: UIViewController {
             } else {
                 endGameVC.winLoseLabelText = "Game over"
             }
+            endGameVC.dataController = dataController
             endGameVC.scoreLabelText = "\(correct)" + "/" + "\(questions.count)"
-        }
+        } 
     }
 }

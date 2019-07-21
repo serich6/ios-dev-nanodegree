@@ -15,6 +15,7 @@ class EndGameVC: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     var winLoseLabelText: String!
     var scoreLabelText: String!
+    var dataController:DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,5 +26,12 @@ class EndGameVC: UIViewController {
     @IBAction func doneButtonClicked() {
         print("done button clicked")
         performSegue(withIdentifier: "exitEndGameScreen", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "exitEndGameScreen" {
+            let triviaMainVC = segue.destination as! TriviaMainVC
+            triviaMainVC.dataController = dataController
+        }
     }
 }

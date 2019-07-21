@@ -8,11 +8,13 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class CategoryListVC: UITableViewController {
     var categoryList: [Category]!
     var fetchedQuestions: [Question]!
     var selectedCategory: Category!
+    var dataController:DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +30,15 @@ class CategoryListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // From course instructions/examples
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell")!
-        selectedCategory = self.categoryList[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = "\(selectedCategory.name)"
+        let category = self.categoryList[(indexPath as NSIndexPath).row]
+        cell.textLabel?.text = "\(category.name)"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let category = self.categoryList[(indexPath as NSIndexPath).row]
+        selectedCategory = category
         OpenDBClient.getQuestions(category: category.id, completion: handleGetQuestionsResponse(questions:error:))
     }
     
@@ -57,8 +59,29 @@ class CategoryListVC: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func checkForCategoryInCoreData() {
-        
+    func checkForCategoryInCoreData(id: Int) -> Bool {
+        let fetchRequest:NSFetchRequest<LocalCategory> = LocalCategory.fetchRequest()
+        let predicateString = "id = \(id)"
+        fetchRequest.predicate = NSPredicate(format: predicateString)
+        do {
+            let fetchedCategories = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [LocalCategory]
+            return fetchedCategories.count > 0
+        } catch {
+            fatalError("Failed to fetch category: \(error)")
+        }
+    }
+    
+    func addCategoryToCoreData(category: Category) {
+       let exists = checkForCategoryInCoreData(id: category.id)
+        if exists {
+            print("Category \(category.name) already created in core data. Continuing")
+        } else {
+            print("Adding category: \(category.name)")
+            let categoryToSave = LocalCategory(context: dataController.viewContext)
+            categoryToSave.name = category.name
+            categoryToSave.id = "\(category.id)"
+            try? dataController.viewContext.save()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,7 +89,8 @@ class CategoryListVC: UITableViewController {
             let gameVC = segue.destination as! GameVC
             gameVC.questions = fetchedQuestions
             gameVC.selectedCategory = selectedCategory
-            checkForCategoryInCoreData()
+            gameVC.dataController = dataController
+            addCategoryToCoreData(category: selectedCategory)
         }
     }
     

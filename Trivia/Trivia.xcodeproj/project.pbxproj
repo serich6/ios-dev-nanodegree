@@ -19,6 +19,7 @@
 		619B391122E4198D000CDF46 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B391022E4198D000CDF46 /* GameVC.swift */; };
 		619B391322E41A47000CDF46 /* GetQuestionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B391222E41A47000CDF46 /* GetQuestionsResponse.swift */; };
 		619B391522E4BE6F000CDF46 /* EndGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B391422E4BE6F000CDF46 /* EndGameVC.swift */; };
+		619B391722E4CE18000CDF46 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B391622E4CE18000CDF46 /* DataController.swift */; };
 		61DAE8FB22E3F83300353102 /* CategoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAE8FA22E3F83300353102 /* CategoryListVC.swift */; };
 		61DAE8FD22E3FF0A00353102 /* StatsMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAE8FC22E3FF0A00353102 /* StatsMainVC.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		619B391022E4198D000CDF46 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		619B391222E41A47000CDF46 /* GetQuestionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetQuestionsResponse.swift; sourceTree = "<group>"; };
 		619B391422E4BE6F000CDF46 /* EndGameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameVC.swift; sourceTree = "<group>"; };
+		619B391622E4CE18000CDF46 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		61DAE8FA22E3F83300353102 /* CategoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListVC.swift; sourceTree = "<group>"; };
 		61DAE8FC22E3FF0A00353102 /* StatsMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsMainVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 			children = (
 				619B390E22E40ED4000CDF46 /* GetCategoriesResponse.swift */,
 				619B391222E41A47000CDF46 /* GetQuestionsResponse.swift */,
+				619B391622E4CE18000CDF46 /* DataController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				619B390D22E40DC0000CDF46 /* OpenDBClient.swift in Sources */,
+				619B391722E4CE18000CDF46 /* DataController.swift in Sources */,
 				61DAE8FB22E3F83300353102 /* CategoryListVC.swift in Sources */,
 				6172C7BB22E3F318002EEDA3 /* TriviaMainVC.swift in Sources */,
 				619B391522E4BE6F000CDF46 /* EndGameVC.swift in Sources */,

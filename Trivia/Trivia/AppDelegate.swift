@@ -13,6 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let dataController = DataController(modelName: "Trivia")
 
     // Adapted from course materials example
     func checkIfFirstLaunch() {
@@ -29,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         checkIfFirstLaunch()
+        
+        dataController.load()
+        let navigationController = window?.rootViewController as! UINavigationController
+        let mapViewController = navigationController.topViewController as! TriviaMainVC
+        mapViewController.dataController = dataController
+        
         return true
     }
 

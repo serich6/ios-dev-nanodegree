@@ -15,6 +15,7 @@ class TriviaMainVC: UIViewController {
     @IBOutlet weak var statsButton: UIButton!
     @IBOutlet weak var playGameButton: UIButton!
     var categoriesList: [Category]!
+    var dataController: DataController!
     
     
     override func viewDidLoad() {
@@ -50,6 +51,7 @@ class TriviaMainVC: UIViewController {
         if segue.identifier == "showCategories"{
             let categoriesVC = segue.destination as! CategoryListVC
             categoriesVC.categoryList = categoriesList
+            categoriesVC.dataController = dataController
         }
     }
 }
