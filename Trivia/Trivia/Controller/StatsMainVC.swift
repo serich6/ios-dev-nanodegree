@@ -49,11 +49,17 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func setBestCategory() {
-        bestCategoryLabel.text = categoriesToDisplay.first?.name
+        let maxElement = scores.max() ?? 0
+        let maxIndex = scores.firstIndex(of: maxElement)
+        // TOOD: remove force unwrap here
+        bestCategoryLabel.text = categoriesToDisplay[maxIndex ?? 0].name
     }
     
     func setWorseCategory() {
-        worseCategoryLabel.text = categoriesToDisplay.last?.name
+        let minElement = scores.min() ?? 0
+        let minIndex = scores.firstIndex(of: minElement)
+        // TOOD: remove force unwrap here
+        worseCategoryLabel.text = categoriesToDisplay[minIndex ?? 0].name
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
