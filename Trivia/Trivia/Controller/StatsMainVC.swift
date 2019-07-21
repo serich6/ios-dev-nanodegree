@@ -42,25 +42,31 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     func getCorrectScores() {
         for c in categoriesToDisplay {
-            let correct = c.questions!.filtered(
-                using: NSPredicate(format: "didAnswerCorrectly = true")
-            )
+            let correct = c.questions!.filtered(using: NSPredicate(format: "didAnswerCorrectly = true"))
             scores.append(correct.count)
         }
     }
     
     func setBestCategory() {
-        let maxElement = scores.max() ?? 0
-        let maxIndex = scores.firstIndex(of: maxElement)
-        // TOOD: remove force unwrap here
-        bestCategoryLabel.text = categoriesToDisplay[maxIndex ?? 0].name
+        if scores.count == 0 {
+            bestCategoryLabel.text = "N/A"
+        } else {
+            let maxElement = scores.max() ?? 0
+            let maxIndex = scores.firstIndex(of: maxElement)
+            // TOOD: remove force unwrap here
+            bestCategoryLabel.text = categoriesToDisplay[maxIndex ?? 0].name
+        }
     }
     
     func setWorseCategory() {
-        let minElement = scores.min() ?? 0
-        let minIndex = scores.firstIndex(of: minElement)
-        // TOOD: remove force unwrap here
-        worseCategoryLabel.text = categoriesToDisplay[minIndex ?? 0].name
+        if scores.count == 0 {
+            worseCategoryLabel.text = "N/A"
+        } else {
+            let minElement = scores.min() ?? 0
+            let minIndex = scores.firstIndex(of: minElement)
+            // TOOD: remove force unwrap here
+            worseCategoryLabel.text = categoriesToDisplay[minIndex ?? 0].name
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
