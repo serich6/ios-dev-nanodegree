@@ -12,6 +12,7 @@ import UIKit
 class CategoryListVC: UITableViewController {
     var categoryList: [Category]!
     var fetchedQuestions: [Question]!
+    var selectedCategory: Category!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +30,8 @@ class CategoryListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // From course instructions/examples
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell")!
-        let category = self.categoryList[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = "\(category.name)"
+        selectedCategory = self.categoryList[(indexPath as NSIndexPath).row]
+        cell.textLabel?.text = "\(selectedCategory.name)"
         return cell
     }
     
@@ -60,6 +61,7 @@ class CategoryListVC: UITableViewController {
         if segue.identifier == "showGame"{
             let gameVC = segue.destination as! GameVC
             gameVC.questions = fetchedQuestions
+            gameVC.selectedCategory = selectedCategory
         }
     }
     

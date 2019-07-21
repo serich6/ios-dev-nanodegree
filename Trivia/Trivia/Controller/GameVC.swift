@@ -18,18 +18,28 @@ class GameVC: UIViewController {
     @IBOutlet weak var answer3: UIButton!
     @IBOutlet weak var answer4: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var exitButton: UIButton!
     var currentQuestion: Question!
     var currentIndex: Int = 0
+    var scoredQuestions: [Question] = []
+    var selectedCategory: Category!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Game"
         currentQuestion = questions.first!
         displayQuestion()
+        navigationController?.navigationBar.isHidden = true
     }
     
+    @IBAction func exitGame() {
+        print("exit game button clicked")
+        // TOOD: get the nav to go back to the initial page
+    }
+    
+    
+    
     func displayAnswerChoices() {
-        // add all of the answers to an array and display them randomly (so we don't have the correct answer in the same place all the time)
         nextButton.isHidden = true
         var answerSet = currentQuestion.incorrectAnswers
         answerSet.append(currentQuestion.correctAnswer)
@@ -53,13 +63,12 @@ class GameVC: UIViewController {
     }
     
     @IBAction func nextButtonClicked() {
-        print("in next button click")
         if currentIndex < questions.count - 1 {
             currentIndex = currentIndex + 1
             currentQuestion = questions[currentIndex]
             displayQuestion()
         } else {
-            print("reached the end of the question list")
+            performSegue(withIdentifier: "showEndGame", sender: nil)
         }
     }
     

@@ -3,7 +3,7 @@
     <entity name="LocalCategory" representedClassName="LocalCategory" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="questions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocalQuestion" inverseName="belongsToCategory" inverseEntity="LocalQuestion" syncable="YES"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocalQuestion" inverseName="belongsToCategory" inverseEntity="LocalQuestion" syncable="YES"/>
     </entity>
     <entity name="LocalQuestion" representedClassName="LocalQuestion" syncable="YES" codeGenerationType="class">
         <attribute name="correctAnswer" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,7 +14,7 @@
         <relationship name="belongsToCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocalCategory" inverseName="questions" inverseEntity="LocalCategory" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocalCategory" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="LocalQuestion" positionX="-54" positionY="9" width="128" height="135"/>
+        <element name="LocalCategory" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="LocalQuestion" positionX="207.375" positionY="47.359375" width="128" height="135"/>
     </elements>
 </model>
