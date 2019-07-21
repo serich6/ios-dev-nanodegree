@@ -30,7 +30,6 @@ class GameVC: UIViewController {
     
     func displayAnswerChoices() {
         // add all of the answers to an array and display them randomly (so we don't have the correct answer in the same place all the time)
-        toggleAnswerButtons(enabled: true)
         nextButton.isHidden = true
         var answerSet = currentQuestion.incorrectAnswers
         answerSet.append(currentQuestion.correctAnswer)
@@ -73,12 +72,10 @@ class GameVC: UIViewController {
         // TODO: remove force unwrap
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
-            print("that's correct!")
             button.backgroundColor = UIColor.green
         } else {
             button.backgroundColor = UIColor.red
-            print("That's not right, looking for \(currentQuestion.correctAnswer)")
-            var correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
+            let correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
             correctButton.backgroundColor = UIColor.green
             correctButton.setTitleColor(UIColor.black, for: .normal)
         }
@@ -104,6 +101,7 @@ class GameVC: UIViewController {
     }
     
     func resetButtons() {
+        toggleAnswerButtons(enabled: true)
         answer1.backgroundColor = UIColor.blue
         answer2.backgroundColor = UIColor.blue
         answer3.backgroundColor = UIColor.blue
@@ -113,6 +111,4 @@ class GameVC: UIViewController {
         answer3.setTitleColor(UIColor.white, for: .normal)
         answer4.setTitleColor(UIColor.white, for: .normal)
     }
-    
-    
 }
