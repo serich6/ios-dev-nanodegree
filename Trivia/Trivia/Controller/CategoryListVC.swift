@@ -57,11 +57,16 @@ class CategoryListVC: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func checkForCategoryInCoreData() {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showGame"{
             let gameVC = segue.destination as! GameVC
             gameVC.questions = fetchedQuestions
             gameVC.selectedCategory = selectedCategory
+            checkForCategoryInCoreData()
         }
     }
     
