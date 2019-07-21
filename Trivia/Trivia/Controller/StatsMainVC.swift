@@ -16,11 +16,13 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var tableView: UITableView!
     var dataController: DataController!
     var categoriesToDisplay: [LocalCategory]!
+    var scores: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My Stats"
         getCategories()
+        getCorrectScores()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         setBestCategory()
@@ -32,9 +34,17 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         do {
             let fetchedCategories = try dataController.viewContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>) as! [LocalCategory]
             categoriesToDisplay = fetchedCategories
-            print("got categories: \(categoriesToDisplay)")
         } catch {
             fatalError("Failed to fetch category: \(error)")
+        }
+    }
+    
+    func getCorrectScores() {
+        for c in categoriesToDisplay {
+            let correct = c.questions!.filtered(
+                using: NSPredicate(format: "didAnswerCorrectly = true")
+            )
+            scores.append(correct.count)
         }
     }
     
@@ -57,7 +67,16 @@ class StatsMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryStatsCell")!
         let category = self.categoriesToDisplay[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = category.name
+        let score = self.scores[(indexPath as NSIndexPath).row]
+        var percentage = 0
+        // Handle divide by zero issue
+        if category.questions!.count > 0 {
+            percentage = score/category.questions!.count
+        }
+        
+        // TODO: move the score portion to the right justified position
+        cell.textLabel?.text = category.name! + " \(score) / \(category.questions!.count)"
+        //cell.detailTextLabel?.text = "\(score)"
         return cell
     }
     
