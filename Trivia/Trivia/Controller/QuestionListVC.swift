@@ -12,6 +12,8 @@ import CoreData
 
 class QuestionListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var questionTextLabel: UITextView!
+    @IBOutlet weak var correctAnswer: UILabel!
+    @IBOutlet weak var yourAnswer: UILabel!
     @IBOutlet weak var correctAnswerLabel: UILabel!
     @IBOutlet weak var yourAnswerLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -27,6 +29,11 @@ class QuestionListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         correctAnswerLabel.isHidden = true
         yourAnswerLabel.isHidden = true
         getQuestions()
+        if questionsToDisplay.count < 1 {
+            questionTextLabel.text = "There are no questions in this category, please select another"
+            yourAnswer.isHidden = true
+            correctAnswer.isHidden = true
+        }
     }
     
     func getQuestions() {

@@ -93,9 +93,11 @@
                         <viewLayoutGuide key="safeArea" id="aCr-iU-a1F"/>
                     </view>
                     <connections>
+                        <outlet property="correctAnswer" destination="eEc-JO-VKi" id="TuO-br-Gpb"/>
                         <outlet property="correctAnswerLabel" destination="YeI-lH-RY2" id="Q5p-Uu-Zpu"/>
                         <outlet property="questionTextLabel" destination="GAM-oJ-QvO" id="rhC-j7-TYp"/>
                         <outlet property="tableView" destination="Fzt-nS-w0N" id="PqY-ae-fqZ"/>
+                        <outlet property="yourAnswer" destination="W4o-a4-Rvz" id="tUA-bL-rLe"/>
                         <outlet property="yourAnswerLabel" destination="4yo-yu-lvj" id="gAm-XC-dda"/>
                     </connections>
                 </viewController>
