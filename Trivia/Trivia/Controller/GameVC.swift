@@ -66,14 +66,22 @@ class GameVC: UIViewController {
         } else {
             button.backgroundColor = UIColor.red
             print("That's not right, looking for \(currentQuestion.correctAnswer)")
+            var correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
+            correctButton.backgroundColor = UIColor.green
+            correctButton.setTitleColor(UIColor.black, for: .normal)
         }
-        
-        // disable the buttons
-        
-        // if correct -> hightlight that text in green
-        // if wrong -> highlight the correct answer in green, selected in red
-        // don't forget to reset for next question
-        
+    }
+    
+    func findCorrectAnswerButton(answer: String) -> UIButton {
+        if answer1.titleLabel!.text == answer {
+            return answer1
+        } else if answer2.titleLabel!.text == answer {
+            return answer1
+        } else if answer3.titleLabel!.text == answer {
+            return answer1
+        } else {
+            return answer4
+        }
     }
     
     func toggleAnswerButtons (enabled: Bool){
