@@ -36,9 +36,10 @@ class OpenDBClient {
         task.resume()
     }
     
-    class func getQuestions(completion: @escaping ([Question]?, Error?) -> Void) {
+    class func getQuestions(category: Int, completion: @escaping ([Question]?, Error?) -> Void) {
         let responseType = GetQuestionsResponse.self
-        let urlString = "https://opentdb.com/api.php?amount=2&category=9"
+        let urlString = buildUserDefaultsString(category: category)
+        print(urlString)
         let request = URLRequest(url: URL(string: urlString)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
@@ -60,5 +61,31 @@ class OpenDBClient {
             }
         }
         task.resume()
+    }
+    
+    class func buildUserDefaultsString(category: Int) -> String {
+        //trueFalseEnabled
+        // multipleChoiceEnabled
+        var result = "https://opentdb.com/api.php?amount=2&category=\(category)"
+        switch UserDefaults.standard.integer(forKey: "difficultyLevel") {
+        case 0:
+            result.append("&difficulty=easy")
+        case 1:
+            result.append("&difficulty=medium")
+        case 2:
+            result.append("&difficulty=hard")
+        default:
+            // do nothing, pull any (not likely this will ever be hit
+            // TODO: refactor segment to take "any/all" difficulty level
+            result.append("")
+        }
+        
+        if !UserDefaults.standard.bool(forKey: "multipleChoiceEnabled") {
+            result.append("&type=multiple")
+        } else if !UserDefaults.standard.bool(forKey: "trueFalseEnabled") {
+            result.append("&type=boolean")
+        }
+        
+        return result
     }
 }

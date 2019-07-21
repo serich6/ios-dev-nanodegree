@@ -34,7 +34,8 @@ class CategoryListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        OpenDBClient.getQuestions(completion: handleGetQuestionsResponse(questions:error:))
+        let category = self.categoryList[(indexPath as NSIndexPath).row]
+        OpenDBClient.getQuestions(category: category.id, completion: handleGetQuestionsResponse(questions:error:))
     }
     
     func handleGetQuestionsResponse(questions: [Question]?, error: Error?) {
