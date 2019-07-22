@@ -355,30 +355,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Win/Lose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-ox-Ku2">
-                                <rect key="frame" x="71" y="241" width="254" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Win/Lose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-ox-Ku2">
+                                <rect key="frame" x="82.5" y="120" width="155" height="46"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="right/total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xG0-IN-Bvt">
-                                <rect key="frame" x="132" y="427" width="150" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="right/total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xG0-IN-Bvt">
+                                <rect key="frame" x="85" y="226" width="150" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqm-Fm-Mna">
-                                <rect key="frame" x="168" y="552" width="37" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Done"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqm-Fm-Mna">
+                                <rect key="frame" x="110" y="319" width="100" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="DX0-ga-tjD"/>
+                                    <constraint firstAttribute="width" constant="100" id="Zo1-U6-3JA"/>
+                                </constraints>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="doneButtonClicked" destination="QCI-6G-NZ6" eventType="touchUpInside" id="phd-hl-aSn"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zDm-ox-Ku2" firstAttribute="centerX" secondItem="GAv-2K-xiM" secondAttribute="centerX" id="7eO-c4-GYq"/>
+                            <constraint firstItem="xG0-IN-Bvt" firstAttribute="top" secondItem="zDm-ox-Ku2" secondAttribute="bottom" constant="60" id="QP8-q1-twY"/>
+                            <constraint firstItem="Jqm-Fm-Mna" firstAttribute="top" secondItem="xG0-IN-Bvt" secondAttribute="bottom" constant="50" id="SzI-Ck-Ctj"/>
+                            <constraint firstItem="zDm-ox-Ku2" firstAttribute="top" secondItem="GAv-2K-xiM" secondAttribute="top" constant="100" id="Xjc-Qu-Gy3" userLabel="Win Lose Label.top = Safe Area.top + 40"/>
+                            <constraint firstItem="Jqm-Fm-Mna" firstAttribute="centerX" secondItem="GAv-2K-xiM" secondAttribute="centerX" id="npm-5J-R8n"/>
+                            <constraint firstItem="xG0-IN-Bvt" firstAttribute="centerX" secondItem="GAv-2K-xiM" secondAttribute="centerX" id="vrA-JG-CQW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="GAv-2K-xiM"/>
                     </view>
                     <connections>
@@ -390,7 +402,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPI-jI-qMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2231" y="44"/>
+            <point key="canvasLocation" x="2229.375" y="43.75"/>
         </scene>
         <!--Trivia MainVC-->
         <scene sceneID="tne-QT-ifu">
