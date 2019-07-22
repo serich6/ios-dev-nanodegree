@@ -80,7 +80,7 @@ class GameVC: UIViewController {
         guard let button = sender as? UIButton else {
             return
         }
-        // TODO: remove force unwrapping in this method
+        
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
             print("that was correct: \(currentQuestion.correctAnswer)")

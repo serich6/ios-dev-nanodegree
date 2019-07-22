@@ -87,7 +87,7 @@ class OpenDBClient {
     }
     
     
-    // TODO: implement to see if we can get some cleaner text from the api result
+    // Added method to clean the questions from special character encoding(?) issues.
     class func cleanQuestions(questions: [Question]) -> [Question] {
         var cleanedQuestions: [Question] = []
         for var q in questions {
