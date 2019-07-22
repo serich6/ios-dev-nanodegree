@@ -85,6 +85,7 @@ class GameVC: UIViewController {
         if selectedAnswer == currentQuestion.correctAnswer {
             print("that was correct: \(currentQuestion.correctAnswer)")
             button.backgroundColor = UIColor.green
+            button.setTitleColor(UIColor.black, for: .normal)
             correct += 1
             addQuestionToCategoryCoreData(question: currentQuestion, yourAnswer: selectedAnswer!, didAnswerCorrectly: true)
         } else {
