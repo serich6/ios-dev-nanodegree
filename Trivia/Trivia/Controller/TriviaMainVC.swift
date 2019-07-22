@@ -14,6 +14,7 @@ class TriviaMainVC: UIViewController {
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var statsButton: UIButton!
     @IBOutlet weak var playGameButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var categoriesList: [Category]!
     var dataController: DataController!
     
@@ -21,6 +22,8 @@ class TriviaMainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navBar.title = "Trivia"
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
         // unhide nav bar in case we just came from a game
         self.navigationItem.setHidesBackButton(true, animated:false);
         navigationController?.navigationBar.isHidden = false
@@ -30,6 +33,8 @@ class TriviaMainVC: UIViewController {
     @IBAction func playButtonTapped() {
         // Disabling in case there is some lag so the user doesn't tap multiple times
         playGameButton.isEnabled = false
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         OpenDBClient.getCategories(completion: handleGetCategoriesResponse(categories:error:))
     }
     
@@ -56,6 +61,8 @@ class TriviaMainVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
         if segue.identifier == "showCategories"{
             let categoriesVC = segue.destination as! CategoryListVC
             categoriesVC.categoryList = categoriesList

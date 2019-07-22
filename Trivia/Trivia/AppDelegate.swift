@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             UserDefaults.standard.set(true, forKey: "multipleChoiceEnabled")
             UserDefaults.standard.set(true, forKey: "trueFalseEnabled")
-            // TODO: refactor to use string to simplify the API call
             UserDefaults.standard.set(3, forKey: "difficultyLevel")
             UserDefaults.standard.synchronize()
         }
