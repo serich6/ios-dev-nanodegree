@@ -246,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Question text here" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="732-S5-iPM">
-                                <rect key="frame" x="20" y="170" width="280" height="128"/>
+                                <rect key="frame" x="20" y="70.5" width="280" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="YKV-kF-LmY"/>
@@ -255,14 +255,13 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question Counter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h52-vR-8Y3">
-                                <rect key="frame" x="92.5" y="70" width="135" height="21"/>
+                                <rect key="frame" x="92.5" y="30" width="135" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="mV0-vV-tnA">
-                                <rect key="frame" x="59" y="433" width="292" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="mV0-vV-tnA">
+                                <rect key="frame" x="20" y="258.5" width="280" height="30"/>
                                 <state key="normal" title="A1">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -271,9 +270,22 @@
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="QPq-r9-I7f"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
-                                <rect key="frame" x="59" y="508" width="292" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5C-Pg-csZ">
+                                <rect key="frame" x="111" y="213.5" width="98" height="30"/>
+                                <state key="normal" title="Next Question"/>
+                                <connections>
+                                    <action selector="nextButtonClicked" destination="Jph-dc-RzK" eventType="touchUpInside" id="taZ-tj-TGE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQT-oP-pKm">
+                                <rect key="frame" x="145" y="453.5" width="30" height="30"/>
+                                <state key="normal" title="Exit"/>
+                                <connections>
+                                    <action selector="exitGame" destination="Jph-dc-RzK" eventType="touchUpInside" id="PlC-BD-2fo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7n-uR-snl">
+                                <rect key="frame" x="20" y="308.5" width="280" height="30"/>
                                 <state key="normal" title="A2">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -282,9 +294,8 @@
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="mLe-R4-zwu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We8-Yc-MA9">
-                                <rect key="frame" x="59" y="583" width="292" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="We8-Yc-MA9">
+                                <rect key="frame" x="20" y="358.5" width="280" height="30"/>
                                 <state key="normal" title="A3">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -293,9 +304,8 @@
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="ZVQ-IR-UtN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cou-iG-jm5">
-                                <rect key="frame" x="59" y="650" width="292" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cou-iG-jm5">
+                                <rect key="frame" x="20" y="408.5" width="280" height="30"/>
                                 <state key="normal" title="A4">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -304,30 +314,32 @@
                                     <action selector="checkAnswerWithSender:" destination="Jph-dc-RzK" eventType="touchUpInside" id="MFZ-EG-8m6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5C-Pg-csZ">
-                                <rect key="frame" x="158" y="374" width="98" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Next Question"/>
-                                <connections>
-                                    <action selector="nextButtonClicked" destination="Jph-dc-RzK" eventType="touchUpInside" id="taZ-tj-TGE"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQT-oP-pKm">
-                                <rect key="frame" x="192" y="752" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Exit"/>
-                                <connections>
-                                    <action selector="exitGame" destination="Jph-dc-RzK" eventType="touchUpInside" id="PlC-BD-2fo"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="mV0-vV-tnA" firstAttribute="top" secondItem="P5C-Pg-csZ" secondAttribute="bottom" constant="15" id="4nU-qn-r9B"/>
+                            <constraint firstItem="cou-iG-jm5" firstAttribute="centerX" secondItem="ZuZ-6t-Nzd" secondAttribute="centerX" id="5Dg-oM-X01"/>
+                            <constraint firstItem="P5C-Pg-csZ" firstAttribute="centerX" secondItem="ZuZ-6t-Nzd" secondAttribute="centerX" id="6Uq-nl-1bA"/>
                             <constraint firstItem="732-S5-iPM" firstAttribute="leading" secondItem="ZuZ-6t-Nzd" secondAttribute="leading" constant="20" id="6fT-Ks-0PR"/>
+                            <constraint firstItem="cou-iG-jm5" firstAttribute="top" secondItem="We8-Yc-MA9" secondAttribute="bottom" constant="20" id="C9s-kH-sTv"/>
+                            <constraint firstItem="ZuZ-6t-Nzd" firstAttribute="trailing" secondItem="A7n-uR-snl" secondAttribute="trailing" constant="20" id="GUR-V2-piJ"/>
                             <constraint firstItem="h52-vR-8Y3" firstAttribute="centerX" secondItem="ZuZ-6t-Nzd" secondAttribute="centerX" id="Hba-4a-APe"/>
-                            <constraint firstItem="h52-vR-8Y3" firstAttribute="top" secondItem="ZuZ-6t-Nzd" secondAttribute="top" constant="50" id="Y0Z-Qx-ljl"/>
-                            <constraint firstItem="732-S5-iPM" firstAttribute="top" secondItem="ZuZ-6t-Nzd" secondAttribute="top" constant="150" id="YM9-rp-82R"/>
+                            <constraint firstItem="732-S5-iPM" firstAttribute="top" secondItem="h52-vR-8Y3" secondAttribute="bottom" constant="20" id="Im7-tF-1w5"/>
+                            <constraint firstItem="P5C-Pg-csZ" firstAttribute="top" secondItem="732-S5-iPM" secondAttribute="bottom" constant="15" id="JdX-oi-Dmo"/>
+                            <constraint firstItem="cQT-oP-pKm" firstAttribute="centerX" secondItem="ZuZ-6t-Nzd" secondAttribute="centerX" id="KmJ-wo-OVQ"/>
+                            <constraint firstItem="ZuZ-6t-Nzd" firstAttribute="trailing" secondItem="cou-iG-jm5" secondAttribute="trailing" constant="20" id="Lkq-Qc-3in"/>
+                            <constraint firstItem="cou-iG-jm5" firstAttribute="leading" secondItem="ZuZ-6t-Nzd" secondAttribute="leading" constant="20" id="S0c-G3-Nuw"/>
+                            <constraint firstItem="We8-Yc-MA9" firstAttribute="leading" secondItem="ZuZ-6t-Nzd" secondAttribute="leading" constant="20" id="aIH-sn-K3i"/>
+                            <constraint firstItem="We8-Yc-MA9" firstAttribute="top" secondItem="A7n-uR-snl" secondAttribute="bottom" constant="20" id="b7j-L9-Qp0"/>
+                            <constraint firstItem="A7n-uR-snl" firstAttribute="top" secondItem="mV0-vV-tnA" secondAttribute="bottom" constant="20" id="cFI-XL-yrk"/>
+                            <constraint firstItem="cQT-oP-pKm" firstAttribute="top" secondItem="cou-iG-jm5" secondAttribute="bottom" constant="15" id="e2L-tN-2Y2"/>
+                            <constraint firstItem="h52-vR-8Y3" firstAttribute="top" secondItem="ZuZ-6t-Nzd" secondAttribute="top" constant="10" id="eeP-YO-Jbn"/>
+                            <constraint firstItem="A7n-uR-snl" firstAttribute="leading" secondItem="ZuZ-6t-Nzd" secondAttribute="leading" constant="20" id="oNm-w2-TZj"/>
+                            <constraint firstItem="ZuZ-6t-Nzd" firstAttribute="trailing" secondItem="We8-Yc-MA9" secondAttribute="trailing" constant="20" id="ovk-3n-GGB"/>
                             <constraint firstItem="ZuZ-6t-Nzd" firstAttribute="trailing" secondItem="732-S5-iPM" secondAttribute="trailing" constant="20" id="psL-dH-AzP"/>
+                            <constraint firstItem="mV0-vV-tnA" firstAttribute="centerX" secondItem="ZuZ-6t-Nzd" secondAttribute="centerX" id="rd1-LN-XM9"/>
+                            <constraint firstItem="ZuZ-6t-Nzd" firstAttribute="trailing" secondItem="mV0-vV-tnA" secondAttribute="trailing" constant="20" id="unD-eI-LeN"/>
+                            <constraint firstItem="mV0-vV-tnA" firstAttribute="leading" secondItem="ZuZ-6t-Nzd" secondAttribute="leading" constant="20" id="ymO-II-37H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZuZ-6t-Nzd"/>
                     </view>
@@ -345,7 +357,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1zI-ky-W3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1119" y="795"/>
+            <point key="canvasLocation" x="1117.5" y="795"/>
         </scene>
         <!--End GameVC-->
         <scene sceneID="JDx-KY-5zd">
@@ -564,6 +576,7 @@
         <image name="cranium" width="1157" height="1920"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="4k6-JI-Viw"/>
         <segue reference="bS3-Xh-CPM"/>
     </inferredMetricsTieBreakers>
 </document>
