@@ -15,6 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let dataController = DataController(modelName: "Trivia")
 
+    // Locking app to portait, since it doesn't make much sense in landscape
+    var portraitModeOnly = UIInterfaceOrientationMask.portrait
+    
+    //Reference: https://developer.apple.com/documentation/uikit/uiviewcontroller/1621435-supportedinterfaceorientations
+    //Reference: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623107-application
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return self.portraitModeOnly
+    }
+    
     // Adapted from course materials example
     func checkIfFirstLaunch() {
         if UserDefaults.standard.bool(forKey: "difficultyLevel") {
