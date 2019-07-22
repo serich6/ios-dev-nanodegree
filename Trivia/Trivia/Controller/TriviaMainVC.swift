@@ -21,6 +21,9 @@ class TriviaMainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navBar.title = "Trivia"
+        // unhide nav bar in case we just came from a game
+        self.navigationItem.setHidesBackButton(true, animated:false);
+        navigationController?.navigationBar.isHidden = false
     }
     
     @IBAction func playButtonTapped() {
