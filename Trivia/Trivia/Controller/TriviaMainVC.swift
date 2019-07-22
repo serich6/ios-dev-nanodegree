@@ -24,6 +24,7 @@ class TriviaMainVC: UIViewController {
         // unhide nav bar in case we just came from a game
         self.navigationItem.setHidesBackButton(true, animated:false);
         navigationController?.navigationBar.isHidden = false
+        settingsButton.image = UIImage(named: "icons8-settings-50")
     }
     
     @IBAction func playButtonTapped() {
