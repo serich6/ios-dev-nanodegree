@@ -36,7 +36,7 @@ class GameVC: UIViewController {
     
     @IBAction func exitGame() {
         print("exit game button clicked")
-        // TOOD: get the nav to go back to the initial page
+        performSegue(withIdentifier: "showEndGame", sender: nil)
     }
     
     
