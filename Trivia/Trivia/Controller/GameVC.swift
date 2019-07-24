@@ -35,7 +35,6 @@ class GameVC: UIViewController {
     }
     
     @IBAction func exitGame() {
-        print("exit game button clicked")
         performSegue(withIdentifier: "showEndGame", sender: nil)
     }
     
@@ -83,13 +82,11 @@ class GameVC: UIViewController {
         
         let selectedAnswer = button.titleLabel!.text
         if selectedAnswer == currentQuestion.correctAnswer {
-            print("that was correct: \(currentQuestion.correctAnswer)")
             button.backgroundColor = UIColor.green
             button.setTitleColor(UIColor.black, for: .normal)
             correct += 1
             addQuestionToCategoryCoreData(question: currentQuestion, yourAnswer: selectedAnswer!, didAnswerCorrectly: true)
         } else {
-            print("that wasn't right: \(currentQuestion.correctAnswer)")
             button.backgroundColor = UIColor.red
             let correctButton = findCorrectAnswerButton(answer: currentQuestion.correctAnswer)
             correctButton.backgroundColor = UIColor.green
@@ -99,7 +96,6 @@ class GameVC: UIViewController {
     }
     
     func findCorrectAnswerButton(answer: String) -> UIButton {
-        print("looking for correct answer: \(answer)")
         if answer1.titleLabel!.text == answer {
             return answer1
         } else if answer2.titleLabel!.text == answer {

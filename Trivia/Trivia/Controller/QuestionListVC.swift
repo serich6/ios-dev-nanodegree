@@ -65,7 +65,6 @@ class QuestionListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let question = self.questionsToDisplay[(indexPath as NSIndexPath).row]
-        print("selected a quetsion")
         questionTextLabel.text = question.text
         yourAnswerLabel.text = question.yourAnswer
         yourAnswerLabel.isHidden = false

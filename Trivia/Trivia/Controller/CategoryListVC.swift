@@ -76,7 +76,6 @@ class CategoryListVC: UITableViewController {
         if exists {
             print("Category \(category.name) already created in core data. Continuing")
         } else {
-            print("Adding category: \(category.name)")
             let categoryToSave = LocalCategory(context: dataController.viewContext)
             categoryToSave.name = category.name
             categoryToSave.id = "\(category.id)"

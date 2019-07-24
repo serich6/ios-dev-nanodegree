@@ -24,7 +24,6 @@ class EndGameVC: UIViewController {
     }
     
     @IBAction func doneButtonClicked() {
-        print("done button clicked")
         performSegue(withIdentifier: "exitEndGameScreen", sender: nil)
     }
     

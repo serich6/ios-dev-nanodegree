@@ -28,7 +28,6 @@ class OpenDBClient {
                 return
             }
             catch {
-                print(error)
                 completion(nil, error)
                 return
             }
@@ -55,7 +54,6 @@ class OpenDBClient {
                 return
             }
             catch {
-                print(error)
                 completion(nil, error)
                 return
             }

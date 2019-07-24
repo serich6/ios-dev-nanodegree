@@ -8,7 +8,6 @@
 
 import Foundation
 
-// {"response_code":0,"results":[{"category":"General Knowledge","type":"multiple","difficulty":"easy","question":"On a dartboard, what number is directly opposite No. 1?","correct_answer":"19","incorrect_answers":["20","12","15"]},{"category":"General Knowledge","type":"multiple","difficulty":"medium","question":"Which slogan did the fast food company, McDonald&#039;s, use before their &quot;I&#039;m Lovin&#039; It&quot; slogan?","correct_answer":"We Love to See You Smile","incorrect_answers":["Why Pay More!?","Have It Your Way","Making People Happy Through Food"]}]}
 struct GetQuestionsResponse: Codable {
     let responseCode: Int
     let questions: [Question]
