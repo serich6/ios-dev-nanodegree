@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
-class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate{
+class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
@@ -34,7 +34,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
         setToolBarTitle()
         drawPin()
         setMapZoom()
-        print(temporaryPhotoURLs)
     }
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
@@ -82,5 +81,22 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
             showMapZoomErrorAlert()
             return
         }
+    }
+}
+
+
+// This part isn't working - I initially tried to mirror something similar to what I had done in Meme without an extension, but that doesn't appear to work. I get an error that I'm not overriding the parent class (but I thought I would be...)
+// I tried this approach and this code is never called.
+extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("in number of items")
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("in cellforItemAt")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
+        cell.photoImageView.image = UIImage(named: "icon_world")
+        return cell
     }
 }

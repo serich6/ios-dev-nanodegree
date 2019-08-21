@@ -15,7 +15,10 @@ class FlickerClient {
     
     class func getPhotoPage(latitude: Double, longitude: Double, completion: @escaping ([FlickrPhoto]?, Error?) -> Void) {
         let responseType = GetPhotoListResponse.self
-        let request = URLRequest(url: URL(string:"https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(apiKey)&lat=\(latitude)&lon=\(longitude)&&extras=url&format=json&nojsoncallback=1")!)
+        print(latitude)
+        print(longitude)
+        let urlString = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(apiKey)&lat=\(latitude)&lon=\(longitude)&&extras=url&format=json&nojsoncallback=1"
+        let request = URLRequest(url: URL(string:urlString)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             //if there is an error with the datatask
@@ -40,7 +43,6 @@ class FlickerClient {
         for photo in photoSearchResults {
             photoIDs.append(photo.id)
         }
-        print(photoIDs)
         return photoIDs
     }
     
@@ -65,7 +67,6 @@ class FlickerClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
-                print(response)
             }
             catch {
                 print(error)

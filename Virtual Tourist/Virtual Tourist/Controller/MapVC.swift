@@ -163,7 +163,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
             return
         }
         if let url = photoURLs {
-            print("Adding url \(url)")
             currentPhotoArray.append(url)
         }
     }

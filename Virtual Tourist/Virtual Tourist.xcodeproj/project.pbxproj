@@ -17,6 +17,7 @@
 		6184B44322CA709D007AECC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6184B44122CA709D007AECC1 /* LaunchScreen.storyboard */; };
 		6184B45222CA8290007AECC1 /* FlickerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B45122CA8290007AECC1 /* FlickerClient.swift */; };
 		6184B45422CA82AA007AECC1 /* GetPhotoListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */; };
+		61F3739D230C3EE400BEC741 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F3739C230C3EE400BEC741 /* ImageCollectionViewCell.swift */; };
 		61FC9A9F22CA8CDF009DB8AB /* PhotoAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC9A9E22CA8CDF009DB8AB /* PhotoAlbumVC.swift */; };
 		61FC9AA122CA8FAB009DB8AB /* GetPhotoInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		6184B44422CA709D007AECC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6184B45122CA8290007AECC1 /* FlickerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerClient.swift; sourceTree = "<group>"; };
 		6184B45322CA82AA007AECC1 /* GetPhotoListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoListResponse.swift; sourceTree = "<group>"; };
+		61F3739C230C3EE400BEC741 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		61FC9A9E22CA8CDF009DB8AB /* PhotoAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumVC.swift; sourceTree = "<group>"; };
 		61FC9AA022CA8FAB009DB8AB /* GetPhotoInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoInfoResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +80,7 @@
 				6184B44122CA709D007AECC1 /* LaunchScreen.storyboard */,
 				6184B44422CA709D007AECC1 /* Info.plist */,
 				6184B43C22CA7098007AECC1 /* Virtual_Tourist.xcdatamodeld */,
+				61F3739C230C3EE400BEC741 /* ImageCollectionViewCell.swift */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				6172C7AB22E27982002EEDA3 /* GetPhotoImageDataResponse.swift in Sources */,
 				6184B45422CA82AA007AECC1 /* GetPhotoListResponse.swift in Sources */,
 				6184B43622CA7098007AECC1 /* AppDelegate.swift in Sources */,
+				61F3739D230C3EE400BEC741 /* ImageCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
