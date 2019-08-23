@@ -84,13 +84,9 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     }
 }
 
-
-// This part isn't working - I initially tried to mirror something similar to what I had done in Meme without an extension, but that doesn't appear to work. I get an error that I'm not overriding the parent class (but I thought I would be...)
-// I tried this approach and this code is never called.
 extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("in number of items")
-        return 5
+        return temporaryPhotoURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
