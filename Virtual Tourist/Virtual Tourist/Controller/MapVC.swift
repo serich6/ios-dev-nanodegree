@@ -82,19 +82,6 @@ class MapVC: UIViewController {
         try? dataController.viewContext.save()
     }
     
-    func checkForPinPhotos(foundPins: [Pin], coordinate: CLLocationCoordinate2D) {
-        currentPin = foundPins.first
-        if let photos = currentPin.photos {
-            if photos.count == 0 {
-                FlickerClient.getPhotoPage(latitude: coordinate.latitude , longitude: coordinate.longitude , completion: handlePhotoResponse)
-                return
-            } else {
-                // would we perform the segue here, but load the [Photo] in the next vc with data that we pass/currentPin.photos? Do we even need to set that, or can we just check it in view did load?
-                print("Pin exists, and has \(photos.count) associated photos")
-            }
-        }
-    }
-    
     // Modeled after mooskine example
     func fetchPinFromDataModel(lat: Double, long: Double) -> [Pin] {
         let fetchRequest:NSFetchRequest<Pin> = Pin.fetchRequest()
@@ -105,53 +92,6 @@ class MapVC: UIViewController {
             return fetchedPins
         } catch {
             fatalError("Failed to fetch pin: \(error)")
-        }
-    }
-    
-    // Open the new view, passing along the photos that need to be populated
-    // Otherwise, throw up an error that there was a problem
-    func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
-        if error != nil {
-            showCustomErrorAlert(title: "Photo download error", message: "There was a problem downloading the photos from Flickr. Please try again.")
-            return
-        }
-        if let photosToID = photos {
-            let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
-            for url in photoURLs {
-                print(url)
-                FlickerClient.downloadImageData(photoURL: url, completion: placeholderCompletion(data:error:))
-            }
-        }
-        // This needs to go somewhere else - it's getting called before the array has been processed.
-        handleArrayComplete()
-    }
-    
-    func placeholderCompletion(data: Data?, error: Error?) {
-        DispatchQueue.main.async {
-            if error != nil {
-                print(error)
-                self.showCustomErrorAlert(title: "placeholder error", message: error.debugDescription)
-                return
-            } else {
-                print(data)
-            }
-        }
-    }
-    
-    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
-        if error != nil {
-            print(error as Any)
-            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
-            return
-        }
-        if let url = photoURLs {
-            currentPhotoArray.append(url)
-        }
-    }
-    
-    func handleArrayComplete() {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
         }
     }
     

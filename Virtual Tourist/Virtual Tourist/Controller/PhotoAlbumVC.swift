@@ -15,14 +15,10 @@ class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
-   // var temporaryPin: MKAnnotationView!
     var temporaryPin: Pin!
-    // TODO: remove the hardcoded initial value later
     var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
-    // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var temporaryPhotoDataArray: [Photo] = []
     var hasPhotos: Bool = false
-    // TODO: figure out if I need to use this to save off the coordinate in user defaults
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var dataController:DataController!
     
@@ -34,25 +30,101 @@ class PhotoAlbumVC: UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
+        print("Current Pin is: " + temporaryPin.debugDescription)
         setToolBarTitle()
         drawPin()
         setMapZoom()
         getPinPhotos()
     }
     
-    // TODO: get this to pull the correct pin from
+    
     func getPinPhotos() {
+        guard let temporaryPin = temporaryPin else {
+            print("pin isn't set")
+            return
+        }
         let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
         let predicate = NSPredicate(format: "pin == %@", temporaryPin)
         fetchRequest.predicate = predicate
         if let result = try? dataController.viewContext.fetch(fetchRequest) {
-            print("did the thing")
-            print(result)
+            if result.count == 0 {
+                print("there are no photos, fetching from flickr!")
+                FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
+            } else {
+                print("I FOUND PIN PHOTOS")
+                print("Photos Count: \(result.count)")
+            }
         } else {
-            print("oops")
+            showCustomErrorAlert(title: "Error loading pin from core data.", message: "Please try again.")
         }
-        //if the pin has associated photos, pull the from core data and save them in the photoData Array
-        // otherwise, fetch the images from flickr
+    }
+    
+//    func checkForPinPhotos(foundPins: [Pin], coordinate: CLLocationCoordinate2D) {
+//        if let photos = temporaryPin.photos {
+//            if photos.count == 0 {
+//                FlickerClient.getPhotoPage(latitude: coordinate.latitude , longitude: coordinate.longitude , completion: handlePhotoResponse)
+//                return
+//            } else {
+//                // do something here
+//                print("Pin exists, and has \(photos.count) associated photos")
+//            }
+//        }
+//    }
+    
+    // Open the new view, passing along the photos that need to be populated
+    // Otherwise, throw up an error that there was a problem
+    func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
+        if error != nil {
+            showCustomErrorAlert(title: "Photo download error", message: "There was a problem downloading the photos from Flickr. Please try again.")
+            return
+        }
+        if let photosToID = photos {
+            let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
+            for url in photoURLs {
+                print(url)
+                FlickerClient.downloadImageData(photoURL: url, completion: placeholderCompletion(data:error:))
+            }
+        }
+        // This needs to go somewhere else - it's getting called before the array has been processed.
+        handleArrayComplete()
+    }
+    
+    func placeholderCompletion(data: Data?, error: Error?) {
+        DispatchQueue.main.async {
+            if error != nil {
+                print(error)
+                self.showCustomErrorAlert(title: "placeholder error", message: error.debugDescription)
+                return
+            } else {
+                print(data)
+            }
+        }
+    }
+    
+    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
+        if error != nil {
+            print(error as Any)
+            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
+            return
+        }
+        if let url = photoURLs {
+            temporaryPhotoURLs.append(url)
+        }
+    }
+    
+    func handleArrayComplete() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
+        }
+    }
+}
+
+// UI functions
+extension PhotoAlbumVC {
+    func showCustomErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.

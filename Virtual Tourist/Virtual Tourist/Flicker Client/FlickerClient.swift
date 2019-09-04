@@ -19,8 +19,6 @@ class FlickerClient {
     
     class func getPhotoPage(latitude: Double, longitude: Double, completion: @escaping ([FlickrPhoto]?, Error?) -> Void) {
         let responseType = GetPhotoListResponse.self
-        print(latitude)
-        print(longitude)
         let urlString = base + method + "&api_key=\(apiKey)&lat=\(latitude)&lon=\(longitude)" + urlExtra + jsonFormat
         let request = URLRequest(url: URL(string:urlString)!)
         let session = URLSession.shared
