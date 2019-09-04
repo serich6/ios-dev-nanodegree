@@ -188,9 +188,13 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
                     }
                 }
             }
+            cell.activityIndicator.isHidden = true
+            cell.activityIndicator.stopAnimating()
         } else {
             print("image url not present, adding a placeholder")
             cell.photoImageView.image = UIImage(named: "icon_world")
+            cell.activityIndicator.isHidden = false
+            cell.activityIndicator.startAnimating()
         }
         
        
