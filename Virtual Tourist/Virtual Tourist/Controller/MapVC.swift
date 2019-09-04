@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapVC: UIViewController, MKMapViewDelegate {
+class MapVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     // TODO: Save off the map center coordinates for next launch (UserDefaults?)
     var mapCenterCoordinate: CLLocationCoordinate2D!
@@ -58,14 +58,12 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    //TODO: Cite stack overflow idea here
-    // https://stackoverflow.com/questions/30858360/adding-a-pin-annotation-to-a-map-view-on-a-long-press-in-swift
+    // Idea from: https://stackoverflow.com/questions/30858360/adding-a-pin-annotation-to-a-map-view-on-a-long-press-in-swift
     fileprivate func addLongPressRecognizer() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
         longPressRecognizer.minimumPressDuration = 1.0
         mapView.addGestureRecognizer(longPressRecognizer)
     }
-    
     
     @objc func handleLongPress(_ gestureRecognizer : UIGestureRecognizer){
         if gestureRecognizer.state != .began { return }
@@ -82,34 +80,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
         pin.latitude = latitude as NSNumber
         pin.longitude = longitude as NSNumber
         try? dataController.viewContext.save()
-    }
-    
-    // Adapted from the example PinApp
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        let reuseId = "touristPin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView?.canShowCallout = true
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        return pinView
-    }
-    
-    // For when the pin is tapped
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let coordinate = view.annotation?.coordinate {
-            let foundPins = fetchPinFromDataModel(lat: coordinate.latitude, long: coordinate.longitude)
-            guard foundPins.first != nil else {
-                showCustomErrorAlert(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.")
-                return
-            }
-           checkForPinPhotos(foundPins: foundPins, coordinate: coordinate)
-        }
     }
     
     func checkForPinPhotos(foundPins: [Pin], coordinate: CLLocationCoordinate2D) {
@@ -173,18 +143,49 @@ class MapVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func showCustomErrorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCollectionSegue"{
             let photoAlbumVC = segue.destination as! PhotoAlbumVC
             photoAlbumVC.temporaryPin = currentPin
+            photoAlbumVC.dataController = dataController
             //photoAlbumVC.temporaryPhotoURLs = currentPhotoArray
         }
+    }
+}
+
+extension MapVC: MKMapViewDelegate {
+    // Adapted from the example PinApp
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        let reuseId = "touristPin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.canShowCallout = true
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        return pinView
+    }
+    
+    // For when the pin is tapped
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let coordinate = view.annotation?.coordinate {
+            let foundPins = fetchPinFromDataModel(lat: coordinate.latitude, long: coordinate.longitude)
+            guard foundPins.first != nil else {
+                showCustomErrorAlert(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.")
+                return
+            }
+            checkForPinPhotos(foundPins: foundPins, coordinate: coordinate)
+        }
+    }
+    
+    func showCustomErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

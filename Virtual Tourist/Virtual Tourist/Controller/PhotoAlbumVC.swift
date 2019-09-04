@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import MapKit
+import CoreData
 
-class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
+class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
@@ -19,9 +20,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     // TODO: remove the hardcoded initial value later
     var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
+    var temporaryPhotoDataArray: [Photo] = []
     var hasPhotos: Bool = false
     // TODO: figure out if I need to use this to save off the coordinate in user defaults
     var mapCenterCoordinate: CLLocationCoordinate2D!
+    var dataController:DataController!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,6 +37,22 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
         setToolBarTitle()
         drawPin()
         setMapZoom()
+        getPinPhotos()
+    }
+    
+    // TODO: get this to pull the correct pin from
+    func getPinPhotos() {
+        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
+        let predicate = NSPredicate(format: "pin == %@", temporaryPin)
+        fetchRequest.predicate = predicate
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            print("did the thing")
+            print(result)
+        } else {
+            print("oops")
+        }
+        //if the pin has associated photos, pull the from core data and save them in the photoData Array
+        // otherwise, fetch the images from flickr
     }
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
@@ -47,7 +66,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
+}
+
+
+// Map functions
+extension PhotoAlbumVC: MKMapViewDelegate {
     func drawPin(){
         guard let pin = temporaryPin else {
             showDisplayPinErrorAlert()
@@ -84,15 +107,17 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     }
 }
 
+
+// Collection view functions
 extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return temporaryPhotoURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("in cellforItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
         cell.photoImageView.image = UIImage(named: "icon_world")
+        //cell.activityIndicator.isAnimating = false
         return cell
     }
 }
