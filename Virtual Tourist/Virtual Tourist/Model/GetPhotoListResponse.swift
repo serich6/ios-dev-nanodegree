@@ -46,6 +46,7 @@ struct FlickrPhoto: Codable {
     let isPublic: Int
     let isFriend: Int
     let isFamily: Int
+    let url: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -57,5 +58,6 @@ struct FlickrPhoto: Codable {
         case isPublic = "ispublic"
         case isFriend = "isfriend"
         case isFamily = "isfamily"
+        case url = "url_n"
     }
 }
