@@ -18,7 +18,7 @@ class PhotoAlbumVC: UIViewController {
    // var temporaryPin: MKAnnotationView!
     var temporaryPin: Pin!
     // TODO: remove the hardcoded initial value later
-    var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
+    var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
     // TODO: add a photo album here - if it's nil when we preform the segue, add the label No Images
     var temporaryPhotoDataArray: [Photo] = []
     var hasPhotos: Bool = false
@@ -123,9 +123,11 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     // TODO: implement this for selecting photos
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // add stuff here
+        print("cell tapped!")
         //remove the photo from the backing array
-        // delete the photo from persistant storage
+        temporaryPhotoURLs.remove(at: indexPath.row)
+        // delete the photo from persistant storage:
+        // TODO!
         //reload the view
         collectionView.reloadData()
     }
