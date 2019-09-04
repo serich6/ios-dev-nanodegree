@@ -82,22 +82,26 @@ class PhotoAlbumVC: UIViewController {
             } else {
                 self.temporaryPhotoURLs = photoUrls
                 DispatchQueue.main.async {
+                    if self.temporaryPhotoURLs.count > 0 {
+                        self.setToolBarTitle(isNewCollection: true)
+                        self.toggleNewCollection(isEnabed: true)
+                    }
                     self.collectionView.reloadData()
                 }
             }
         }
     }
     
-    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
-        if error != nil {
-            print(error as Any)
-            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
-            return
-        }
-        if let url = photoURLs {
-            temporaryPhotoURLs.append(url)
-        }
-    }
+//    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
+//        if error != nil {
+//            print(error as Any)
+//            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
+//            return
+//        }
+//        if let url = photoURLs {
+//            temporaryPhotoURLs.append(url)
+//        }
+//    }
 }
 
 // UI functions
@@ -112,10 +116,15 @@ extension PhotoAlbumVC {
     func setToolBarTitle(isNewCollection: Bool) {
         if isNewCollection {
             toolBarTitle.title = "New Collection"
+            toggleNewCollection(isEnabed: false)
         }
         else {
             toolBarTitle.title = "No Images"
         }
+    }
+    
+    func toggleNewCollection(isEnabed: Bool){
+        toolBarTitle.isEnabled = isEnabed
     }
 }
 
