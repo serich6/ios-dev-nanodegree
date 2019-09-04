@@ -160,7 +160,6 @@ class MapVC: UIViewController {
             let photoAlbumVC = segue.destination as! PhotoAlbumVC
             photoAlbumVC.temporaryPin = currentPin
             photoAlbumVC.dataController = dataController
-            //photoAlbumVC.temporaryPhotoURLs = currentPhotoArray
         }
     }
 }
@@ -190,7 +189,10 @@ extension MapVC: MKMapViewDelegate {
                 showCustomErrorAlert(title: "Pin query error", message: "There was a problem querying the pin from core data. Please try again.")
                 return
             }
-            checkForPinPhotos(foundPins: foundPins, coordinate: coordinate)
+            currentPin = foundPins.first
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
+            }
         }
     }
     
