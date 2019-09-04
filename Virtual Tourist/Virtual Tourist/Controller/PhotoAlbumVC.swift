@@ -16,7 +16,7 @@ class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolBarTitle: UIBarButtonItem!
     var temporaryPin: Pin!
-    var temporaryPhotoURLs: [String]! = ["https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg", "https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg"]
+    var temporaryPhotoURLs: [String]! = []
     var temporaryPhotoDataArray: [Photo] = []
     var hasPhotos: Bool = false
     var mapCenterCoordinate: CLLocationCoordinate2D!
@@ -59,18 +59,6 @@ class PhotoAlbumVC: UIViewController {
         }
     }
     
-//    func checkForPinPhotos(foundPins: [Pin], coordinate: CLLocationCoordinate2D) {
-//        if let photos = temporaryPin.photos {
-//            if photos.count == 0 {
-//                FlickerClient.getPhotoPage(latitude: coordinate.latitude , longitude: coordinate.longitude , completion: handlePhotoResponse)
-//                return
-//            } else {
-//                // do something here
-//                print("Pin exists, and has \(photos.count) associated photos")
-//            }
-//        }
-//    }
-    
     // Open the new view, passing along the photos that need to be populated
     // Otherwise, throw up an error that there was a problem
     func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
@@ -79,24 +67,30 @@ class PhotoAlbumVC: UIViewController {
             return
         }
         if let photosToID = photos {
-            let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
-            for url in photoURLs {
-                print(url)
-                FlickerClient.downloadImageData(photoURL: url, completion: placeholderCompletion(data:error:))
-            }
+            
+            // TODO, create a completion handler  that updates the local URL array and reloads the collection view instead of this inline implementation
+            //let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
+            FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
+//            for url in photoURLs {
+//                print(url)
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//                }
+//            }
         }
-        // This needs to go somewhere else - it's getting called before the array has been processed.
-        handleArrayComplete()
     }
     
-    func placeholderCompletion(data: Data?, error: Error?) {
+    func placeholderCompletion(photoUrls: [String]?, error: Error?) {
         DispatchQueue.main.async {
             if error != nil {
                 print(error)
-                self.showCustomErrorAlert(title: "placeholder error", message: error.debugDescription)
                 return
             } else {
-                print(data)
+                print(photoUrls)
+                self.temporaryPhotoURLs = photoUrls
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             }
         }
     }
@@ -109,12 +103,6 @@ class PhotoAlbumVC: UIViewController {
         }
         if let url = photoURLs {
             temporaryPhotoURLs.append(url)
-        }
-    }
-    
-    func handleArrayComplete() {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "showCollectionSegue", sender: nil)
         }
     }
 }
@@ -188,24 +176,30 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
-        cell.photoImageView.image = UIImage(named: "icon_world")
-        //cell.photoImageView.image = UIImage
-        //cell.activityIndicator.isAnimating = false
-        let url = URL(string:"https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg")!
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    cell.photoImageView.image = image
+        // if the temporary url array has a url in it, set to the image from there
+        // otherwise, use the placeholder
+        if temporaryPhotoURLs.indices.contains(indexPath.row) {
+            print("Index exists")
+            let url = URL(string:temporaryPhotoURLs[indexPath.row])!
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.photoImageView.image = image
+                    }
                 }
             }
+        } else {
+            print("image url not present, adding a placeholder")
+            cell.photoImageView.image = UIImage(named: "icon_world")
         }
+        
+       
         return cell
     }
     
     // TODO: implement this for selecting photos
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("cell tapped!")
-        //remove the photo from the backing array
         temporaryPhotoURLs.remove(at: indexPath.row)
         // delete the photo from persistant storage:
         // TODO!

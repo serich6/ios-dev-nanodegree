@@ -40,12 +40,19 @@ class FlickerClient {
         task.resume()
     }
     
-    class func convertFlikrPhotosToURLArray(photoSearchResults: [FlickrPhoto]) -> [String] {
+//    class func convertFlikrPhotosToURLArray(photoSearchResults: [FlickrPhoto]) -> [String] {
+//        var photoIDs: [String] = []
+//        for photo in photoSearchResults {
+//            photoIDs.append(photo.url)
+//        }
+//        return photoIDs
+//    }
+    class func convertFlikrPhotosToURLArray(photoSearchResults: [FlickrPhoto], completion: @escaping ([String]?, Error?) -> Void){
         var photoIDs: [String] = []
         for photo in photoSearchResults {
             photoIDs.append(photo.url)
         }
-        return photoIDs
+        completion(photoIDs, nil)
     }
     
     class func downloadImageData(photoURL: String, completion: @escaping (Data?, Error?) -> Void) {
