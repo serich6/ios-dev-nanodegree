@@ -15,7 +15,7 @@ class MapVC: UIViewController {
     // TODO: Save off the map center coordinates for next launch (UserDefaults?)
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var currentPin: Pin!
-    var currentPhotoArray: [String]!
+    var currentPhotoArray: [String]! = []
     var dataController:DataController!
     var fetchedResultsController:NSFetchedResultsController<Pin>!
     var downloadedPhotos: [Data]!
@@ -116,10 +116,9 @@ class MapVC: UIViewController {
             return
         }
         if let photosToID = photos {
-            let photoIDs = FlickerClient.convertFlikrPhotosToIDArray(photoSearchResults: photosToID)
-            currentPhotoArray = []
-            for id in photoIDs {
-                FlickerClient.getPhotoImageURL(photoID: id, completion: handleGetPhotoImageURLResponse(photoURLs:error:))
+            let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
+            for url in photoURLs {
+                print(url)
             }
         }
         // This needs to go somewhere else - it's getting called before the array has been processed.
