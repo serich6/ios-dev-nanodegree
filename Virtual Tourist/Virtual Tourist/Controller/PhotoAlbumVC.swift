@@ -30,13 +30,11 @@ class PhotoAlbumVC: UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
-        print("Current Pin is: " + temporaryPin.debugDescription)
-        setToolBarTitle()
+        setToolBarTitle(isNewCollection: false)
         drawPin()
         setMapZoom()
         getPinPhotos()
     }
-    
     
     func getPinPhotos() {
         guard let temporaryPin = temporaryPin else {
@@ -51,6 +49,7 @@ class PhotoAlbumVC: UIViewController {
                 print("there are no photos, fetching from flickr!")
                 FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
             } else {
+                setToolBarTitle(isNewCollection: true)
                 print("I FOUND PIN PHOTOS")
                 print("Photos Count: \(result.count)")
             }
@@ -67,16 +66,11 @@ class PhotoAlbumVC: UIViewController {
             return
         }
         if let photosToID = photos {
-            
-            // TODO, create a completion handler  that updates the local URL array and reloads the collection view instead of this inline implementation
-            //let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
-            FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
-//            for url in photoURLs {
-//                print(url)
-//                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
-//                }
-//            }
+            if photosToID.count == 0 {
+                setToolBarTitle(isNewCollection: false)
+            } else {
+               FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
+            }
         }
     }
     
@@ -86,7 +80,6 @@ class PhotoAlbumVC: UIViewController {
                 print(error)
                 return
             } else {
-                print(photoUrls)
                 self.temporaryPhotoURLs = photoUrls
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
@@ -116,14 +109,12 @@ extension PhotoAlbumVC {
     }
     
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
-    func setToolBarTitle() {
-        if let photos = temporaryPhotoURLs {
-            if photos.count > 0 {
-                toolBarTitle.title = "New Collection"
-            }
-            else {
-                toolBarTitle.title = "No Images"
-            }
+    func setToolBarTitle(isNewCollection: Bool) {
+        if isNewCollection {
+            toolBarTitle.title = "New Collection"
+        }
+        else {
+            toolBarTitle.title = "No Images"
         }
     }
 }
@@ -179,7 +170,6 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
         // if the temporary url array has a url in it, set to the image from there
         // otherwise, use the placeholder
         if temporaryPhotoURLs.indices.contains(indexPath.row) {
-            print("Index exists")
             let url = URL(string:temporaryPhotoURLs[indexPath.row])!
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
@@ -196,14 +186,11 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.activityIndicator.isHidden = false
             cell.activityIndicator.startAnimating()
         }
-        
-       
         return cell
     }
     
     // TODO: implement this for selecting photos
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("cell tapped!")
         temporaryPhotoURLs.remove(at: indexPath.row)
         // delete the photo from persistant storage:
         // TODO!
