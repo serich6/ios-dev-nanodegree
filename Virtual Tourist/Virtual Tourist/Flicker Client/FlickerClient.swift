@@ -16,10 +16,11 @@ class FlickerClient {
     static let method = "?method=flickr.photos.search"
     static let urlExtra = "&extras=url_n"
     static let jsonFormat = "&format=json&nojsoncallback=1"
+    static let pageInfo = "&per_page=20&page=1"
     
     class func getPhotoPage(latitude: Double, longitude: Double, completion: @escaping ([FlickrPhoto]?, Error?) -> Void) {
         let responseType = GetPhotoListResponse.self
-        let urlString = base + method + "&api_key=\(apiKey)&lat=\(latitude)&lon=\(longitude)" + urlExtra + jsonFormat
+        let urlString = base + method + "&api_key=\(apiKey)&lat=\(latitude)&lon=\(longitude)" + pageInfo + urlExtra + jsonFormat
         let request = URLRequest(url: URL(string:urlString)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in

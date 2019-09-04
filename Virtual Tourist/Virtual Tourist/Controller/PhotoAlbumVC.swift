@@ -50,6 +50,7 @@ class PhotoAlbumVC: UIViewController {
                 FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
             } else {
                 setToolBarTitle(isNewCollection: true)
+                toggleNewCollection(isEnabed: false)
                 print("I FOUND PIN PHOTOS")
                 print("Photos Count: \(result.count)")
             }
@@ -116,11 +117,11 @@ extension PhotoAlbumVC {
     func setToolBarTitle(isNewCollection: Bool) {
         if isNewCollection {
             toolBarTitle.title = "New Collection"
-            toggleNewCollection(isEnabed: false)
         }
         else {
             toolBarTitle.title = "No Images"
         }
+        toggleNewCollection(isEnabed: false)
     }
     
     func toggleNewCollection(isEnabed: Bool){
