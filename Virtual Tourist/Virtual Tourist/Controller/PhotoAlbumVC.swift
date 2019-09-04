@@ -120,4 +120,13 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
         //cell.activityIndicator.isAnimating = false
         return cell
     }
+    
+    // TODO: implement this for selecting photos
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // add stuff here
+        //remove the photo from the backing array
+        // delete the photo from persistant storage
+        //reload the view
+        collectionView.reloadData()
+    }
 }
