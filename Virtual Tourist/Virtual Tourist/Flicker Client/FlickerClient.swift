@@ -53,6 +53,7 @@ class FlickerClient {
     class func downloadImageData(photoURL: String, completion: @escaping (Data?, Error?) -> Void) {
         let responseType = GetPhotoInfoResponse.self
         let request = URLRequest(url: URL(string:photoURL)!)
+        print("using " + photoURL)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil {
@@ -62,7 +63,10 @@ class FlickerClient {
             }
             let decoder = JSONDecoder()
             do {
-                let response = try decoder.decode(responseType.self, from: data!)
+                //let response = try decoder.decode(responseType.self, from: data!)
+                let response = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
+                print(response)
+                //completion(data, nil)
             }
             catch {
                 print(error)

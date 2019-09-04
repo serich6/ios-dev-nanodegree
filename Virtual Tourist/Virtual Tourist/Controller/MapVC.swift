@@ -119,10 +119,23 @@ class MapVC: UIViewController {
             let photoURLs = FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID)
             for url in photoURLs {
                 print(url)
+                FlickerClient.downloadImageData(photoURL: url, completion: placeholderCompletion(data:error:))
             }
         }
         // This needs to go somewhere else - it's getting called before the array has been processed.
         handleArrayComplete()
+    }
+    
+    func placeholderCompletion(data: Data?, error: Error?) {
+        DispatchQueue.main.async {
+            if error != nil {
+                print(error)
+                self.showCustomErrorAlert(title: "placeholder error", message: error.debugDescription)
+                return
+            } else {
+                print(data)
+            }
+        }
     }
     
     func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {

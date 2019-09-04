@@ -117,7 +117,16 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
         cell.photoImageView.image = UIImage(named: "icon_world")
+        //cell.photoImageView.image = UIImage
         //cell.activityIndicator.isAnimating = false
+        let url = URL(string:"https://live.staticflickr.com/7108/7562919526_0079d66ded_s.jpg")!
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    cell.photoImageView.image = image
+                }
+            }
+        }
         return cell
     }
     
