@@ -17,7 +17,7 @@ class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var toolBarButton: UIButton!
     var temporaryPin: Pin!
     var temporaryPhotoURLs: [String]! = []
-    var temporaryPhotoDataArray: [Photo] = []
+    var temporaryPhotoDataArray: [Data] = []
     var hasPhotos: Bool = false
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var dataController:DataController!
@@ -36,6 +36,7 @@ class PhotoAlbumVC: UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
+        collectionView.reloadData()
         drawPin()
         setMapZoom()
         setToolBarTitle(isNewCollection: false)
@@ -44,7 +45,7 @@ class PhotoAlbumVC: UIViewController {
     
     func getPinPhotos() {
         guard let temporaryPin = temporaryPin else {
-            print("pin isn't set")
+            showCustomErrorAlert(title: "Pin is Nil", message: "Try again.")
             return
         }
         let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
@@ -78,6 +79,8 @@ class PhotoAlbumVC: UIViewController {
             if photosToID.count == 0 {
                 DispatchQueue.main.async {
                     self.setToolBarTitle(isNewCollection: false)
+                    self.toggleNewCollection(isEnabed: false)
+                    print("No images found after call to flickr")
                 }
             } else {
                FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
@@ -92,6 +95,7 @@ class PhotoAlbumVC: UIViewController {
                 return
             } else {
                 self.temporaryPhotoURLs = photoUrls
+                self.convertURLsToData(photoUrls: self.temporaryPhotoURLs)
                 DispatchQueue.main.async {
                     if self.temporaryPhotoURLs.count > 0 {
                         self.setToolBarTitle(isNewCollection: true)
@@ -101,6 +105,29 @@ class PhotoAlbumVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func convertURLsToData(photoUrls: [String]) {
+        temporaryPhotoDataArray = []
+        for url in photoUrls {
+            if let data = try? Data(contentsOf: URL(string:url)!) {
+                temporaryPhotoDataArray.append(data)
+            } else {
+                print("Error loading data from url string in convertURLsToData")
+            }
+        }
+    }
+    
+    func savePhotosToStorage(data: Data) {
+        print("TODO: implement save photos to persistant store here")
+        let photoToSave = Photo(context: dataController.viewContext)
+        photoToSave.image = data
+        temporaryPin.addToPhotos(photoToSave)
+        try? dataController.viewContext.save()
+    }
+    
+    func deletePhotosFromStorage() {
+       print("TODO: implement delete photos to persistant store here")
     }
 }
 
@@ -182,14 +209,13 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.activityIndicator.isHidden = false
         cell.activityIndicator.startAnimating()
         
-        if temporaryPhotoURLs.indices.contains(indexPath.row) {
-            let url = URL(string:temporaryPhotoURLs[indexPath.row])!
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.photoImageView.image = image
-                    }
+        if temporaryPhotoDataArray.indices.contains(indexPath.row) {
+            if let image = UIImage(data: temporaryPhotoDataArray[indexPath.row]) {
+                DispatchQueue.main.async {
+                    cell.photoImageView.image = image
                 }
+            } else {
+               cell.photoImageView.image = UIImage(named: "icon_world")
             }
             cell.activityIndicator.isHidden = true
             cell.activityIndicator.stopAnimating()
