@@ -23,9 +23,8 @@ class PhotoAlbumVC: UIViewController {
     var dataController:DataController!
     
     @IBAction func toolBarButtonClicked() {
-        //delete photos for that pin
-        // call the getPinPhotos again
-        print("TODO: implmenent new collection")
+        temporaryPin.removeFromPhotos(temporaryPin.photos!)
+        getPinPhotos()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +42,21 @@ class PhotoAlbumVC: UIViewController {
         getPinPhotos()
     }
     
+    fileprivate func displayPreviouslySavedPhotos(_ result: [Photo]) {
+        print("Photos Count: \(result.count)")
+        DispatchQueue.main.async {
+            self.setToolBarTitle(isNewCollection: true)
+            self.toggleNewCollection(isEnabed: false)
+        }
+        temporaryPhotoDataArray = []
+        for photo in result {
+            temporaryPhotoDataArray.append(photo.image!)
+        }
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     func getPinPhotos() {
         guard let temporaryPin = temporaryPin else {
             showCustomErrorAlert(title: "Pin is Nil", message: "Try again.")
@@ -56,12 +70,7 @@ class PhotoAlbumVC: UIViewController {
                 print("there are no photos, fetching from flickr!")
                 FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
             } else {
-                DispatchQueue.main.async {
-                    self.setToolBarTitle(isNewCollection: true)
-                    self.toggleNewCollection(isEnabed: false)
-                }
-                print("I FOUND PIN PHOTOS")
-                print("Photos Count: \(result.count)")
+                displayPreviouslySavedPhotos(result)
             }
         } else {
             showCustomErrorAlert(title: "Error loading pin from core data.", message: "Please try again.")
@@ -76,17 +85,22 @@ class PhotoAlbumVC: UIViewController {
             return
         }
         if let photosToID = photos {
-            if photosToID.count == 0 {
-                DispatchQueue.main.async {
-                    self.setToolBarTitle(isNewCollection: false)
-                    self.toggleNewCollection(isEnabed: false)
-                    print("No images found after call to flickr")
-                }
-            } else {
-               FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
-            }
+            handlePhotoArrayConversions(photosToID)
         }
     }
+    
+    fileprivate func handlePhotoArrayConversions(_ photosToID: [FlickrPhoto]) {
+        if photosToID.count == 0 {
+            DispatchQueue.main.async {
+                self.setToolBarTitle(isNewCollection: false)
+                self.toggleNewCollection(isEnabed: false)
+                print("No images found after call to flickr")
+            }
+        } else {
+            FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
+        }
+    }
+    
     
     func placeholderCompletion(photoUrls: [String]?, error: Error?) {
         DispatchQueue.main.async {
@@ -94,18 +108,26 @@ class PhotoAlbumVC: UIViewController {
                 print(error)
                 return
             } else {
-                self.temporaryPhotoURLs = photoUrls
-                self.convertURLsToData(photoUrls: self.temporaryPhotoURLs)
-                DispatchQueue.main.async {
-                    if self.temporaryPhotoURLs.count > 0 {
-                        self.setToolBarTitle(isNewCollection: true)
-                        self.toggleNewCollection(isEnabed: true)
-                    }
-                    self.collectionView.reloadData()
-                }
+                self.updateUIStorageWithPhotos(photoUrls: photoUrls!)
             }
         }
     }
+    
+    fileprivate func updateUIStorageWithPhotos(photoUrls: [String]) {
+        self.temporaryPhotoURLs = photoUrls
+        self.convertURLsToData(photoUrls: self.temporaryPhotoURLs)
+        for data in temporaryPhotoDataArray {
+            savePhotosToStorage(data: data)
+        }
+        DispatchQueue.main.async {
+            if self.temporaryPhotoURLs.count > 0 {
+                self.setToolBarTitle(isNewCollection: true)
+                self.toggleNewCollection(isEnabed: true)
+            }
+            self.collectionView.reloadData()
+        }
+    }
+
     
     func convertURLsToData(photoUrls: [String]) {
         temporaryPhotoDataArray = []
@@ -119,10 +141,10 @@ class PhotoAlbumVC: UIViewController {
     }
     
     func savePhotosToStorage(data: Data) {
-        print("TODO: implement save photos to persistant store here")
         let photoToSave = Photo(context: dataController.viewContext)
         photoToSave.image = data
         temporaryPin.addToPhotos(photoToSave)
+        print(temporaryPin.photos)
         try? dataController.viewContext.save()
     }
     
@@ -151,7 +173,9 @@ extension PhotoAlbumVC {
     }
     
     func toggleNewCollection(isEnabed: Bool){
-        toolBarButton.isEnabled = isEnabed
+        
+        // TODO: change back
+        toolBarButton.isEnabled = true
     }
 }
 
