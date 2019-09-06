@@ -48,6 +48,7 @@ class PhotoAlbumVC: UIViewController {
         }
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.toggleNewCollection(isEnabed: true)
         }
     }
     
@@ -61,7 +62,6 @@ class PhotoAlbumVC: UIViewController {
         fetchRequest.predicate = predicate
         if let result = try? dataController.viewContext.fetch(fetchRequest) {
             if result.count == 0 {
-                print("there are no photos, fetching from flickr!")
                 FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
             } else {
                 displayPreviouslySavedPhotos(result)
@@ -128,7 +128,7 @@ class PhotoAlbumVC: UIViewController {
                 photoToSave.image = data
                 photosArray.append(photoToSave)
             } else {
-                print("Error loading data from url string in convertURLsToData")
+                showCustomErrorAlert(title: "Conversion Error", message: "Error loading photo data from URL")
             }
         }
     }
@@ -162,7 +162,7 @@ extension PhotoAlbumVC {
     
     func toggleNewCollection(isEnabed: Bool){
         // TODO: change back
-        toolBarButton.isEnabled = true
+        toolBarButton.isEnabled = isEnabed
     }
     
     @IBAction func toolBarButtonClicked() {
