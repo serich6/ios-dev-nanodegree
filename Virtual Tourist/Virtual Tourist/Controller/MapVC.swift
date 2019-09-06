@@ -30,6 +30,10 @@ class MapVC: UIViewController {
         mapView.delegate = self
         addLongPressRecognizer()
         drawPinsFromCoreData()
+        if UserDefaults.standard.double(forKey: "mapLat") != nil {
+            mapView.centerCoordinate.latitude = UserDefaults.standard.double(forKey: "mapLat")
+            mapView.centerCoordinate.longitude = UserDefaults.standard.double(forKey: "mapLong")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,8 +143,10 @@ extension MapVC: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("other update method")
-        
+        let lat = Double(mapView.centerCoordinate.latitude.description)
+        let long = Double(mapView.centerCoordinate.longitude.description)
+        UserDefaults.standard.set(lat, forKey: "mapLat")
+        UserDefaults.standard.set(long, forKey: "mapLong")
     }
     
     func showCustomErrorAlert(title: String, message: String) {
