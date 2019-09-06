@@ -92,17 +92,6 @@ class PhotoAlbumVC: UIViewController {
             }
         }
     }
-    
-//    func handleGetPhotoImageURLResponse(photoURLs: String?, error: Error?) {
-//        if error != nil {
-//            print(error as Any)
-//            showCustomErrorAlert(title: "Fetch Image URL error", message: "There was an issue fetching the image URL. Please try again.")
-//            return
-//        }
-//        if let url = photoURLs {
-//            temporaryPhotoURLs.append(url)
-//        }
-//    }
 }
 
 // UI functions
@@ -179,6 +168,10 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
         // if the temporary url array has a url in it, set to the image from there
         // otherwise, use the placeholder
+        cell.photoImageView.image = UIImage(named: "icon_world")
+        cell.activityIndicator.isHidden = false
+        cell.activityIndicator.startAnimating()
+        
         if temporaryPhotoURLs.indices.contains(indexPath.row) {
             let url = URL(string:temporaryPhotoURLs[indexPath.row])!
             if let data = try? Data(contentsOf: url) {
@@ -190,12 +183,7 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
             }
             cell.activityIndicator.isHidden = true
             cell.activityIndicator.stopAnimating()
-        } else {
-            print("image url not present, adding a placeholder")
-            cell.photoImageView.image = UIImage(named: "icon_world")
-            cell.activityIndicator.isHidden = false
-            cell.activityIndicator.startAnimating()
-        }
+        } 
         return cell
     }
     
