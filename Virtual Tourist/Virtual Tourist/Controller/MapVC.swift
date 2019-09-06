@@ -123,6 +123,7 @@ extension MapVC: MKMapViewDelegate {
     
     // For when the pin is tapped
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("pin tapped")
         if let coordinate = view.annotation?.coordinate {
             let foundPins = fetchPinFromDataModel(lat: coordinate.latitude, long: coordinate.longitude)
             guard foundPins.first != nil else {

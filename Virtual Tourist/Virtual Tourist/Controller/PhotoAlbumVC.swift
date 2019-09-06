@@ -17,7 +17,7 @@ class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var toolBarButton: UIButton!
     var temporaryPin: Pin!
     var temporaryPhotoURLs: [String]! = []
-    var temporaryPhotoDataArray: [Data] = []
+    var photosArray : [Photo] = []
     var hasPhotos: Bool = false
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var dataController:DataController!
@@ -43,9 +43,8 @@ class PhotoAlbumVC: UIViewController {
             self.setToolBarTitle(isNewCollection: true)
             self.toggleNewCollection(isEnabed: false)
         }
-        temporaryPhotoDataArray = []
         for photo in result {
-            temporaryPhotoDataArray.append(photo.image!)
+            photosArray.append(photo)
         }
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -110,12 +109,10 @@ class PhotoAlbumVC: UIViewController {
     
     fileprivate func updateUIStorageWithPhotos(photoUrls: [String]) {
         self.temporaryPhotoURLs = photoUrls
-        self.convertURLsToData(photoUrls: self.temporaryPhotoURLs)
-        for data in temporaryPhotoDataArray {
-            savePhotosToStorage(data: data)
-        }
+        self.convertURLsToPhotos(photoUrls: self.temporaryPhotoURLs)
+        savePhotosToStorage(photos: photosArray)
         DispatchQueue.main.async {
-            if self.temporaryPhotoURLs.count > 0 {
+            if self.photosArray.count > 0 {
                 self.setToolBarTitle(isNewCollection: true)
                 self.toggleNewCollection(isEnabed: true)
             }
@@ -123,23 +120,22 @@ class PhotoAlbumVC: UIViewController {
         }
     }
 
-    
-    func convertURLsToData(photoUrls: [String]) {
-        temporaryPhotoDataArray = []
+    func convertURLsToPhotos(photoUrls: [String]) {
         for url in photoUrls {
             if let data = try? Data(contentsOf: URL(string:url)!) {
-                temporaryPhotoDataArray.append(data)
+                let photoToSave = Photo(context: dataController.viewContext)
+                photoToSave.image = data
+                photosArray.append(photoToSave)
             } else {
                 print("Error loading data from url string in convertURLsToData")
             }
         }
     }
     
-    func savePhotosToStorage(data: Data) {
-        let photoToSave = Photo(context: dataController.viewContext)
-        photoToSave.image = data
-        temporaryPin.addToPhotos(photoToSave)
-        print(temporaryPin.photos)
+    func savePhotosToStorage(photos: [Photo]) {
+        for photoToSave in photos {
+            temporaryPin.addToPhotos(photoToSave)
+        }
         try? dataController.viewContext.save()
     }
     
@@ -168,13 +164,13 @@ extension PhotoAlbumVC {
     }
     
     func toggleNewCollection(isEnabed: Bool){
-        
         // TODO: change back
         toolBarButton.isEnabled = true
     }
     
     @IBAction func toolBarButtonClicked() {
-        temporaryPin.removeFromPhotos(temporaryPin.photos!)
+        let photosToRemove = temporaryPin.photos!
+        temporaryPin.removeFromPhotos(photosToRemove)
         getPinPhotos()
     }
 }
@@ -222,19 +218,17 @@ extension PhotoAlbumVC: MKMapViewDelegate {
 // Collection view functions
 extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return temporaryPhotoURLs.count
+        return photosArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
-        // if the temporary url array has a url in it, set to the image from there
-        // otherwise, use the placeholder
         cell.photoImageView.image = UIImage(named: "icon_world")
         cell.activityIndicator.isHidden = false
         cell.activityIndicator.startAnimating()
         
-        if temporaryPhotoDataArray.indices.contains(indexPath.row) {
-            if let image = UIImage(data: temporaryPhotoDataArray[indexPath.row]) {
+        if photosArray.indices.contains(indexPath.row) {
+            if let image = UIImage(data: photosArray[indexPath.row].image!) {
                 DispatchQueue.main.async {
                     cell.photoImageView.image = image
                 }
@@ -247,12 +241,10 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
         return cell
     }
     
-    // TODO: implement this for selecting photos
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //get the photo for that pin with that data
-        // remove it from storage
-        //remove it from the backing array
-        temporaryPhotoDataArray.remove(at: indexPath.row)
+        print("removing photo at location: \(indexPath.row)")
+        temporaryPin.removeFromPhotos(photosArray[indexPath.row])
+        photosArray.remove(at: indexPath.row)
         collectionView.reloadData()
     }
 }
