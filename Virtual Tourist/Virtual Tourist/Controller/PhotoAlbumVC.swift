@@ -22,11 +22,6 @@ class PhotoAlbumVC: UIViewController {
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var dataController:DataController!
     
-    @IBAction func toolBarButtonClicked() {
-        temporaryPin.removeFromPhotos(temporaryPin.photos!)
-        getPinPhotos()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -177,6 +172,11 @@ extension PhotoAlbumVC {
         // TODO: change back
         toolBarButton.isEnabled = true
     }
+    
+    @IBAction func toolBarButtonClicked() {
+        temporaryPin.removeFromPhotos(temporaryPin.photos!)
+        getPinPhotos()
+    }
 }
 
 
@@ -249,10 +249,10 @@ extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     // TODO: implement this for selecting photos
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        temporaryPhotoURLs.remove(at: indexPath.row)
-        // delete the photo from persistant storage:
-        // TODO!
-        //reload the view
+        //get the photo for that pin with that data
+        // remove it from storage
+        //remove it from the backing array
+        temporaryPhotoDataArray.remove(at: indexPath.row)
         collectionView.reloadData()
     }
 }
