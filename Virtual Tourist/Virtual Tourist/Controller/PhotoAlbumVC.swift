@@ -138,10 +138,6 @@ class PhotoAlbumVC: UIViewController {
         }
         try? dataController.viewContext.save()
     }
-    
-    func deletePhotosFromStorage() {
-       print("TODO: implement delete photos to persistant store here")
-    }
 }
 
 // UI functions
@@ -184,9 +180,8 @@ extension PhotoAlbumVC: MKMapViewDelegate {
             return
         }
         let annotation = MKPointAnnotation()
-        //TODO: remove force unwrap here
         annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude as! CLLocationDegrees, longitude: pin.longitude as! CLLocationDegrees)
-        self.mapView.addAnnotations([annotation])
+        self.mapView.addAnnotation(annotation)
     }
     
     func showDisplayPinErrorAlert() {
