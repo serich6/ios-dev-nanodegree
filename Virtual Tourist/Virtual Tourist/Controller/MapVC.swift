@@ -63,6 +63,7 @@ class MapVC: UIViewController {
     }
     
     // Idea from: https://stackoverflow.com/questions/30858360/adding-a-pin-annotation-to-a-map-view-on-a-long-press-in-swift
+    // 7/1/2019
     fileprivate func addLongPressRecognizer() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
         longPressRecognizer.minimumPressDuration = 1.0
@@ -70,6 +71,7 @@ class MapVC: UIViewController {
     }
     
     // Idea from: https://stackoverflow.com/questions/30858360/adding-a-pin-annotation-to-a-map-view-on-a-long-press-in-swift
+    // 7/1/2019
     @objc func handleLongPress(_ gestureRecognizer : UIGestureRecognizer){
         if gestureRecognizer.state != .began { return }
         let location = gestureRecognizer.location(in: mapView)
