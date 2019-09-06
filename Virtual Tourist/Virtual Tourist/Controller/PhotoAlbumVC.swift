@@ -14,13 +14,19 @@ import CoreData
 class PhotoAlbumVC: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var toolBarTitle: UIBarButtonItem!
+    @IBOutlet weak var toolBarButton: UIButton!
     var temporaryPin: Pin!
     var temporaryPhotoURLs: [String]! = []
     var temporaryPhotoDataArray: [Photo] = []
     var hasPhotos: Bool = false
     var mapCenterCoordinate: CLLocationCoordinate2D!
     var dataController:DataController!
+    
+    @IBAction func toolBarButtonClicked() {
+        //delete photos for that pin
+        // call the getPinPhotos again
+        print("TODO: implmenent new collection")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -30,9 +36,9 @@ class PhotoAlbumVC: UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         collectionView.delegate = self
-        setToolBarTitle(isNewCollection: false)
         drawPin()
         setMapZoom()
+        setToolBarTitle(isNewCollection: false)
         getPinPhotos()
     }
     
@@ -49,8 +55,10 @@ class PhotoAlbumVC: UIViewController {
                 print("there are no photos, fetching from flickr!")
                 FlickerClient.getPhotoPage(latitude: temporaryPin.latitude as! Double , longitude: temporaryPin.longitude as! Double , completion: handlePhotoResponse)
             } else {
-                setToolBarTitle(isNewCollection: true)
-                toggleNewCollection(isEnabed: false)
+                DispatchQueue.main.async {
+                    self.setToolBarTitle(isNewCollection: true)
+                    self.toggleNewCollection(isEnabed: false)
+                }
                 print("I FOUND PIN PHOTOS")
                 print("Photos Count: \(result.count)")
             }
@@ -68,7 +76,9 @@ class PhotoAlbumVC: UIViewController {
         }
         if let photosToID = photos {
             if photosToID.count == 0 {
-                setToolBarTitle(isNewCollection: false)
+                DispatchQueue.main.async {
+                    self.setToolBarTitle(isNewCollection: false)
+                }
             } else {
                FlickerClient.convertFlikrPhotosToURLArray(photoSearchResults: photosToID, completion: placeholderCompletion(photoUrls:error:))
             }
@@ -105,16 +115,16 @@ extension PhotoAlbumVC {
     // Update the UI with the correct tool bar title/label depending on if we have photos to display or not.
     func setToolBarTitle(isNewCollection: Bool) {
         if isNewCollection {
-            toolBarTitle.title = "New Collection"
+            toolBarButton.titleLabel?.text = "New Collection"
         }
         else {
-            toolBarTitle.title = "No Images"
+            toolBarButton.titleLabel?.text = "No Images"
         }
         toggleNewCollection(isEnabed: false)
     }
     
     func toggleNewCollection(isEnabed: Bool){
-        toolBarTitle.isEnabled = isEnabed
+        toolBarButton.isEnabled = isEnabed
     }
 }
 
