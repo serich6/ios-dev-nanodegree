@@ -74,6 +74,7 @@ class PhotoAlbumVC: UIViewController {
     // Open the new view, passing along the photos that need to be populated
     // Otherwise, throw up an error that there was a problem
     func handlePhotoResponse(photos: [FlickrPhoto]?, error: Error?) {
+        //the count is known here
         if error != nil {
             showCustomErrorAlert(title: "Photo download error", message: "There was a problem downloading the photos from Flickr. Please try again.")
             return
@@ -213,6 +214,9 @@ extension PhotoAlbumVC: MKMapViewDelegate {
 // Collection view functions
 extension PhotoAlbumVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if photosArray.count == 0 {
+            return 20
+        }
         return photosArray.count
     }
     

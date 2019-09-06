@@ -31,6 +31,7 @@ class FlickerClient {
             let decoder = JSONDecoder()
             do {
                 let response = try decoder.decode(responseType.self, from: data!)
+                print(response)
                 completion(response.photos.photo, nil)
             }
             catch {
